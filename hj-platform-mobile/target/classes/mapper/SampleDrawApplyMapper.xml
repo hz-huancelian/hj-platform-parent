@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.mapper.SampleDrawApplyMapper">
+    <select id="findSampleItemByCondition" resultType="org.hj.chain.platform.vo.MobileSampleItemVo">
+        select
+            sda.id drawApplyId,
+            si.id sampItemId,
+            si.sample_no sampleNo,
+            si.audit_reason auditReason,
+            si.sample_status sampleStatus,
+            si.factor_point factorPoint,
+            si.secd_class_name secdClassName,
+            si.day day,
+            si.frequency frequency,
+            sid.collect_time collectTime,
+            su.emp_name collectUser,
+            st.job_id jobId
+        from t_sample_draw_apply sda
+        left join t_sample_item si on sda.sample_item_id = si.id
+        left join t_sample_item_data sid on si.id = sid.sample_item_id
+        left join t_sample_task st on si.sample_task_id = st.id
+        left join t_sys_user su on sid.collect_user_id = su.user_id
+        where si.organ_id = #{organId} and sda.approval_status = "0"
+    </select>
+</mapper>

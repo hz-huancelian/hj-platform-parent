@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.sample.mapper.SampleStoreListMapper">
+
+
+    <select id="findHandoverParamBySampNo" parameterType="java.util.Map"
+            resultType="org.hj.chain.platform.vo.samplebak.HandoverParam">
+        SELECT
+		sj.consignor_name consignorName,
+		sl.store_time storeTime
+	FROM
+		t_sample_store_list sl
+		LEFT JOIN t_sample_item si ON sl.sample_item_id = si.id
+		LEFT JOIN t_sample_task st ON st.id = si.sample_task_id
+		LEFT JOIN t_schedule_job sj ON sj.id = st.job_id
+		WHERE si.sample_no = #{sampleItemNo,jdbcType = VARCHAR}
+		     and si.organ_id = #{organId,jdbcType = VARCHAR}
+    </select>
+
+
+    <select id="findHandoverParamBySampNos" parameterType="java.util.Map"
+            resultType="org.hj.chain.platform.vo.samplebak.HandoverParam">
+        SELECT
+        sj.consignor_name consignorName,
+        sl.store_time storeTime,
+        sl.send_user sendUser
+        FROM
+        t_sample_store_list sl
+        LEFT JOIN t_sample_item si ON sl.sample_item_id = si.id
+        LEFT JOIN t_sample_task st ON st.id = si.sample_task_id
+        LEFT JOIN t_schedule_job sj ON sj.id = st.job_id
+        WHERE si.sample_no in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item,jdbcType = VARCHAR}
+        </foreach>
+        and si.organ_id = #{organId,jdbcType = VARCHAR}
+    </select>
+</mapper>

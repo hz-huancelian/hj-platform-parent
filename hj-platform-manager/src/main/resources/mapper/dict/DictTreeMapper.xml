@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.mapper.SysDictRootMapper">
+
+    <select id="findPageByCondition" resultType="org.hj.chain.platform.vo.SysDictRootVo">
+        SELECT
+        id,
+        dict_key dictKey,
+        dict_val dictVal,
+        dict_desc dictDesc
+        FROM
+        t_sys_dict_root
+        <where>
+            <if test="dictVal!=null">
+                and dict_val like concat('%', #{dictVal,jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>

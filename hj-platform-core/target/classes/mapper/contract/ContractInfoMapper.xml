@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.contract.mapper.ContractInfoMapper">
+
+    <select id="findPageByCondition" resultType="org.hj.chain.platform.vo.contract.ContractInfoVo">
+        SELECT
+        ct.id,
+        ct.cont_code contCode,
+        ct.make_user_id makeUserId,
+        ct.cont_status contStatus,
+        ct.sign_date signDate,
+        ct.make_type makeType,
+        ct.validity validity,
+        ct.cont_file_id contFileId,
+        ct.sup_cont_code supContCode,
+        oi.project_name projectName,
+        ccb.company_name partA,
+        oi.consignor_name consignorName,
+        oi.id offerId
+        FROM
+        t_contract_info ct
+        LEFT JOIN t_offer_info oi ON ct.offer_id = oi.id
+        LEFT JOIN t_cus_contract_base_info ccb ON ccb.id= ct.cus_cont_base_info_id
+        <where>
+            <if test="organId!=null">
+                and ct.organ_id = #{organId,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.contCode!=null">
+                and ct.cont_code = #{sv.contCode,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.contName!=null">
+                and oi.project_name like concat('%',#{sv.contName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="sv.contStatus!=null">
+                and ct.cont_status = #{sv.contStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.contStatusIds!=null">
+                and ct.cont_status in
+                <foreach item="item" index="index" collection="sv.contStatusIds" open="(" separator="," close=")">
+                    #{item,jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="userId!=null">
+                and ct.make_user_id = #{userId,jdbcType=VARCHAR}
+            </if>
+            <if test="deptIds!=null">
+                and ct.dept_id in
+                <foreach item="item" index="index" collection="deptIds" open="(" separator="," close=")">
+                    #{item,jdbcType=BIGINT}
+                </foreach>
+            </if>
+            <if test="sv.supContCode!=null">
+                and ct.sup_cont_code = #{sv.supContCode,jdbcType=VARCHAR}
+            </if>
+        </where>
+        order by ct.update_time desc
+    </select>
+
+    <select id="validContractsForCurrMonth" parameterType="java.lang.String" resultType="org.hj.chain.platform.vo.statistics.ValidContractVo">
+        SELECT
+            SUM(draft_amount) contAmount,
+            COUNT(*) contSum
+        FROM
+            t_offer_dispatch_task odt
+                LEFT JOIN t_offer_info oi ON odt.offer_id = oi.id
+                LEFT JOIN t_offer_cost oc ON oi.id = oc.offer_id
+                LEFT JOIN t_contract_info ci ON oi.id = ci.offer_id
+        WHERE
+            oi.organ_id = #{organId}
+          AND oi.status NOT IN ("2","5")
+          AND DATE_FORMAT( odt.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+    </select>
+
+    <select id="validContractsForCurrYear" parameterType="java.lang.String" resultType="org.hj.chain.platform.vo.statistics.ValidContractVo">
+        SELECT
+            SUM(draft_amount) contAmount,
+            COUNT(*) contSum
+        FROM
+            t_offer_dispatch_task odt
+                LEFT JOIN t_offer_info oi ON odt.offer_id = oi.id
+                LEFT JOIN t_offer_cost oc ON oi.id = oc.offer_id
+                LEFT JOIN t_contract_info ci ON oi.id = ci.offer_id
+        WHERE
+            oi.organ_id = #{organId}
+          AND oi.status NOT IN ("2","5")
+          AND YEAR( odt.create_time ) = YEAR ( NOW() )
+    </select>
+
+    <select id="validContractsForPass11Month" parameterType="java.lang.String" resultType="org.hj.chain.platform.vo.statistics.ValidContractForPass11MonthVo">
+        SELECT
+            sum( oc.draft_amount ) contactMoney,
+            count( ci.cont_code ) contactNum,
+            DATE_FORMAT( ci.create_time, '%Y-%m' ) xNameData
+        FROM
+            t_contract_info ci
+                LEFT JOIN t_offer_info oi ON ci.offer_id = oi.id
+                LEFT JOIN t_offer_cost oc ON oi.id = oc.offer_id
+                LEFT JOIN t_judge_task jt ON oi.id = jt.offer_id
+        WHERE
+            ci.organ_id = #{organId}
+          AND ci.cont_status IN ( "3", "4" )
+          AND jt.task_status IN ( "2", "6" )
+          AND DATE_FORMAT( ci.create_time, '%Y-%m' ) > DATE_FORMAT( DATE_SUB( CURDATE(), INTERVAL 12 MONTH ), '%Y-%m' )
+        GROUP BY
+            xNameData
+        ORDER BY
+            xNameData
+    </select>
+
+    <select id="selectCountForJudge" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            count( DISTINCT ci.cont_code ) cnt
+        FROM
+            t_contract_info ci
+                LEFT JOIN t_offer_info oi ON ci.offer_id = oi.id
+                LEFT JOIN t_judge_task jt ON oi.id = jt.offer_id
+        WHERE
+            ci.organ_id = #{organId}
+          AND jt.task_status IN ( "0", "1" )
+    </select>
+
+    <select id="sortContAmountForCurrMonth" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT
+            sum( oc.draft_amount ) amount,
+            su.emp_name empName
+        FROM
+            t_contract_info ci
+                LEFT JOIN t_offer_info oi ON ci.offer_id = oi.id
+                LEFT JOIN t_offer_cost oc ON oi.id = oc.offer_id
+                LEFT JOIN t_judge_task jt ON oi.id = jt.offer_id
+                LEFT JOIN t_sys_user su ON ci.make_user_id = su.user_id
+        WHERE
+            ci.organ_id = #{organId}
+          AND ci.cont_status IN ( "3", "4" )
+          AND jt.task_status IN ( "2", "6" )
+          AND DATE_FORMAT( ci.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+        GROUP BY
+            empName
+        ORDER BY
+            amount DESC
+    </select>
+
+    <select id="sortContAmountForCurrYear" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT
+            sum( oc.draft_amount ) amount,
+            su.emp_name empName
+        FROM
+            t_contract_info ci
+                LEFT JOIN t_offer_info oi ON ci.offer_id = oi.id
+                LEFT JOIN t_offer_cost oc ON oi.id = oc.offer_id
+                LEFT JOIN t_judge_task jt ON oi.id = jt.offer_id
+                LEFT JOIN t_sys_user su ON ci.make_user_id = su.user_id
+        WHERE
+            ci.organ_id = #{organId}
+          AND ci.cont_status IN ( "3", "4" )
+          AND jt.task_status IN ( "2", "6" )
+          AND YEAR( ci.create_time ) = YEAR ( NOW() )
+        GROUP BY
+            empName
+        ORDER BY
+            amount DESC
+    </select>
+
+    <select id="sortContNumForCurrMonth" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT
+            count( ci.cont_code ) cnt,
+            su.emp_name empName
+        FROM
+            t_contract_info ci
+                LEFT JOIN t_offer_info oi ON ci.offer_id = oi.id
+                LEFT JOIN t_offer_cost oc ON oi.id = oc.offer_id
+                LEFT JOIN t_judge_task jt ON oi.id = jt.offer_id
+                LEFT JOIN t_sys_user su ON ci.make_user_id = su.user_id
+        WHERE
+            ci.organ_id = #{organId}
+          AND ci.cont_status IN ( "3", "4" )
+          AND jt.task_status IN ( "2", "6" )
+          AND DATE_FORMAT( ci.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+        GROUP BY
+            empName
+        ORDER BY
+            cnt DESC
+    </select>
+
+    <select id="sortContNumForCurrYear" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT
+            count( ci.cont_code ) cnt,
+            su.emp_name empName
+        FROM
+            t_contract_info ci
+                LEFT JOIN t_offer_info oi ON ci.offer_id = oi.id
+                LEFT JOIN t_offer_cost oc ON oi.id = oc.offer_id
+                LEFT JOIN t_judge_task jt ON oi.id = jt.offer_id
+                LEFT JOIN t_sys_user su ON ci.make_user_id = su.user_id
+        WHERE
+            ci.organ_id = #{organId}
+          AND ci.cont_status IN ( "3", "4" )
+          AND jt.task_status IN ( "2", "6" )
+          AND YEAR( ci.create_time ) = YEAR ( NOW() )
+        GROUP BY
+            empName
+        ORDER BY
+            cnt DESC
+    </select>
+
+    <select id="ownerValidContractsForPass11Month" resultType="org.hj.chain.platform.vo.statistics.ValidContractForPass11MonthVo">
+        SELECT
+            sum( oc.draft_amount ) contactMoney,
+            count( ci.cont_code ) contactNum,
+            DATE_FORMAT( ci.create_time, '%Y-%m' ) xNameData
+        FROM
+            t_contract_info ci
+                LEFT JOIN t_offer_info oi ON ci.offer_id = oi.id
+                LEFT JOIN t_offer_cost oc ON oi.id = oc.offer_id
+                LEFT JOIN t_judge_task jt ON oi.id = jt.offer_id
+        WHERE
+            ci.organ_id = #{organId}
+          AND ci.make_user_id = #{userId}
+          AND ci.cont_status IN ( "3", "4" )
+          AND jt.task_status IN ( "2", "6" )
+          AND DATE_FORMAT( ci.create_time, '%Y-%m' ) > DATE_FORMAT( DATE_SUB( CURDATE(), INTERVAL 12 MONTH ), '%Y-%m' )
+        GROUP BY
+            xNameData
+        ORDER BY
+            xNameData
+    </select>
+
+</mapper>

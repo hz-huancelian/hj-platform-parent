@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.schedule.mapper.ScheduleTaskMapper">
+
+    <select id="findByCondition" resultType="org.hj.chain.platform.vo.schedule.ScheduleTaskVo">
+        SELECT
+            st.id taskId,
+            st.latest_schedule_date latestScheduleDate,
+            st.plan_num planNum,
+            st.scheduled_plan_num scheduledPlanNum,
+            st.create_time createTime,
+            st.schedule_flag scheduleFlag,
+            st.cont_code contCode,
+            oi.project_name projectName,
+            oi.consignor_name consignorName,
+            oi.consignor_linker consignorLinker,
+            oi.consignor_linker_phone consignorLinkerPhone
+        FROM
+            t_schedule_task st
+                LEFT JOIN t_offer_info oi ON st.offer_id = oi.id
+        WHERE
+            st.del_status = '0' and oi.organ_id = #{organId}
+            <if test="sv.scheduleStatus != null">
+                AND st.schedule_status = #{sv.scheduleStatus}
+            </if>
+            <if test="sv.scheduleStatus == null">
+                AND st.schedule_status in ("0", "1")
+            </if>
+            <if test="sv.contCode != null">
+                AND st.cont_code = #{sv.contCode}
+            </if>
+            <if test="sv.projectName != null">
+                AND oi.project_name like concat('%',#{sv.projectName},'%')
+            </if>
+        ORDER BY st.create_time DESC
+    </select>
+</mapper>

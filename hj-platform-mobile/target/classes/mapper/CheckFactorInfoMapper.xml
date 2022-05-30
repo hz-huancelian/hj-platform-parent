@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.mapper.CheckFactorInfoMapper">
+    <select id="getCheckFactorByIds" resultType="org.hj.chain.platform.vo.MobileCheckFactorInfoVo">
+        select
+        cfi.id id,
+        sii.id smapItemId,
+        sii.audit_reason auditReason,
+        sii.sample_status sampleStatus,
+        sii.day day,
+        sii.frequency frequency,
+        sii.secd_class_name secdClassName,
+        sid.collect_time collectTime,
+        ofi.factor_point factorPoint,
+        ofi.check_standard_id checkStandardId,
+        su.emp_name collectUser,
+        sti.dispatch_info_id taskNumber
+        from t_check_factor_info cfi
+        left join t_sample_item sii on cfi.sample_item_id = sii.id
+        left join t_offer_factor_info ofi on cfi.offer_factor_id = ofi.id
+        left join t_sample_item_detail sid on sii.id = sid.sample_item_id
+        left join t_sample_task_info sti on sii.samp_task_id = sti.id
+        left join t_sys_user su on sid.collect_user_id = su.user_id
+        where cfi.id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.mapper.FactorMethodInfoMapper">
+
+    <select id="findPage" resultType="org.hj.chain.platform.vo.FactorMethodRelVo">
+       SELECT
+			fmi.id standardCode,
+			fi.class_id classId,
+			fi.name factorName
+		FROM
+			t_factor_method_info fmi
+	    LEFT JOIN t_factor_info fi ON fmi.factor_id = fi.id
+    </select>
+</mapper>

@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    username:
+    password:
+  redis:
+    host: ${REDIS_HOST:xxxxx}
+    port: ${REDIS_PORT:6379}
+    database: 4

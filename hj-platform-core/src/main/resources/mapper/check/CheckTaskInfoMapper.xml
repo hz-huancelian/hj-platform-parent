@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.check.mapper.CheckTaskMapper">
+    <select id="findByCondition" resultType="org.hj.chain.platform.vo.check.CheckTaskInfoVo">
+        select
+        ct.id checkTaskId,
+        ct.task_status checkTaskStatus,
+        ct.job_id jobId,
+        sj.inspection_name inspectionName,
+        sj.inspection_linker inspectionLinker,
+        sj.inspection_linker_phone inspectionLinkerPhone,
+        sj.check_goal checkGoal,
+        sj.start_date startDate,
+        sj.end_date endDate,
+        sj.job_remark jobRemark,
+        sj.project_address projectAddress,
+        sj.create_time createTime,
+        sj.project_name projectName,
+        sj.consignor_name consignorName,
+        sj.consignor_linker consignorLinker,
+        sj.consignor_linker_phone consignorLinkerPhone,
+        st.offer_id offerId,
+        st.cont_code contCode,
+        su.emp_name scheduUser
+        from t_check_task ct
+        left join t_schedule_job sj on ct.job_id = sj.id
+        left join t_schedule_task st on sj.task_id = st.id
+        left join t_sys_user su on sj.create_user_id = su.user_id
+        where ct.organ_id = #{organId}
+        <if test="sv.jobId != null">
+            and ct.job_id = #{sv.jobId}
+        </if>
+        <if test="sv.projectName != null">
+            and sj.project_name like concat('%',#{sv.projectName},'%')
+        </if>
+        <if test="sv.checkTaskStatus != null">
+            and ct.task_status = #{sv.checkTaskStatus}
+        </if>
+        <if test="sv.checkTaskStatus == null">
+            and ct.task_status in ("1", "2")
+        </if>
+        order by ct.task_status asc, ct.create_time desc
+    </select>
+
+    <select id="findForDeptByCondition" resultType="org.hj.chain.platform.vo.check.CheckTaskInfoVo">
+        select
+        ct.id checkTaskId,
+        ct.task_status checkTaskStatus,
+        ct.job_id jobId,
+        sj.inspection_name inspectionName,
+        sj.inspection_linker inspectionLinker,
+        sj.inspection_linker_phone inspectionLinkerPhone,
+        sj.check_goal checkGoal,
+        sj.start_date startDate,
+        sj.end_date endDate,
+        sj.job_remark jobRemark,
+        sj.project_address projectAddress,
+        sj.create_time createTime,
+        sj.project_name projectName,
+        sj.consignor_name consignorName,
+        sj.consignor_linker consignorLinker,
+        sj.consignor_linker_phone consignorLinkerPhone,
+        st.offer_id offerId,
+        st.cont_code contCode,
+        su.emp_name scheduUser
+        from t_check_task ct
+        left join t_schedule_job sj on ct.job_id = sj.id
+        left join t_schedule_task st on sj.task_id = st.id
+        left join t_sys_user su on sj.create_user_id = su.user_id
+        where ct.organ_id = #{organId} and (ct.dept_id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        or ct.dept_id is null)
+        <if test="sv.jobId != null">
+            and ct.job_id = #{sv.jobId}
+        </if>
+        <if test="sv.projectName != null">
+            and sj.project_name like concat('%',#{sv.projectName},'%')
+        </if>
+        <if test="sv.checkTaskStatus != null">
+            and ct.task_status = #{sv.checkTaskStatus}
+        </if>
+        <if test="sv.checkTaskStatus == null">
+            and ct.task_status in ("1", "2")
+        </if>
+        order by ct.task_status asc, ct.create_time desc
+    </select>
+
+    <select id="findCheckTaskForManageByCondition" resultType="org.hj.chain.platform.vo.check.CheckTaskVo">
+        select
+            cti.id checkTaskId,
+            cti.task_status checkTaskStatus,
+            cti.job_id jobId,
+            sj.inspection_name inspectionName,
+            sj.start_date startDate,
+            sj.end_date endDate,
+            sj.create_time createTime,
+            sj.project_name projectName
+        from t_check_task cti
+        left join t_schedule_job sj on cti.job_id = sj.id
+        where cti.organ_id = #{organId}
+        <if test="sv.jobId != null">
+            and cti.job_id = #{sv.jobId}
+        </if>
+        <if test="sv.checkTaskStatus != null">
+            and cti.task_status = #{sv.checkTaskStatus}
+        </if>
+        <if test="sv.checkTaskStatus == null">
+            and cti.task_status in ("1", "2")
+        </if>
+        order by cti.task_status asc, cti.create_time desc
+    </select>
+
+    <select id="findCheckTaskForEmpByCondition" resultType="org.hj.chain.platform.vo.check.CheckTaskVo">
+        select
+        cti.id checkTaskId,
+        cti.task_status checkTaskStatus,
+        cti.job_id jobId,
+        sj.inspection_name inspectionName,
+        sj.start_date startDate,
+        sj.end_date endDate,
+        sj.create_time createTime,
+        sj.project_name projectName
+        from t_check_task cti
+        left join t_schedule_job sj on cti.job_id = sj.id
+        where cti.id in (select check_task_id from t_check_factor_info where assign_user_id = #{userId})
+        <if test="sv.jobId != null">
+            and cti.job_id = #{sv.jobId}
+        </if>
+        <if test="sv.checkTaskStatus != null">
+            and cti.task_status = #{sv.checkTaskStatus}
+        </if>
+        <if test="sv.checkTaskStatus == null">
+            and cti.task_status in ("1", "2")
+        </if>
+        order by cti.task_status asc, cti.create_time desc
+    </select>
+
+    <select id="findCheckTaskForDeptByCondition" resultType="org.hj.chain.platform.vo.check.CheckTaskVo">
+        select
+        cti.id checkTaskId,
+        cti.task_status checkTaskStatus,
+        cti.job_id jobId,
+        sj.inspection_name inspectionName,
+        sj.start_date startDate,
+        sj.end_date endDate,
+        sj.create_time createTime,
+        sj.project_name projectName
+        from t_check_task cti
+        left join t_schedule_job sj on cti.job_id = sj.id
+        where (cti.dept_id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        or cti.dept_id is null)
+        <if test="sv.jobId != null">
+            and cti.job_id = #{sv.jobId}
+        </if>
+        <if test="sv.checkTaskStatus != null">
+            and cti.task_status = #{sv.checkTaskStatus}
+        </if>
+        <if test="sv.checkTaskStatus == null">
+            and cti.task_status in ("1", "2")
+        </if>
+        order by cti.task_status asc, cti.create_time desc
+    </select>
+
+    <select id="completeTaskForCurrMonth" parameterType="java.lang.String" resultType="org.hj.chain.platform.vo.statistics.CompleteTaskVo">
+        SELECT
+            count(*) totalCnt,
+            sum( cti.task_status = "2" ) completeCnt
+        FROM
+            t_check_task_info cti
+                LEFT JOIN t_offer_dispatch_info odi ON cti.dispatch_info_id = odi.id
+                LEFT JOIN t_offer_info oi ON odi.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+          AND DATE_FORMAT( cti.create_time, '%Y%m' ) = DATE_FORMAT(
+                CURDATE(),
+                '%Y%m'
+            )
+    </select>
+
+    <select id="completeTaskForCurrYear" parameterType="java.lang.String" resultType="org.hj.chain.platform.vo.statistics.CompleteTaskVo">
+        SELECT
+            count(*) totalCnt,
+            sum( cti.task_status = "2" ) completeCnt
+        FROM
+            t_check_task_info cti
+                LEFT JOIN t_offer_dispatch_info odi ON cti.dispatch_info_id = odi.id
+                LEFT JOIN t_offer_info oi ON odi.offer_id = oi.id
+        WHERE
+                oi.organ_id = #{organId}
+                AND YEAR ( cti.create_time ) = YEAR (
+            NOW()
+            )
+    </select>
+    
+    <select id="checkTaskCntForCurrMonth" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT
+            count( cti.id ) cnt,
+            cti.task_status taskStatus
+        FROM
+            t_check_task_info cti
+                LEFT JOIN t_offer_info oi ON cti.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+          AND DATE_FORMAT( cti.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+        GROUP BY
+            taskStatus
+    </select>
+
+    <select id="checkTaskCntForCurrYear" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT
+            count( cti.id ) cnt,
+            cti.task_status taskStatus
+        FROM
+            t_check_task_info cti
+                LEFT JOIN t_offer_info oi ON cti.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+            AND YEAR ( cti.create_time ) = YEAR ( NOW() )
+        GROUP BY
+            taskStatus
+    </select>
+    <select id="selectCountForUnAssignCheckTask" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            count(*) cnt
+        FROM
+            t_check_task_info cti
+            LEFT JOIN t_offer_info oi ON cti.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+          AND cti.task_status = "0"
+    </select>
+</mapper>

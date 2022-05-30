@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.sample.mapper.SampleItemDataMapper">
+
+    <select id="getSampleDataBySampItemId" parameterType="java.lang.Long"
+            resultType="org.hj.chain.platform.vo.sample.SampleDataVo">
+        select
+            sid.collect_iamge1_id collectIamge1,
+            sid.collect_iamge2_id collectIamge2,
+            sid.collect_iamge3_id collectIamge3,
+            sid.collect_iamge4_id collectIamge4,
+            sid.collect_location collectLocation,
+            sid.collect_remark collectRemark,
+            sid.collect_time collectTime,
+            sid.create_time createTime,
+            sid.collect_date collectDate,
+            sid.sample_data sampleData,
+            sid.special_note specialNote,
+            si.factor_point factorPoint,
+            su.emp_name collectUser
+        from t_sample_item_data sid
+                left join t_sample_item si on sid.sample_item_id = si.id
+                 left join t_sys_user su on sid.collect_user_id = su.user_id
+        where sid.sample_item_id = #{sampItemId}
+    </select>
+    <select id="getSampleDetailBySampItemId" parameterType="java.lang.Long"
+            resultType="org.hj.chain.platform.vo.sample.SampleDetailVo">
+        select
+            sii.aval_draw_count avalDrawCount,
+            sii.draw_count drawCount,
+            sii.audit_time auditTime,
+            sid.collect_location collectLocation,
+            sid.collect_time collectTime,
+            sid.create_time createTime,
+            sid.collect_date collectDate,
+            sid.collect_remark sampRemark,
+            ss.store_location storeLocation,
+            ss.send_user sendUser,
+            ss.store_time storeTime
+        from t_sample_item sii
+                 left join t_sample_item_data sid on sii.id = sid.sample_item_id
+                 left join t_sample_store_list ss on sii.id = ss.sample_item_id
+        where sii.id = #{sampItemId}
+    </select>
+
+    <select id="findSampleDatasBySampleNos" parameterType="java.util.Map"
+            resultType="org.hj.chain.platform.vo.sample.SampleDataParam">
+        SELECT
+        si.sample_no sampleNo,
+        sd.collect_time collectTime,
+        sd.collect_date collectDate,
+        sd.collect_location collectLocation,
+        sd.sample_properties sampleProperties,
+        sd.sample_fixative sampleFixative
+        FROM
+        t_sample_item_data sd
+        LEFT JOIN t_sample_item si ON sd.sample_item_id = si.id
+        WHERE si.sample_no in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item,jdbcType = VARCHAR}
+        </foreach>
+        and si.organ_id = #{organId,jdbcType = VARCHAR}
+    </select>
+
+
+    <select id="findSampleDataDetailsBySampleNos" parameterType="java.util.Map"
+            resultType="org.hj.chain.platform.vo.sample.SampleDataDetailParam">
+        SELECT
+        si.sample_no sampleNo,
+        sd.collect_time collectTime,
+        sd.collect_date collectDate,
+        sd.collect_location collectLocation,
+        sd.sample_data_value sampleData,
+        sd.sample_properties sampleProperties,
+        sd.sample_fixative sampleFixative,
+        sd.pollutant_info pollutantInfo,
+        sd.collect_remark collectRemark,
+        sd.collect_user_id collectUserId,
+        sd.review_user_id reviewUserId,
+        si.factor_point factorPoint,
+        si.group_key groupKey
+        FROM
+        t_sample_item_data sd
+        LEFT JOIN t_sample_item si ON sd.sample_item_id = si.id
+        WHERE si.sample_no in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item,jdbcType = VARCHAR}
+        </foreach>
+        and si.organ_id = #{organId,jdbcType = VARCHAR}
+    </select>
+
+    <select id="getSampleDetailBySampleItemId" parameterType="java.lang.Long"
+            resultType="org.hj.chain.platform.vo.sample.SampleItemDetailVo">
+        select
+            sii.id sampItemId,
+            sii.sample_no sampleNo,
+            sii.audit_reason auditReason,
+            sii.sample_status sampleStatus,
+            sii.factor_point factorPoint,
+            sii.secd_class_name secdClassName,
+            sii.secd_class_id secdClassId,
+            sii.sample_user_id collectLeaderId,
+            sj.project_name projectName,
+            sj.consignor_name consignorName,
+            sj.inspection_linker inspectionLinker,
+            sj.inspection_name inspectionName,
+            sj.inspection_linker_phone inspectionLinkerPhone,
+            sj.start_date startDate,
+            sj.end_date endDate,
+            sj.project_address taskAddress,
+            sj.job_remark jobRemark,
+            sid.collect_time collectTime,
+            sid.collect_date collectDate,
+            sid.sample_data sampleData,
+            sid.collect_location collectLocation,
+            sid.collect_user_id collectUserId,
+            sid.review_user_id reviewUserId,
+            sid.collect_remark collectRemark,
+            sid.special_note specialNote
+        from t_sample_item sii
+                 left join t_sample_item_data sid on sii.id = sid.sample_item_id
+                 left join t_sample_task sti on sii.sample_task_id = sti.id
+                 left join t_schedule_job sj on sti.job_id = sj.id
+        where sii.id = #{sampItemId}
+    </select>
+</mapper>

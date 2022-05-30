@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c5c96e74-41ab-4416-90ec-6eda6a17a157" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="G:/anzhuangbao/apache-maven-3.6.1" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="jreName" value="1.8" />
+  </component>
+  <component name="ProjectId" id="25zsWKE7Zppr4EU6MjsMsxrHwG8" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="extract.method.default.visibility" value="private" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../hz-websit" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.hj.chain.platform.word" />
+      <recent name="org.hj.chain.platform.vo.samplebak" />
+      <recent name="org.hj.chain.platform.vo.sample" />
+      <recent name="org.hj.chain.platform.report.model" />
+      <recent name="org.hj.chain.platform.vo.offer" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/hj-platform-core" />
+      <recent name="$PROJECT_DIR$/hj-platform-core/src/main/resources/mapper/report" />
+      <recent name="$PROJECT_DIR$/hj-platform-common/tmp-generate" />
+      <recent name="$PROJECT_DIR$/hj-platform-common" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.HjPlatformCoreApplication">
+    <configuration name="HjPlatformCoreApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="hj-platform-core" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.hj.chain.platform.HjPlatformCoreApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HjPlatformMobileApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="hj-platform-mobile" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.hj.chain.platform.HjPlatformMobileApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.HjPlatformCoreApplication" />
+      <item itemvalue="Spring Boot.HjPlatformMobileApplication" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>$USER_HOME$/.subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c5c96e74-41ab-4416-90ec-6eda6a17a157" name="Default Changelist" comment="" />
+      <created>1646541279692</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1646541279692</updated>
+      <workItem from="1646541285383" duration="5178000" />
+      <workItem from="1646549484379" duration="26329000" />
+      <workItem from="1646814661253" duration="2301000" />
+      <workItem from="1646901158168" duration="94000" />
+      <workItem from="1647218972532" duration="2781000" />
+      <workItem from="1647306656868" duration="13776000" />
+      <workItem from="1647597919795" duration="5054000" />
+      <workItem from="1647695574518" duration="18038000" />
+      <workItem from="1648100814039" duration="219000" />
+      <workItem from="1648101137292" duration="20290000" />
+      <workItem from="1648182412534" duration="3005000" />
+      <workItem from="1648362701310" duration="1122000" />
+      <workItem from="1648365592219" duration="883000" />
+      <workItem from="1648398672777" duration="619000" />
+      <workItem from="1648456531982" duration="2479000" />
+      <workItem from="1648612350695" duration="305000" />
+      <workItem from="1648800773451" duration="2520000" />
+      <workItem from="1648877470707" duration="316000" />
+      <workItem from="1648881394192" duration="1802000" />
+      <workItem from="1648970888675" duration="672000" />
+      <workItem from="1649228472144" duration="1370000" />
+      <workItem from="1649292826689" duration="42159000" />
+      <workItem from="1650765126265" duration="73302000" />
+      <workItem from="1651683102011" duration="64220000" />
+      <workItem from="1652416039492" duration="65694000" />
+      <workItem from="1652925184169" duration="11663000" />
+      <workItem from="1653035410337" duration="25161000" />
+      <workItem from="1653463555118" duration="3395000" />
+      <workItem from="1653554072557" duration="705000" />
+      <workItem from="1653559176260" duration="2229000" />
+      <workItem from="1653561495256" duration="212000" />
+      <workItem from="1653611551508" duration="2849000" />
+      <workItem from="1653615238182" duration="5450000" />
+      <workItem from="1653871265470" duration="2052000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="false" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="e85d5344-053d-40ba-b03d-74828cc902b1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint type="java-method">
+          <url>file://$PROJECT_DIR$/hj-platform-core/src/main/java/org/hj/chain/platform/sample/service/impl/SampleItemServiceImpl.java</url>
+          <line>821</line>
+          <properties class="org.hj.chain.platform.sample.service.impl.SampleItemServiceImpl" method="findSampleRenderDataByTaskId" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

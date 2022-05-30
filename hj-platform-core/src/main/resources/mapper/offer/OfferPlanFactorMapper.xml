@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.offer.mapper.OfferPlanFactorMapper">
+    <select id="findJudgeOfferFactorByOfferId" parameterType="java.util.Map"
+            resultType="org.hj.chain.platform.vo.offer.OfferPlanFactorVo">
+        SELECT
+            ffi.id planFactorId,
+            ffi.offer_id offerId,
+            ffi.offer_plan_id offerPlanId,
+            ffi.check_standard_id checkStandardId,
+            ffi.secd_class_id secdClassId,
+            ffi.frequency,
+            ffi.day_count dayCount,
+            ffi.total_cost totalCost,
+            ffi.cost_per_time costPerTime,
+            ffi.factor_point factorPoint,
+            ffi.factor_group_key factorGroupKey,
+            ffi.dynamic_param dynamicParam,
+            ffi.factor_name factorName,
+            ffi.is_factor isFactor,
+            ffi.remark,
+            jo.judge_organ_name organName
+        FROM
+            t_offer_plan_factor ffi
+                LEFT JOIN t_offer_factor_organ ofo ON ffi.id = ofo.plan_factor_id
+                LEFT JOIN t_judge_organ jo ON jo.id = ofo.organ_id
+        where  ffi.offer_id = #{offerId,jdbcType = VARCHAR}
+    </select>
+
+    <select id="getFactorsByOfferPlanId" parameterType="java.lang.Long"
+            resultType="org.hj.chain.platform.vo.offer.OfferPlanFactorVo">
+        SELECT
+            opf.id planFactorId,
+            opf.offer_id offerId,
+            opf.offer_plan_id offerPlanId,
+            opf.secd_class_id secdClassId,
+            opf.check_standard_id checkStandardId,
+            opf.factor_name factorName,
+            opf.is_factor isFactor,
+            opf.frequency,
+            opf.day_count dayCount,
+            opf.factor_point factorPoint,
+            opf.dynamic_param dynamicParam,
+            opf.factor_group_key factorGroupKey,
+            opf.remark,
+            ofo.organ_id organId
+        FROM
+            t_offer_plan_factor opf
+                LEFT JOIN t_offer_factor_organ ofo ON opf.id = ofo.plan_factor_id
+        WHERE
+            opf.offer_plan_id = #{offerPlanId}
+        ORDER BY opf.secd_class_id
+    </select>
+
+    <select id="getFactorsByOfferPlanIds" parameterType="java.util.List"
+            resultType="org.hj.chain.platform.vo.offer.OfferPlanFactorVo">
+        SELECT
+        opf.id planFactorId,
+        opf.offer_id offerId,
+        opf.offer_plan_id offerPlanId,
+        opf.secd_class_id secdClassId,
+        opf.check_standard_id checkStandardId,
+        opf.factor_name factorName,
+        opf.is_factor isFactor,
+        opf.frequency,
+        opf.day_count dayCount,
+        opf.factor_point factorPoint,
+        opf.dynamic_param dynamicParam,
+        opf.factor_group_key factorGroupKey,
+        opf.remark,
+        ofo.organ_id organId
+        FROM
+        t_offer_plan_factor opf
+        LEFT JOIN t_offer_factor_organ ofo ON opf.id = ofo.plan_factor_id
+        WHERE
+        opf.offer_plan_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ORDER BY opf.secd_class_id
+    </select>
+
+</mapper>

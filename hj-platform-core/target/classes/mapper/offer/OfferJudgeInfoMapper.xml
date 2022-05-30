@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.offer.mapper.OfferJudgeInfoMapper">
+
+    <select id="findOfferJudgeApprovalsByCondition" resultType="org.hj.chain.platform.vo.approval.OfferJudgeApprovalVo">
+        SELECT
+        oji.offer_id offerId,
+        oi.project_name projectName,
+        oi.check_type checkType,
+        oji.`status`,
+        oi.consignor_name consignorName,
+        oi.finish_date finishDate,
+        oi.check_task_count checkTaskCount,
+        oi.create_user_id createUserId,
+        oi.remark,
+        oi.update_time createTime
+        FROM
+        t_offer_judge_info oji
+        LEFT JOIN t_offer_info oi ON oi.id = oji.offer_id
+        <where>
+            <if test="organId!=null">
+                and oi.organ_id = #{organId,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.offerId!=null">
+                and oji.offer_id = #{sv.offerId,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.status!=null">
+                and oji.status = #{sv.status,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.projectName!=null">
+                and oi.project_name like concat('%',#{projectName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        order by oi.update_time desc
+    </select>
+
+    <select id="pendingOfferJudgeCnt" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            count(*) cnt
+        FROM
+            t_offer_judge_info oji
+                LEFT JOIN t_offer_info oi ON oji.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+          AND oji.`status` = "0"
+    </select>
+
+    <select id="offerJudgeCntForCurrMonth" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.vo.statistics.OfferJudgeTaskStatisVo">
+        SELECT
+            count(*) totalCnt,
+            sum(oji.`status` = "0") unFinishCnt,
+            sum(oji.`status` = "1") finishCnt
+        FROM
+            t_offer_judge_info oji
+                LEFT JOIN t_offer_info oi ON odt.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+          AND DATE_FORMAT( oji.create_time, '%Y%m' ) = DATE_FORMAT(
+                CURDATE(),
+                '%Y%m'
+            )
+    </select>
+
+    <select id="offerJudgeCntForCurrYear" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.vo.statistics.OfferJudgeTaskStatisVo">
+        SELECT
+            count(*) totalCnt,
+            sum(oji.schedu_status = "0") unFinishCnt,
+            sum(oji.schedu_status = "1") finishCnt
+        FROM
+            t_offer_judge_info oji
+                LEFT JOIN t_offer_info oi ON oji.offer_id = oi.id
+        WHERE
+                oi.organ_id = #{organId}
+                AND YEAR ( oji.create_time ) = YEAR ( NOW() )
+    </select>
+
+    <select id="findOfferJudgeInfoByCondition" resultType="org.hj.chain.platform.vo.offer.OfferJudgeInfoVo"
+            parameterType="java.util.Map">
+       SELECT
+        opf.check_standard_id checkStandardId,
+        opf.secd_class_id secdClassId,
+        jo.judge_organ_name judgeOrganName
+        FROM
+        t_offer_factor_organ ofo
+        LEFT JOIN t_judge_organ jo ON ofo.organ_id = jo.id
+        LEFT JOIN t_offer_plan_factor opf ON ofo.plan_factor_id = opf.id
+        where opf.offer_id = #{offerId,jdbcType = VARCHAR} and ofo.organ_id != #{organId,jdbcType = VARCHAR}
+    </select>
+
+    <select id="selectListByOrganId" parameterType="java.lang.String" resultType="org.hj.chain.platform.offer.entity.OfferJudgeInfo">
+        SELECT
+            oji.offer_id offerId, oji.`status` status
+        FROM
+            t_offer_judge_info oji
+                LEFT JOIN t_offer_info oi ON oji.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+    </select>
+</mapper>

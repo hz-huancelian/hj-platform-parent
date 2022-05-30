@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.schedule.mapper.ScheduleJobPlanFactorMapper">
+
+    <select id="getJobFactorsByJobId" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.vo.schedule.ScheduleJobFactorVo">
+        SELECT
+            sjpf.job_id jobId,
+            sjpf.job_plan_id jobPlanId,
+            sjp.offer_plan_id offerPlanId,
+            sjpf.secd_class_id secdClassId,
+            sjpf.check_standard_id checkStandardId,
+            sjpf.factor_name factorName,
+            sjpf.fb_flag fbFlag,
+            sjpf.is_factor isFactor,
+            sjpf.hy_flag hyFlag,
+            sjpf.frequency frequency,
+            sjpf.day_count dayCount,
+            sjpf.factor_point factorPoint,
+            sjpf.dynamic_param dynamicParam,
+            sjpf.factor_group_key factorGroupKey,
+            sjpf.factor_remark factorRemark,
+            sjpf.data_entry_step dataEntryStep,
+            fmi.standard_no standardNo
+        FROM
+            t_schedule_job_plan_factor sjpf
+                LEFT JOIN t_schedule_job_plan sjp ON sjpf.job_plan_id = sjp.id
+                LEFT JOIN t_factor_method_info fmi ON sjpf.check_standard_id = fmi.id
+        WHERE
+            sjpf.job_id = #{jobId}
+    </select>
+
+    <select id="getJobFactorsByCondition" resultType="org.hj.chain.platform.vo.sample.JobFactorVo">
+        SELECT
+        sjpf.id jobPlanFactorId,
+        sjpf.factor_name factorName,
+        sjpf.factor_point factorPoint,
+        sjpf.frequency,
+        sjpf.day_count dayCount,
+        sjpf.fb_flag fbFlag,
+        sjpf.secd_class_id secdClassId,
+        sjpf.factor_group_key factorGroupKey,
+        fci.`name` secdClassName
+        FROM
+        t_schedule_job_plan_factor sjpf
+        LEFT JOIN t_factor_class_info fci ON sjpf.secd_class_id = fci.id
+        WHERE
+        sjpf.job_id = #{sv.jobId}
+        <if test="sv.fbFlag != null">
+            AND sjpf.fb_flag = #{sv.fbFlag}
+        </if>
+        <if test="sv.hyFlag != null">
+            AND sjpf.hy_flag = #{sv.hyFlag}
+        </if>
+        <if test="sv.factorName != null">
+            AND sjpf.factor_name like concat('%',#{sv.factorName},'%')
+        </if>
+        <if test="sv.factorPoint != null">
+            AND sjpf.factor_point like concat('%',#{sv.factorPoint},'%')
+        </if>
+    </select>
+
+    <select id="getJobFactorsBySampItemId" parameterType="java.lang.Long"
+            resultType="org.hj.chain.platform.vo.sample.JobFactorVo">
+        SELECT
+            b.id jobPlanFactorId,
+            b.secd_class_id secdClassId,
+            b.factor_name factorName,
+            b.factor_point factorPoint,
+            b.frequency frequency,
+            b.day_count dayCount,
+            b.fb_flag fbFlag,
+            b.factor_group_key factorGroupKey,
+            c.`name` secdClassName
+        FROM
+            t_sample_item_factor_data a
+                LEFT JOIN t_schedule_job_plan_factor b ON a.job_plan_factor_id = b.id
+                LEFT JOIN t_factor_class_info c ON b.secd_class_id = c.id
+        WHERE
+            a.sample_item_id = #{sampItemId}
+    </select>
+
+    <select id="findFactorStandardIdsBySampleNos" parameterType="java.util.Map"
+            resultType="org.hj.chain.platform.vo.samplebak.SampleCheckItemParam">
+        SELECT
+        GROUP_CONCAT( DISTINCT sjf.factor_name ) factorNames,
+        si.sample_no sampleNo
+        FROM
+        t_schedule_job_plan_factor sjf
+        LEFT JOIN t_sample_item_factor_data sid ON sjf.id = sid.job_plan_factor_id
+        LEFT JOIN t_sample_item si ON si.id = sid.sample_item_id
+        WHERE
+        si.sample_no in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+        and
+        si.organ_id = #{organId,jdbcType = VARCHAR}
+        GROUP BY
+        si.sample_no
+    </select>
+
+    <select id="getOfferFactorsByJobId" parameterType="java.lang.String" resultType="org.hj.chain.platform.vo.check.CheckTaskFactorVo">
+        SELECT
+            secd_class_id secdClassId,
+            factor_name factorName,
+            fb_flag fbFlag,
+            data_entry_step dataEntryStep,
+            GROUP_CONCAT( id ) jobPlanFactorId
+        FROM
+            t_schedule_job_plan_factor
+        WHERE
+            job_id = #{jobId}
+          AND data_entry_step = "2"
+        GROUP BY
+            secd_class_id,
+            factor_name,
+            fb_flag,
+            data_entry_step
+    </select>
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.sample.mapper.SampleItemFactorDataMapper">
+
+    <select id="getSampleFactorDataBySampItemId" parameterType="java.lang.Long"
+            resultType="org.hj.chain.platform.vo.sample.SampleFactorDataVo">
+        SELECT
+            a.id,
+            a.factor_data factorData,
+            a.calibration_equipment calibrationEquipment,
+            a.check_equipment checkEquipment,
+            a.positioning_one positioningOne,
+            a.positioning_two positioningTwo,
+            a.positioning_three positioningThree,
+            a.theoretical_val theoreticalVal,
+            a.ground_conditions groundConditions,
+            a.measured_form_val measuredFormVal,
+            b.factor_name factorName,
+            b.check_standard_id checkStandardId,
+            c.data_entry_step dataEntryStep,
+            c.unit_name unitName
+        FROM
+            t_sample_item_factor_data a
+                LEFT JOIN t_schedule_job_plan_factor b ON a.job_plan_factor_id = b.id
+                LEFT JOIN t_factor_method_info c ON b.check_standard_id = c.id
+        WHERE a.sample_item_id = #{sampItemId}
+    </select>
+
+
+    <select id="findFactorDataDetailsBySampleNos" parameterType="java.util.List"
+            resultType="org.hj.chain.platform.vo.sample.SampleFactorDataParam">
+        SELECT
+        si.sample_no sampleNo,
+        si.secd_class_id secdClassId,
+        sjf.check_standard_id checkStandardId,
+        sjf.factor_name factorName,
+        sjf.is_factor isFactor,
+        sid.factor_data_value factorData,
+        sid.check_equipment checkEquipment,
+        sid.calibration_equipment calibrationEquipment,
+        sid.ground_conditions groundConditions,
+        sid.positioning_one positioningOne,
+        sid.positioning_two positioningTwo,
+        sid.positioning_three positioningThree,
+        sid.theoretical_val theoreticalVal
+        FROM
+        t_sample_item_factor_data sid
+        LEFT JOIN t_sample_item si ON si.id = sid.sample_item_id
+        LEFT JOIN t_schedule_job_plan_factor sjf ON sjf.id = sid.job_plan_factor_id
+        WHERE si.sample_no in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item,jdbcType = VARCHAR}
+        </foreach>
+        and si.organ_id = #{organId,jdbcType = VARCHAR}
+    </select>
+</mapper>

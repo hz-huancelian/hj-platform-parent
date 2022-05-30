@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.mapper.SysUserMapper">
+
+
+    <select id="selectUserListByCondition" resultType="org.hj.chain.platform.vo.UserVo">
+        SELECT
+        su.user_id userId,
+        su.dept_id deptId,
+        sd.dept_name deptName,
+        su.username username,
+        su.emp_name empName,
+        su.emp_code empCode,
+        su.user_type userType,
+        su.email,
+        su.phonenumber,
+        su.sex,
+        su.STATUS,
+        su.del_flag delFlag,
+        su.login_ip loginIp,
+        su.login_date loginDate,
+        su.create_time createTime,
+        GROUP_CONCAT(distinct sp.post_name) postNames,
+        GROUP_CONCAT(distinct sr.role_name) roleNames,
+        su.remark
+        FROM
+        t_sys_user su
+        LEFT JOIN t_sys_dept sd ON su.dept_id = sd.dept_id
+        LEFT JOIN t_sys_user_post sup ON su.user_id = sup.user_id
+        LEFT JOIN t_sys_post sp ON sp.post_id = sup.post_id
+        LEFT JOIN t_sys_user_role sur ON su.user_id = sur.user_id
+        LEFT JOIN t_sys_role sr ON sr.role_id = sur.role_id
+        <where>
+            <if test="sv.deptId!=null">
+                and su.dept_id = #{sv.deptId,jdbcType = BIGINT}
+            </if>
+            <if test="sv.empName!=null">
+                and su.emp_name = #{sv.empName,jdbcType = VARCHAR}
+            </if>
+            <if test="sv.phonenumber!=null">
+                and su.phonenumber = #{sv.phonenumber,jdbcType = VARCHAR}
+            </if>
+            <if test="sv.status!=null">
+                and su.status = #{sv.status,jdbcType = VARCHAR}
+            </if>
+            <if test="organId!=null">
+                and su.organ_id = #{organId,jdbcType = VARCHAR}
+            </if>
+            <if test="1==1">
+                and su.user_type = '1'
+            </if>
+        </where>
+        GROUP BY
+        su.user_id
+        ORDER BY
+        su.status asc, su.emp_code ASC
+    </select>
+
+    <select id="selectUserListByConditionNoPage" resultType="org.hj.chain.platform.vo.UserVo">
+        SELECT
+        su.user_id userId,
+        su.dept_id deptId,
+        sd.dept_name deptName,
+        su.username username,
+        su.emp_name empName,
+        su.emp_code empCode,
+        su.user_type userType,
+        su.email,
+        su.phonenumber,
+        su.sex,
+        su.STATUS,
+        su.del_flag delFlag,
+        su.login_ip loginIp,
+        su.login_date loginDate,
+        su.create_time createTime,
+        GROUP_CONCAT(distinct sp.post_name) postNames,
+        GROUP_CONCAT(distinct sr.role_name) roleNames,
+        su.remark
+        FROM
+        t_sys_user su
+        LEFT JOIN t_sys_dept sd ON su.dept_id = sd.dept_id
+        LEFT JOIN t_sys_user_post sup ON su.user_id = sup.user_id
+        LEFT JOIN t_sys_post sp ON sp.post_id = sup.post_id
+        LEFT JOIN t_sys_user_role sur ON su.user_id = sur.user_id
+        LEFT JOIN t_sys_role sr ON sr.role_id = sur.role_id
+        where su.organ_id = #{organId} and su.user_type = '1' and su.status = '0'
+        GROUP BY
+        su.user_id
+        ORDER BY
+        su.emp_code
+    </select>
+
+
+    <select id="selectUserByLoginName" parameterType="java.util.Map" resultType="org.hj.chain.platform.vo.UserVo">
+        SELECT
+        su.user_id userId,
+        su.dept_id deptId,
+        sd.dept_name deptName,
+        su.username username,
+        su.emp_name empName,
+        su.emp_code empCode,
+        su.user_type userType,
+        su.email,
+        su.phonenumber,
+        su.sex,
+        su.STATUS,
+        su.password,
+        su.del_flag delFlag,
+        su.login_ip loginIp,
+        su.login_date loginDate,
+        su.organ_id organId,
+        su.is_app_login isAppLogin,
+        su.remark,
+        su.avatar_path avatarPath
+        FROM
+        t_sys_user su
+        LEFT JOIN t_sys_dept sd ON su.dept_id = sd.dept_id
+        where su.username = #{username,jdbcType = VARCHAR}
+    </select>
+
+
+    <select id="selectUserByPhoneNumber" parameterType="java.util.Map" resultType="org.hj.chain.platform.vo.UserVo">
+        SELECT
+        su.user_id userId,
+        su.dept_id deptId,
+        sd.dept_name deptName,
+        su.username username,
+        su.emp_name empName,
+        su.user_type userType,
+        su.email,
+        su.phonenumber,
+        su.sex,
+        su.STATUS,
+        su.password,
+        su.del_flag delFlag,
+        su.login_ip loginIp,
+        su.login_date loginDate,
+        su.is_app_login isAppLogin,
+        su.organ_id organId,
+        su.remark,
+        su.avatar_path avatarPath
+        FROM
+        t_sys_user su
+        LEFT JOIN t_sys_dept sd ON su.dept_id = sd.dept_id
+        where su.phonenumber = #{phonenumber,jdbcType = VARCHAR}
+    </select>
+
+    <select id="selectUserByEmail" parameterType="java.util.Map" resultType="org.hj.chain.platform.vo.UserVo">
+        SELECT
+        su.user_id userId,
+        su.dept_id deptId,
+        sd.dept_name deptName,
+        su.username username,
+        su.emp_name empName,
+        su.emp_code empCode,
+        su.user_type userType,
+        su.email,
+        su.phonenumber,
+        su.sex,
+        su.STATUS,
+        su.del_flag delFlag,
+        su.login_ip loginIp,
+        su.login_date loginDate,
+        su.remark,
+        su.avatar_path avatarPath
+        FROM
+        t_sys_user su
+        LEFT JOIN t_sys_dept sd ON su.dept_id = sd.dept_id
+        where su.email = #{email,jdbcType = VARCHAR} and su.organ_id = #{organId,jdbcType = VARCHAR}
+    </select>
+
+
+    <select id="selectUserByUserId" parameterType="java.lang.String" resultType="org.hj.chain.platform.vo.UserVo">
+        SELECT
+        su.user_id userId,
+        su.dept_id deptId,
+        sd.dept_name deptName,
+        su.username username,
+        su.emp_code empCode,
+        su.emp_name empName,
+        su.user_type userType,
+        su.email,
+        su.phonenumber,
+        su.sex,
+        su.STATUS,
+        su.del_flag delFlag,
+        su.login_ip loginIp,
+        su.login_date loginDate,
+        su.is_app_login isAppLogin,
+        GROUP_CONCAT(sp.post_name) postNames,
+        su.remark,
+        su.avatar_path avatarPath
+        FROM
+        t_sys_user su
+        LEFT JOIN t_sys_dept sd ON su.dept_id = sd.dept_id
+        LEFT JOIN t_sys_user_post sup ON su.user_id = sup.user_id
+        LEFT JOIN t_sys_post sp ON sp.post_id = sup.post_id
+        where su.user_id = #{userId,jdbcType = VARCHAR}
+        group by su.user_id
+    </select>
+
+    <select id="findUserParamByDeptIds" parameterType="java.util.List"
+            resultType="org.hj.chain.platform.vo.UserParamVo">
+        SELECT
+        su.username,
+        su.user_id userId,
+        su.emp_name empName,
+        sd.dept_name deptName,
+        GROUP_CONCAT(sp.post_name) postNames
+        FROM
+        t_sys_user su
+        LEFT JOIN t_sys_dept sd ON su.dept_id = sd.dept_id
+        LEFT JOIN t_sys_user_post sup ON su.user_id = sup.user_id
+        LEFT JOIN t_sys_post sp ON sp.post_id = sup.post_id
+        WHERE su.status = '0' AND sd.dept_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item,jdbcType=BIGINT}
+        </foreach>
+        GROUP BY
+        su.user_id
+    </select>
+
+
+    <select id="selectUsersByCondition" parameterType="java.util.Map"
+            resultType="org.hj.chain.platform.vo.UserParamVo">
+        SELECT
+        su.username,
+        su.user_id userId,
+        su.emp_name empName,
+        sd.dept_id deptId,
+        sd.dept_name deptName,
+        GROUP_CONCAT(sp.post_id) postIds,
+        GROUP_CONCAT(sp.post_name) postNames
+        FROM
+        t_sys_user su
+        LEFT JOIN t_sys_dept sd ON su.dept_id = sd.dept_id
+        LEFT JOIN t_sys_user_post sup ON su.user_id = sup.user_id
+        LEFT JOIN t_sys_post sp ON sp.post_id = sup.post_id
+        <where>
+            <if test="1==1">
+                and su.status = '0'
+            </if>
+            <if test="empName!=null">
+                and su.emp_name like concat('%',#{empName,jdbcType = VARCHAR},'%')
+            </if>
+
+            <if test="organId!=null">
+                and su.organ_id = #{organId,jdbcType = VARCHAR}
+            </if>
+            <if test="deptId!=null">
+                and sd.dept_id = #{deptId,jdbcType = BIGINT}
+            </if>
+            <if test="postId!=null">
+                and sp.post_id = #{postId,jdbcType = BIGINT}
+            </if>
+        </where>
+        GROUP BY
+        su.user_id
+    </select>
+
+    <select id="deptUserCnt" parameterType="java.lang.String" resultType="org.hj.chain.platform.vo.SysUserDeptVo">
+        SELECT
+        sd.dept_name deptName,
+        count(*) cnt
+        FROM
+        t_sys_user su
+        LEFT JOIN t_sys_dept sd ON su.dept_id = sd.dept_id
+        WHERE
+        su.dept_id != "-1"
+        AND su.organ_id = #{organId}
+        AND su.STATUS = "0"
+        AND su.del_flag = "0"
+        GROUP BY
+        deptName
+        ORDER BY
+        cnt desc
+    </select>
+
+    <select id="selectUserParamByRoleKeyAndOrganId" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.vo.UserParamVo">
+        SELECT
+        su.username,
+        su.user_id userId,
+        su.emp_name empName,
+        sd.dept_name deptName,
+        GROUP_CONCAT(sp.post_name) postNames
+        FROM
+        t_sys_role sr
+        LEFT JOIN t_sys_user_role sur on sr.role_id = sur.role_id
+        LEFT JOIN t_sys_user su on sur.user_id = su.user_id
+        LEFT JOIN t_sys_dept sd ON su.dept_id = sd.dept_id
+        LEFT JOIN t_sys_user_post sup ON su.user_id = sup.user_id
+        LEFT JOIN t_sys_post sp ON sp.post_id = sup.post_id
+        WHERE sr.role_key = #{roleKey} and sr.organ_id = #{organId} and su.status = '0'
+        GROUP BY
+        su.user_id
+    </select>
+
+    <select id="selectUserParamByAppRoleAndOrganId" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.vo.UserParamVo">
+        SELECT
+            su.username,
+            su.user_id userId,
+            su.emp_name empName
+        FROM
+        t_sys_user su
+        LEFT JOIN t_sys_user_app_role suar on su.user_id = suar.user_id
+        WHERE su.organ_id = #{organId} and su.status = '0' and su.is_app_login = "1" and suar.app_role = #{appRole}
+    </select>
+
+
+    <select id="selectUserParamByRoleKeysAndOrganId" resultType="org.hj.chain.platform.vo.UserParamVo">
+        SELECT
+            su.username,
+            su.user_id userId,
+            su.emp_name empName,
+            sd.dept_name deptName,
+            GROUP_CONCAT(sp.post_name) postNames
+        FROM
+            t_sys_role sr
+        LEFT JOIN t_sys_user_role sur on sr.role_id = sur.role_id
+        LEFT JOIN t_sys_user su on sur.user_id = su.user_id
+        LEFT JOIN t_sys_dept sd ON su.dept_id = sd.dept_id
+        LEFT JOIN t_sys_user_post sup ON su.user_id = sup.user_id
+        LEFT JOIN t_sys_post sp ON sp.post_id = sup.post_id
+        WHERE sr.organ_id = #{organId} and su.status = '0' and sr.role_key in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY
+        su.user_id
+    </select>
+</mapper>

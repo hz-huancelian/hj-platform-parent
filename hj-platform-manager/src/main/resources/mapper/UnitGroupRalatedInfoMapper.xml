@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.mapper.UnitGroupRelatedInfoMapper">
+
+    <select id="findUnitListByGroupId" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.vo.UnitInfoVo">
+       SELECT
+			ui.id unitId,
+			ui.`name` unitName
+		FROM
+		  t_unit_group_related_info ugr
+		LEFT JOIN t_unit_info ui ON ui.id = ugr.unit_id
+		LEFT JOIN t_unit_group_info ugi ON ugi.id = ugr.group_id
+		where ugi.id = #{groupId,jdbcType = VARCHAR}
+    </select>
+</mapper>

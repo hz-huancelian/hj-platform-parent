@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.factor.mapper.FactorCheckStandardMapper">
+
+    <select id="findCheckStandardsByCondition" resultType="org.hj.chain.platform.vo.factor.FactorCheckStandardVo">
+        SELECT
+        fcs.id,
+        fcs.standard_code standardCode,
+        fcs.factor_name factorName,
+        fcs.class_id classId,
+        fcs.cma_flg cmaFlg,
+        fcs.cnas_flg cnas_flg,
+        fcs.price,
+        fmi.standard_no standardNo,
+        fmi.analysis_method analysisMethod,
+        fmi.status methodStatus,
+        fcs.ext_assist_flg extAssistFlg
+        FROM
+        t_factor_check_standard fcs left join t_factor_method_info fmi on fcs.standard_code = fmi.id
+        <where>
+            <if test="1==1">
+                and fmi.status != '4'
+            </if>
+            <if test="sv.factorName!=null">
+                and fcs.factor_name like concat('%',#{sv.factorName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="sv.standardNo!=null">
+                and fmi.standard_no like concat('%',#{sv.standardNo,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="sv.standardName!=null">
+                and fmi.standard_name like concat('%',#{sv.standardName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="sv.dataEntryStep!=null">
+                and fmi.data_entry_step = #{sv.dataEntryStep,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.classId!=null">
+                and fcs.class_id = #{sv.classId,jdbcType=VARCHAR}
+            </if>
+            <if test="organId!=null">
+                and fcs.organ_id = #{organId,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.authType != null and sv.authType == '0'.toString()">
+                and fcs.cma_flg = "1"
+            </if>
+            <if test="sv.authType != null and sv.authType == '1'.toString()">
+                and fcs.cnas_flg = "1"
+            </if>
+            <if test="checkStandardIds!=null">
+                and fcs.standard_code in
+                <foreach collection="checkStandardIds" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by fcs.standard_code asc
+    </select>
+</mapper>

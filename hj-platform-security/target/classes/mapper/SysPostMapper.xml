@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.mapper.SysPostMapper">
+
+
+    <select id="selectPostsByUserId" parameterType="java.lang.String" resultType="org.hj.chain.platform.vo.SysPostVo">
+        SELECT
+            sp.post_id postId,
+            sp.post_code postCode,
+            sp.post_name postName,
+            sp.post_sort postSort,
+            sp.`status` status,
+            sp.create_time createTime,
+            sp.remark remark
+        FROM
+            t_sys_post sp
+            LEFT JOIN t_sys_user_post sup ON sp.post_id = sup.post_id
+	    where sp.status = "0" and sup.user_id = #{userId,jdbcType = VARCHAR}
+    </select>
+
+    <select id="selectPostIdsByUserId" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT
+            sp.post_id postId
+        FROM
+            t_sys_post sp
+            LEFT JOIN t_sys_user_post sup ON sp.post_id = sup.post_id
+	    where sup.user_id = #{userId,jdbcType = VARCHAR} and sp.status = '0'
+    </select>
+
+    <select id="selectUserPostGroup" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT
+	      sp.post_code
+         FROM
+	      t_sys_post sp
+	     LEFT JOIN t_sys_user_post sup ON sp.post_id = sup.post_id
+         WHERE
+	     sup.user_id = #{userId,jdbcType = VARCHAR}
+    </select>
+
+</mapper>

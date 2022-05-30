@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.contract.mapper.SubcontractInfoMapper">
+
+    <select id="findPageByCondition" resultType="org.hj.chain.platform.vo.contract.SubcontractVo">
+        SELECT
+        ct.id,
+        ct.cont_code contCode,
+        ct.make_user_id makeUserId,
+        ct.cont_status contStatus,
+        ct.cont_file_id contFileId,
+        ct.sign_date signDate,
+        oi.project_name projectName,
+        jo.judge_organ_name judgeOrganName,
+        oi.id offerId
+        FROM
+        t_subcontract_info ct
+        LEFT JOIN t_offer_info oi ON ct.offer_id = oi.id
+        LEFT JOIN t_judge_organ jo ON jo.id= ct.judge_organ_id
+        <where>
+            <if test="organId!=null">
+                and ct.judge_organ_id != #{organId,jdbcType=VARCHAR}
+            </if>
+            <if test="organId!=null">
+                and ct.organ_id = #{organId,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.contCode!=null">
+                and ct.cont_code = #{sv.contCode,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.contName!=null">
+                and oi.project_name like concat('%',#{sv.contName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="sv.contStatus!=null">
+                and ct.cont_status = #{sv.contStatus,jdbcType=VARCHAR}
+            </if>
+        </where>
+        order by ct.id desc
+    </select>
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.judge.mapper.JudgeRecordMapper">
+    <select id="selectCountForReview" resultType="java.lang.Integer">
+        SELECT
+            count( jr.judge_task_id ) cnt
+        FROM
+            t_judge_record jr
+            LEFT JOIN t_judge_task jt ON jr.judge_task_id = jt.id
+            LEFT JOIN t_offer_info oi ON jt.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+          AND jr.judge_status = "0"
+          AND jr.judge_user_id = #{userId}
+    </select>
+</mapper>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.mapper.SampleItemMapper">
+    <select id="getSampleItemsBySampleTaskIdAndUserId" resultType="org.hj.chain.platform.vo.MobileSampleItemVo">
+        select
+            si.id sampItemId,
+            si.sample_no sampleNo,
+            si.audit_reason auditReason,
+            si.sample_status sampleStatus,
+            si.factor_point factorPoint,
+            si.secd_class_name secdClassName,
+            si.sign_image_url signImageUrl,
+            sid.collect_time collectTime,
+            su.emp_name collectUser,
+            st.job_id jobId
+        from t_sample_item si
+        left join t_sample_item_data sid on si.id = sid.sample_item_id
+        left join t_sample_task st on si.sample_task_id = st.id
+        left join t_sys_user su on sid.collect_user_id = su.user_id
+        where si.sample_task_id = #{taskId} and si.sample_user_id = #{userId}
+    </select>
+
+    <select id="getSampleItemsByUserId" resultType="org.hj.chain.platform.vo.MobileSampleItemVo">
+        select
+        si.id sampItemId,
+        si.sample_no sampleNo,
+        si.audit_reason auditReason,
+        si.sample_status sampleStatus,
+        si.factor_point factorPoint,
+        si.secd_class_name secdClassName,
+        sid.collect_time collectTime,
+        sid.collect_date collectDate,
+        su.emp_name collectUser,
+        st.job_id jobId
+        from t_sample_item si
+        left join t_sample_item_data sid on si.id = sid.sample_item_id
+        left join t_sample_task st on si.sample_task_id = st.id
+        left join t_sys_user su on sid.collect_user_id = su.user_id
+        where sid.collect_user_id = #{userId}
+        <if test='sampleStatus == "0"'>
+            and si.sample_status = "1"
+        </if>
+        <if test='sampleStatus == "1"'>
+            and si.sample_status = "5"
+        </if>
+        <if test='sampleStatus == "2"'>
+            and si.sample_status = "10"
+        </if>
+        order by si.sample_no desc
+    </select>
+
+<!--    <select id="getSampleFactorById" parameterType="java.lang.String" resultType="org.hj.chain.platform.vo.MobileSampleFactorVo">-->
+<!--        select-->
+<!--        sif.samp_item_id sampItemId,-->
+<!--        sif.off_factor_id  offFactorId,-->
+<!--        ofi.check_standard_id checkStandardId,-->
+<!--        ofi.secd_class_id secdClassId-->
+<!--        from t_sample_item_factor sif-->
+<!--        left join t_offer_factor_info ofi on sif.off_factor_id = ofi.id-->
+<!--        where sif.samp_item_id = #{id}-->
+<!--    </select>-->
+
+    <select id="getSampleItemForTeamLeader" resultType="org.hj.chain.platform.vo.MobileSampleItemVo">
+        select
+        si.id sampItemId,
+        si.sample_no sampleNo,
+        sj.project_name projectName,
+        sj.inspection_name inspectionName,
+        si.audit_reason auditReason,
+        si.sample_status sampleStatus,
+        si.factor_point factorPoint,
+        si.secd_class_name secdClassName,
+        sid.collect_time collectTime,
+        sid.collect_date collectDate,
+        su.emp_name collectUser,
+        st.job_id jobId
+        from t_sample_item si
+        left join t_sample_item_data sid on si.id = sid.sample_item_id
+        left join t_sample_task st on si.sample_task_id = st.id
+        left join t_schedule_job sj on st.job_id = sj.id
+        left join t_sys_user su on sid.collect_user_id = su.user_id
+        where si.sample_user_id = #{userId}
+        <if test='sampleStatus == "0"'>
+            and si.sample_status = "2"
+        </if>
+        <if test='sampleStatus == "1"'>
+            and si.sample_status = "5"
+        </if>
+        <if test='sampleStatus == "2"'>
+            and si.sample_status = "4" and si.store_flag = "1" and si.fb_flag = "0"
+        </if>
+        <if test='sampleStatus == "3"'>
+            and si.sample_status = "4" and si.fb_flag = "0"
+        </if>
+    </select>
+
+    <select id="getSampleListByCondition" resultType="org.hj.chain.platform.vo.SampleListVo">
+        select
+            si.id sampItemId,
+            si.sample_no sampleNo,
+            si.factor_point factorPoint,
+            si.secd_class_name secdClassName,
+            sid.collect_time collectTime,
+            su.emp_name collectUser
+        from t_sample_item si
+                 left join t_sample_item_data sid on si.id = sid.sample_item_id
+                 left join t_sample_task st on si.sample_task_id = st.id
+                 left join t_sys_user su on sid.collect_user_id = su.user_id
+        where st.id = #{taskId} and si.sample_user_id = #{userId}
+        <if test='sampleStatus == "0"'>
+            and si.sample_status = "2"
+        </if>
+        <if test='sampleStatus == "1"'>
+            and si.sample_status = "4" and si.store_flag = "1" and si.fb_flag = "0"
+        </if>
+        <if test='sampleStatus == "2"'>
+            and st.task_status = "3"
+        </if>
+        order by si.sample_no desc
+    </select>
+
+    <select id="getRejectedSampleList" resultType="org.hj.chain.platform.vo.SampleListVo">
+        select
+            si.id sampItemId,
+            si.sample_no sampleNo,
+            si.factor_point factorPoint,
+            si.secd_class_name secdClassName,
+            sid.collect_time collectTime,
+            su.emp_name collectUser
+        from t_sample_item si
+                 left join t_sample_item_data sid on si.id = sid.sample_item_id
+                 left join t_sys_user su on sid.collect_user_id = su.user_id
+        where si.sample_user_id = #{userId} and si.sample_status = "5"
+        order by si.sample_no desc
+    </select>
+    <select id="getSampleItemsForCollectUser" resultType="org.hj.chain.platform.vo.SampleListVo">
+        select
+        si.id sampItemId,
+        si.sample_no sampleNo,
+        si.factor_point factorPoint,
+        si.secd_class_name secdClassName,
+        sid.collect_time collectTime,
+        su.emp_name collectUser
+        from t_sample_item si
+        left join t_sample_item_data sid on si.id = sid.sample_item_id
+        left join t_sys_user su on sid.collect_user_id = su.user_id
+        where sid.collect_user_id = #{userId}
+        <if test='sampleStatus == "0"'>
+            and si.sample_status = "1"
+        </if>
+        <if test='sampleStatus == "1"'>
+            and si.sample_status = "5"
+        </if>
+        order by si.sample_no desc
+    </select>
+
+    <select id="getSampItemsForCollectUserByTaskId" resultType="org.hj.chain.platform.model.SampleItem">
+        select
+            si.id,
+            si.sample_no sampleNo,
+            si.sample_status sampleStatus
+        from t_sample_item si
+                 left join t_sample_item_data sid on si.id = sid.sample_item_id
+                left join t_sample_task st on si.sample_task_id = st.id
+        where st.id = #{taskId} and sid.review_user_id = #{userId}
+    </select>
+    
+    <select id="getToReviewSampItemsForCollectUserByTaskId" resultType="org.hj.chain.platform.vo.SampleListVo">
+        select
+        si.id sampItemId,
+        si.sample_no sampleNo,
+        si.factor_point factorPoint,
+        si.secd_class_name secdClassName,
+        sid.collect_time collectTime,
+        su.emp_name collectUser
+        from t_sample_item si
+        left join t_sample_item_data sid on si.id = sid.sample_item_id
+        left join t_sample_task st on si.sample_task_id = st.id
+        left join t_sys_user su on sid.collect_user_id = su.user_id
+        where st.id = #{taskId} and si.sample_status = "10" and sid.review_user_id = #{userId}
+        order by si.sample_no desc
+    </select>
+</mapper>

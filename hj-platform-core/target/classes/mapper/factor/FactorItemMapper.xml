@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.factor.mapper.FactorGroupItemMapper">
+
+    <select id="scan" parameterType="java.util.Map"
+            resultType="org.hj.chain.platform.factor.entity.FactorGroupItem">
+        SELECT
+        id,
+        check_standard_id checkStandardId,
+        secd_class_id secdClassId
+        FROM
+        t_factor_group_item
+        where group_id = #{groupId,jdbcType=BIGINT} limit #{limit,jdbcType = INTEGER}
+        order by id desc
+    </select>
+</mapper>

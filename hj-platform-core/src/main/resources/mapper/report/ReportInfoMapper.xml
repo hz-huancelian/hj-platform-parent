@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.report.mapper.ReportInfoMapper">
+
+    <select id="findReportInfosByCondition" resultType="org.hj.chain.platform.vo.report.ReportVo">
+        SELECT
+        ri.id id,
+        ri.report_code reportCode,
+        ri.report_status reportStatus,
+        ri.report_make_time reportMakeTime,
+        ri.report_make_user_id reportMakeUserId,
+        ri.report_file_id reportFileId,
+        sj.consignor_name consignorName,
+        sj.project_name projectName,
+        sj.id jobId,
+        sj.inspection_name inspectionName
+        FROM
+        t_report_info ri
+        LEFT JOIN t_schedule_job sj ON sj.id = ri.job_id
+        <where>
+            <if test="1==1">
+                and ri.report_status in('0','1','2','3','4','5','7')
+            </if>
+            <if test="organId!=null">
+                and ri.organ_id = #{organId,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.jobId!=null">
+                and sj.id = #{sv.jobId,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.reportStatus!=null">
+                and ri.report_status = #{sv.reportStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.reportCode!=null">
+                and ri.report_code = #{sv.reportCode,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.projectName!=null">
+                and sj.project_name like concat('%',#{sv.projectName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        order by ri.report_status asc,ri.create_time desc
+    </select>
+
+
+    <select id="findHisReportInfosByCondition" resultType="org.hj.chain.platform.vo.report.ReportVo">
+        SELECT
+        ri.id id,
+        ri.report_code reportCode,
+        ri.report_status reportStatus,
+        ri.report_make_time reportMakeTime,
+        ri.report_make_user_id reportMakeUserId,
+        ri.report_file_id reportFileId,
+        sj.consignor_name consignorName,
+        sj.project_name projectName,
+        sj.id jobId,
+        sj.inspection_name inspectionName
+        FROM
+        t_report_info ri
+        LEFT JOIN t_schedule_job sj ON sj.id = ri.job_id
+        <where>
+            <if test="organId!=null">
+                and ri.organ_id = #{organId,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.jobId!=null">
+                and sj.id = #{sv.jobId,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.reportStatus!=null">
+                and ri.report_status = #{sv.reportStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.reportCode!=null">
+                and ri.report_code = #{sv.reportCode,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.projectName!=null">
+                and sj.project_name like concat('%',#{sv.projectName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        order by ri.report_code desc
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*) cnt
+        from t_report_info ri
+        left join t_offer_info oi on ri.offer_id = oi.id
+        where oi.organ_id = #{organId}
+        and DATE_FORMAT(ri.create_time,'%Y-%m-%d') = #{date}
+    </select>
+
+    <select id="completeTaskForCurrMonth" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.vo.statistics.CompleteTaskVo">
+        SELECT
+            count(*) totalCnt,
+            sum( ri.report_status = "6" ) completeCnt
+        FROM
+            t_report_info ri
+                LEFT JOIN t_offer_info oi ON ri.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+          AND DATE_FORMAT( ri.create_time, '%Y%m' ) = DATE_FORMAT(
+                CURDATE(),
+                '%Y%m'
+            )
+    </select>
+
+    <select id="completeTaskForCurrYear" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.vo.statistics.CompleteTaskVo">
+        SELECT
+            count(*) totalCnt,
+            sum( ri.report_status = "6" ) completeCnt
+        FROM
+            t_report_info ri
+                LEFT JOIN t_offer_info oi ON ri.offer_id = oi.id
+        WHERE
+                oi.organ_id = #{organId}
+                AND YEAR ( ri.create_time ) = YEAR (
+            NOW()
+            )
+    </select>
+
+    <select id="issueReportForCurrMonth" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.vo.statistics.ReportIssueVo">
+        SELECT
+            sum( ri.report_status = "6" ) IssuedCnt,
+            sum( ri.report_status > "1" ) totalIssuedCnt
+        FROM
+            t_report_info ri
+                LEFT JOIN t_offer_info oi ON ri.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+          AND DATE_FORMAT( ri.create_time, '%Y%m' ) = DATE_FORMAT(
+                CURDATE(),
+                '%Y%m'
+            )
+    </select>
+
+    <select id="issueReportForCurrYear" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.vo.statistics.ReportIssueVo">
+        SELECT
+            sum( ri.report_status = "6" ) IssuedCnt,
+            sum( ri.report_status > "1" ) totalIssuedCnt
+        FROM
+            t_report_info ri
+                LEFT JOIN t_offer_info oi ON ri.offer_id = oi.id
+        WHERE
+                oi.organ_id = #{organId}
+                AND YEAR ( ri.create_time ) = YEAR (
+            NOW()
+            )
+    </select>
+
+    <select id="selectCountFinishedForCurrMonth" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            count( dispatch_info_id ) cnt
+        FROM
+            t_report_info
+        WHERE
+            report_status = "6"
+          AND organ_id = #{organId}
+          AND DATE_FORMAT( create_time, '%Y%m' ) = DATE_FORMAT(
+                CURDATE(),
+                '%Y%m'
+            )
+    </select>
+
+    <select id="selectCountFinishedForCurrYear" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            count( dispatch_info_id ) cnt
+        FROM
+            t_report_info
+        WHERE
+            report_status = "6"
+            AND organ_id = #{organId}
+            AND YEAR ( create_time ) = YEAR (
+            NOW()
+            )
+    </select>
+
+    <select id="issueReportForPass11Month" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT
+            DATE_FORMAT( update_time, '%Y-%m' ) xNameData,
+            count( report_code ) xValData
+        FROM
+            t_report_info
+        WHERE
+            organ_id = #{organId}
+          AND report_status = "6"
+          AND DATE_FORMAT( update_time, '%Y-%m' ) > DATE_FORMAT( DATE_SUB( CURDATE(), INTERVAL 12 MONTH ), '%Y-%m' )
+        GROUP BY
+            xNameData
+        ORDER BY
+            xNameData
+    </select>
+
+    <select id="findReportBaseByCondition" resultType="org.hj.chain.platform.vo.report.ReportBaseParam"
+            parameterType="java.util.Map">
+        SELECT
+         ri.id reportId,
+         ri.job_id jobId,
+         sj.project_name projectName,
+         st.offer_id offerId
+        FROM
+             t_report_info ri
+             LEFT JOIN t_schedule_job sj  ON sj.id = ri.job_id
+             LEFT JOIN t_schedule_task st ON st.id = sj.task_id
+        WHERE  ri.report_code = #{reportCode,jdbcType = VARCHAR} and ri.organ_id =  #{organId,jdbcType = VARCHAR}
+    </select>
+</mapper>

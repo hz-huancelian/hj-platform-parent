@@ -1,0 +1,88 @@
+#spring:
+#  datasource:
+#    url: jdbc:mysql://114.55.41.78/hj_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong&allowMultiQueries=true
+#    username: administrator
+#    password: 156156Qpzmxzz
+#    type: com.zaxxer.hikari.HikariDataSource
+#spring:
+#  datasource:
+#    dynamic:
+#      primary: organ
+#      datasource:
+#        organ:
+#          url: jdbc:mysql://114.55.41.78/hj_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong&allowMultiQueries=true
+#          username: administrator
+#          password: 156156Qpzmxzz
+#          type: com.zaxxer.hikari.HikariDataSource
+#          driver-class-name: com.mysql.cj.jdbc.Driver
+#        platform:
+#          url: jdbc:mysql://114.55.41.78/hj_db_manager?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong&allowMultiQueries=true
+#          username: administrator
+#          password: 156156Qpzmxzz
+#          type: com.zaxxer.hikari.HikariDataSource
+#          driver-class-name: com.mysql.cj.jdbc.Driver
+#spring:
+#  datasource:
+#    dynamic:
+#      primary: master #设置默认的数据源或者数据源组,默认值即为master
+#      lazy: false #默认立即初始化数据源，true则支持在需要建立连接时再初始化数据源
+#      strict: false #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+#      datasource:
+#        master:
+#          url: jdbc:mysql://114.55.41.78/hj_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong&allowMultiQueries=true
+#          username: administrator
+#          password: 156156Qpzmxzz
+#          driver-class-name: com.mysql.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
+#        slave_1:
+#          url: jdbc:mysql://114.55.41.78/hj_db_manager?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong&allowMultiQueries=true
+#          username: administrator
+#          password: 156156Qpzmxzz
+#          driver-class-name: com.mysql.jdbc.Driver
+#        slave_2:
+#          url: ENC(xxxxx) # 内置加密,使用请查看详细文档
+#          username: ENC(xxxxx)
+#          password: ENC(xxxxx)
+#          driver-class-name: com.mysql.jdbc.Driver
+#          schema: db/schema.sql # 配置则生效,自动初始化表结构
+#          data: db/data.sql # 配置则生效,自动初始化数据
+#          continue-on-error: true # 默认true,初始化失败是否继续
+#          separator: ";" # sql默认分号分隔符
+#          lazy: true #可独立配置是否启用懒启动
+spring:
+  datasource:
+    dynamic:
+      druid:
+        initial-size: 5
+        max-active: 8
+        min-idle: 2
+        max-wait: -1
+        min-evictable-idle-time-millis: 30000
+        max-evictable-idle-time-millis: 30000
+        time-between-eviction-runs-millis: 0
+        validation-query: select 1
+        validation-query-timeout: -1
+        test-on-borrow: false
+        test-on-return: false
+        test-while-idle: true
+        pool-prepared-statements: true
+        max-open-prepared-statements: 100
+        share-prepared-statements: true
+      datasource:
+        organ:
+#          url: jdbc:mysql://182.92.73.87/hj_db?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Hongkong&allowMultiQueries=true
+#          username: root
+#          password: 1234qwer
+#          url: jdbc:mysql://8.136.159.136/hj_db?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Hongkong&allowMultiQueries=true
+          url: jdbc:mysql://8.136.159.136/hj_db_new?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Hongkong&allowMultiQueries=true
+          username: administrator
+          password: 156156Qpzmxzz
+#        platform:
+#          url: jdbc:mysql://8.136.159.136/hj_db_manager?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Hongkong&allowMultiQueries=true
+#          username: administrator
+#          password: 156156Qpzmxzz
+      primary: organ
+
+    redis:
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    database: 4

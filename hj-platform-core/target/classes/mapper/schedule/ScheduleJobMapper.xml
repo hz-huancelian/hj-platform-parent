@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.schedule.mapper.ScheduleJobMapper">
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*) cnt
+        from t_schedule_job sj
+        where sj.organ_id = #{organId}
+          and DATE_FORMAT(sj.create_time,'%Y-%m-%d') = #{date}
+    </select>
+
+    <select id="getContCodeByJobId" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT
+            st.cont_code contCode
+        FROM
+            t_schedule_job sj
+                LEFT JOIN t_schedule_task st ON sj.task_id = st.id
+        WHERE
+            sj.id = #{jobId}
+    </select>
+
+    <select id="findCondignorNameBySampleTaskId" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT
+	        consignor_name consignorName
+        FROM
+	        t_schedule_job sj
+	    LEFT JOIN t_sample_task st ON sj.id = st.job_id
+	    where st.id = #{taskId,jdbcType = BIGINT}
+    </select>
+</mapper>

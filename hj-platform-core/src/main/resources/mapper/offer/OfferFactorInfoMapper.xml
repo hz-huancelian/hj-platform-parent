@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.offer.mapper.OfferFactorInfoMapper">
+    <select id="getOfferFactorByOfferId" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.vo.offer.OfferFactorVo">
+        select
+        ofi.id offerFactorId,
+        ofi.check_standard_id checkStandardId,
+        ofi.day_count dayCount,
+        ofi.frequency frequency,
+        ofi.factor_point factorPoint,
+        ofi.dynamic_param dynamicParam,
+        ofi.remark remark,
+        ofi.secd_class_id secdClassId,
+        ofi.total_cost totalCost,
+        ofo.organ_id organId
+        from t_offer_factor_info ofi
+        left join t_offer_factor_organ ofo on ofi.id = ofo.offer_factor_id
+        where ofi.offer_id = #{offerId}
+        order by ofi.secd_class_id,ofi.factor_point,ofi.day_count,ofi.frequency
+    </select>
+
+    <select id="findJudgeOfferFactorByOfferId" parameterType="java.util.Map"
+            resultType="org.hj.chain.platform.vo.offer.OfferFactorVo">
+       SELECT
+            ffi.id offerFactorId,
+            ffi.check_standard_id checkStandardId,
+            ffi.secd_class_id secdClassId,
+            ffi.frequency,
+            ffi.day_count dayCount,
+            ffi.total_cost totalCost,
+            ffi.factor_point factorPoint,
+            ffi.dynamic_param dynamicParam,
+            ffi.remark,
+            jo.judge_organ_name organName
+        FROM
+	   t_offer_factor_info ffi
+	    LEFT JOIN t_offer_factor_organ ofo ON ffi.id = ofo.offer_factor_id
+	    LEFT JOIN t_judge_organ jo ON jo.id = ofo.organ_id
+	    where  ffi.offer_id = #{offerId,jdbcType = VARCHAR}
+    </select>
+
+
+    <select id="findOrderSampleIdBySampleIds" parameterType="java.util.List"
+            resultType="org.hj.chain.platform.vo.samplebak.SampleFactorIdParam">
+        SELECT
+        ofi.check_standard_id checkStandardId,
+        sif.samp_item_id sampItemId
+        FROM
+        t_offer_factor_info ofi
+        LEFT JOIN t_sample_item_factor sif ON ofi.id = sif.off_factor_id
+        WHERE
+        sif.samp_item_id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+        ORDER BY ofi.check_standard_id
+    </select>
+
+</mapper>

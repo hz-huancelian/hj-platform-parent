@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.mapper.SampleItemFactorDataMapper">
+    <select id="getSampleFactorDataBySampItemId" parameterType="java.lang.Long"
+            resultType="org.hj.chain.platform.vo.SampleFactorDataVo">
+        SELECT
+            a.id,
+            a.factor_data factorData,
+            a.calibration_equipment calibrationEquipment,
+            a.check_equipment checkEquipment,
+            a.positioning_one positioningOne,
+            a.positioning_two positioningTwo,
+            a.positioning_three positioningThree,
+            a.theoretical_val theoreticalVal,
+            a.ground_conditions groundConditions,
+            a.measured_form_val measuredFormVal,
+            b.factor_name factorName,
+            b.check_standard_id checkStandardId,
+            c.data_entry_step dataEntryStep,
+            c.unit_name unitName
+        FROM
+            t_sample_item_factor_data a
+                LEFT JOIN t_schedule_job_plan_factor b ON a.job_plan_factor_id = b.id
+                LEFT JOIN t_factor_method_info c ON b.check_standard_id = c.id
+        WHERE a.sample_item_id = #{sampItemId}
+    </select>
+</mapper>

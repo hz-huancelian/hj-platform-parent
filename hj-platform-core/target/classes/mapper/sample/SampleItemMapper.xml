@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.sample.mapper.SampleItemMapper">
+    <select id="findCompleteSampleByJobId" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.sample.entity.SampleItem">
+        SELECT
+            si.id,
+            si.sample_status sampleStatus
+        FROM
+            t_sample_item si
+                LEFT JOIN t_sample_task st ON si.sample_task_id = st.id
+        WHERE
+            st.job_id = #{jobId}
+          AND si.sample_status IN ("4","6","7","8","9")
+    </select>
+
+    <select id="fuzzyQrySampItemByCondition" resultType="org.hj.chain.platform.sample.entity.SampleItem">
+        select *
+        from t_sample_item
+        where organ_id = #{organId}
+          and sample_no like concat('',#{sampleNo},'%')
+        order by sample_no desc
+            limit 1
+    </select>
+
+    <select id="getSampTaskItemByTaskIdAndUserId" resultType="org.hj.chain.platform.vo.sample.SampleTaskItemVo">
+        select
+            sii.id sampItemId,
+            sii.sample_no sampleNo,
+            sii.secd_class_name secdClassName,
+            sii.factor_point factorPoint,
+            sii.sample_status smapStatus,
+            sii.fb_flag fbType,
+            sii.`day` `day`,
+            sii.frequency frequency,
+            sj.inspection_name inspectionName
+        from t_sample_item sii
+                 left join t_sample_task sti on sii.sample_task_id = sti.id
+                 left join t_schedule_job sj on sti.job_id = sj.id
+        where sii.sample_task_id = #{sampTaskId} and sii.sample_user_id = #{userId}
+    </select>
+
+    <select id="getSampTaskItemById" resultType="org.hj.chain.platform.vo.sample.SampleTaskItemVo">
+        select
+            sii.id sampItemId,
+            sii.sample_no sampleNo,
+            sii.secd_class_name secdClassName,
+            sii.factor_point factorPoint,
+            sii.sample_status smapStatus,
+            sii.fb_flag fbType,
+            sii.`day` `day`,
+            sii.frequency frequency,
+            sj.inspection_name inspectionName
+        from t_sample_item sii
+                 left join t_sample_task sti on sii.sample_task_id = sti.id
+                 left join t_schedule_job sj on sti.job_id = sj.id
+        where sii.sample_task_id = #{sampTaskId}
+    </select>
+
+    <select id="findSampTaskDetailByCondition" resultType="org.hj.chain.platform.vo.sample.SampleTaskDetailVo">
+        select
+        sii.id sampItemId,
+        sii.sample_no sampleNo,
+        sii.secd_class_name secdClassName,
+        sii.factor_point factorPoint,
+        sii.sample_status smapStatus,
+        sii.audit_reason auditReason,
+        sid.collect_time collectTime,
+        sid.collect_date collectDate,
+        su.emp_name collectUser,
+        ss.store_time storeTime,
+        sj.inspection_name inspectionName
+        from t_sample_item sii
+        left join t_sample_item_data sid on sii.id = sid.sample_item_id
+        left join t_sys_user su on sid.collect_user_id = su.user_id
+        left join t_sample_store_list ss on sii.id = ss.sample_item_id
+        left join t_sample_task sti on sii.sample_task_id = sti.id
+        left join t_schedule_job sj on sti.job_id = sj.id
+        <where>
+            <if test="sv.sampTaskId != null">
+                and sii.sample_task_id = #{sv.sampTaskId}
+            </if>
+            <if test="sv.sampleNo != null">
+                and sii.sample_no = #{sv.sampleNo}
+            </if>
+            <if test="sv.sampStatus != null">
+                and sii.sample_status = #{sv.sampStatus}
+            </if>
+        </where>
+    </select>
+
+    <select id="findSampTaskForManagerByCondition" resultType="org.hj.chain.platform.vo.sample.SampleTaskListVo">
+        SELECT
+        st.id sampTaskId,
+        st.job_id jobId,
+        st.task_status sampTaskStatus,
+        sj.project_name projectName,
+        sj.inspection_name inspectionName,
+        sj.start_date startDate,
+        sj.end_date endDate,
+        sj.create_time createTime
+        FROM
+        t_sample_task st
+        LEFT JOIN t_schedule_job sj ON st.job_id = sj.id
+        WHERE st.organ_id = #{organId}
+        <if test="sv.jobId != null">
+            AND st.job_id = #{sv.jobId}
+        </if>
+        <if test="sv.projectName != null">
+            AND sj.project_name like concat('',#{sv.projectName},'%')
+        </if>
+        <if test="sv.sampTaskStatus != null">
+            AND st.task_status = #{sv.sampTaskStatus}
+        </if>
+    </select>
+
+    <select id="findSampleTaskForLeaderByCondition" resultType="org.hj.chain.platform.vo.sample.SampleTaskListVo">
+        SELECT
+        st.id sampTaskId,
+        st.job_id jobId,
+        st.task_status sampTaskStatus,
+        sj.project_name projectName,
+        sj.inspection_name inspectionName,
+        sj.start_date startDate,
+        sj.end_date endDate,
+        sj.create_time createTime
+        FROM
+        t_sample_task st
+        LEFT JOIN t_schedule_job sj ON st.job_id = sj.id
+        WHERE st.id IN (SELECT DISTINCT a.sample_task_id
+        FROM t_sample_item a
+        LEFT JOIN t_sample_item_data b ON a.id = b.sample_item_id
+        WHERE a.sample_user_id = #{userId} OR b.collect_user_id = #{userId})
+        <if test="sv.jobId != null">
+            AND st.job_id = #{sv.jobId}
+        </if>
+        <if test="sv.projectName != null">
+            AND sj.project_name like concat('',#{sv.projectName},'%')
+        </if>
+        <if test="sv.sampTaskStatus != null">
+            AND st.task_status = #{sv.sampTaskStatus}
+        </if>
+    </select>
+
+    <select id="findAuditSampItemForManageByCondition" resultType="org.hj.chain.platform.vo.sample.SampleItemInfoVo">
+        SELECT
+        si.id sampItemId,
+        si.sample_no sampleNo,
+        si.factor_point factorPoint,
+        si.secd_class_name secdClassName,
+        si.sample_status sampleStatus,
+        si.sample_user_id sampleUserId,
+        sid.create_time finishTime,
+        sid.collect_user_id collectUserId,
+        sid.review_user_id reviewUserId,
+        st.job_id jobId,
+        sj.project_name projectName,
+        sj.inspection_name inspectionName
+        FROM
+        t_sample_item si
+        LEFT JOIN t_sample_item_data sid ON si.id = sid.sample_item_id
+        LEFT JOIN t_sample_task st ON si.sample_task_id = st.id
+        LEFT JOIN t_schedule_job sj ON st.job_id = sj.id
+        WHERE
+        si.sample_task_id = #{sv.sampTaskId}
+        <if test="sv.sampleNo != null">
+            AND si.sample_no = #{sv.sampleNo}
+        </if>
+        <if test="sv.sampStatus != null">
+            AND si.sample_status = #{sv.sampStatus}
+        </if>
+        <if test="sv.sampStatus == null">
+            AND si.sample_status in ("4","6","7","8","9")
+        </if>
+    </select>
+
+    <select id="findAuditSampItemForLeaderByCondition" resultType="org.hj.chain.platform.vo.sample.SampleItemInfoVo">
+        SELECT
+        si.id sampItemId,
+        si.sample_no sampleNo,
+        si.factor_point factorPoint,
+        si.secd_class_name secdClassName,
+        si.sample_status sampleStatus,
+        si.sample_user_id sampleUserId,
+        sid.create_time finishTime,
+        sid.collect_user_id collectUserId,
+        sid.review_user_id reviewUserId,
+        st.job_id jobId,
+        sj.project_name projectName,
+        sj.inspection_name inspectionName
+        FROM
+        t_sample_item si
+        LEFT JOIN t_sample_item_data sid ON si.id = sid.sample_item_id
+        LEFT JOIN t_sample_task st ON si.sample_task_id = st.id
+        LEFT JOIN t_schedule_job sj ON st.job_id = sj.id
+        WHERE
+        si.sample_task_id = #{sv.sampTaskId} and si.sample_user_id = #{userId}
+        <if test="sv.sampleNo != null">
+            AND si.sample_no = #{sv.sampleNo}
+        </if>
+        <if test="sv.sampStatus != null">
+            AND si.sample_status = #{sv.sampStatus}
+        </if>
+        <if test="sv.sampStatus == null">
+            AND si.sample_status in ("3","4","6","7","8","9")
+        </if>
+    </select>
+
+    <select id="getSamplesBySampTaskId" resultType="org.hj.chain.platform.vo.sample.SampleVo">
+        select
+        si.id sampItemId,
+        si.sample_no sampleNo,
+        si.factor_point factorPoint,
+        si.secd_class_id secdClassId,
+        si.secd_class_name secdClassName,
+        si.create_time createTime,
+        si.sample_status sampStatus,
+        si.store_flag storeFlag,
+        sid.review_user_id reviewUserId,
+        sj.id jobId,
+        sj.start_date startDate,
+        sj.end_date endDate,
+        sj.inspection_name inspectionName,
+        sj.project_name projectName,
+        ss.store_location storeLocation,
+        ss.store_time storeTime,
+        ss.send_user sendUser,
+        su.emp_name collectUser
+        from t_sample_store_list ss
+        left join t_sample_item si on ss.sample_item_id = si.id
+        left join t_sample_item_data sid on si.id = sid.sample_item_id
+        left join t_sample_task st on si.sample_task_id = st.id
+        left join t_schedule_job sj on st.job_id = sj.id
+        left join t_sys_user su on sid.collect_user_id = su.user_id
+        <where>
+            <if test="sv.sampTaskId != null">
+                and st.id = #{sv.sampTaskId}
+            </if>
+            <if test="sv.sampleNo != null">
+                and si.sample_no = #{sv.sampleNo}
+            </if>
+            <if test="sv.sampStatus == null">
+                and si.sample_status in ("6", "7", "8")
+            </if>
+            <if test="sv.sampStatus != null">
+                and si.sample_status = #{sv.sampStatus}
+            </if>
+            <if test="sv.date != null">
+                and DATE_FORMAT(ss.store_time,'%Y-%m-%d') = #{sv.date}
+            </if>
+        </where>
+        order by ss.store_time desc, si.sample_no asc
+    </select>
+
+    <select id="findReportSampleInfoByJobId" parameterType="java.util.Map"
+            resultType="org.hj.chain.platform.vo.samplebak.ReportSampleVo">
+        SELECT
+            si.sample_no sampItemId,
+            si.factor_point factorPoint,
+            si.group_key groupKey,
+            si.secd_class_id secdClassId,
+            si.factor_group_key factorGroupKey,
+            si.frequency frequency,
+            si.fb_flag fbFlag,
+            si.sample_start_date sampleStartDate,
+            si.sample_end_date sampleEndDate,
+            sid.create_time collectTime,
+            sid.collect_date collectDate,
+            sid.sample_data_value sampleData,
+            sid.collect_user_id collectUserId
+        FROM
+            t_sample_item si
+            LEFT JOIN t_sample_item_data sid ON si.id = sid.sample_item_id
+            LEFT JOIN t_sample_task st ON st.id = si.sample_task_id
+        WHERE st.job_id = #{jobId,jdbcType = VARCHAR} and si.organ_id = #{organId,jdbcType = VARCHAR}
+    </select>
+
+
+    <select id="findReportSampleFactorDataByJobId" parameterType="java.util.Map"
+            resultType="org.hj.chain.platform.vo.samplebak.ReportSampleFactorDataVo">
+        SELECT
+            si.sample_no sampItemId,
+            sifd.factor_data_value factorData
+        FROM
+            t_sample_item si
+            LEFT JOIN t_sample_item_factor_data sifd ON si.id = sifd.sample_item_id
+            LEFT JOIN t_sample_task st ON st.id = si.sample_task_id
+        WHERE st.job_id = #{jobId,jdbcType = VARCHAR} and si.organ_id = #{organId,jdbcType = VARCHAR}
+    </select>
+</mapper>

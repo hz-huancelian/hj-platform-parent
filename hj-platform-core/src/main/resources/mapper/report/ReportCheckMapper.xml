@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.report.mapper.ReportCheckMapper">
+
+    <select id="findReportCheckByPage" resultType="org.hj.chain.platform.vo.report.ReportCheckVo">
+        SELECT
+        rc.id,
+        rc.create_time commitCheckTime,
+        ri.id reportId,
+        ri.report_code reportCode,
+        ri.job_id jobId,
+        ri.report_status reportStatus,
+        ri.report_make_time reportMakeTime,
+        ri.report_make_user_id reportMakeUserId,
+        ri.report_file_id reportFileId,
+        sj.consignor_name consignorName,
+        sj.project_name projectName,
+        sj.inspection_name inspectionName
+        FROM
+        t_report_check rc
+        LEFT JOIN t_report_info ri ON rc.report_id = ri.id
+        LEFT JOIN t_schedule_job sj ON sj.id = ri.job_id
+        <where>
+            <if test="1==1">
+                and rc.check_status = '0'
+            </if>
+            <if test="organId!=null">
+                and ri.organ_id = #{organId,jdbcType=VARCHAR}
+            </if>
+            <if test="jobId!=null">
+                and sj.id = #{jobId,jdbcType=VARCHAR}
+            </if>
+            <if test="projectName!=null">
+                and sj.project_name like concat('%',#{projectName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        order by rc.id desc
+    </select>
+
+</mapper>

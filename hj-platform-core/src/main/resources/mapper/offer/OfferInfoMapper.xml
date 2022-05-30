@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.offer.mapper.OfferInfoMapper">
+
+    <select id="findOfferInfosByCondition" resultType="org.hj.chain.platform.vo.offer.OfferInfoVo">
+        SELECT
+        oi.id,
+        oi.project_name projectName,
+        oi.check_type checkType,
+        oi.certification_type certificationType,
+        oi.`status`,
+        oi.consignor_name consignorName,
+        oi.finish_date finishDate,
+        oo.draft_amount draftAmount,
+        oi.create_user_id createUserId,
+        oi.remark,
+        oi.explains,
+        oi.create_time createTime
+        FROM
+        t_offer_info oi
+        LEFT JOIN t_offer_cost oo ON oi.id = oo.offer_id
+        <where>
+            <if test="1==1">
+                and oi.del_status = '0'
+            </if>
+            <if test="organId!=null">
+                and oi.organ_id = #{organId,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.id!=null">
+                and oi.id = #{sv.id,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.status!=null">
+                and oi.status = #{sv.status,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.status==null">
+                and oi.status in ("0","1","2")
+            </if>
+            <if test="sv.projectName!=null">
+                and oi.project_name like concat('%',#{sv.projectName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="userId!=null">
+                and oi.create_user_id = #{userId,jdbcType=VARCHAR}
+            </if>
+            <if test="deptIds!=null">
+                and oi.dept_id in
+                <foreach item="item" index="index" collection="deptIds" open="(" separator="," close=")">
+                    #{item,jdbcType=BIGINT}
+                </foreach>
+            </if>
+        </where>
+        order by oi.id desc
+    </select>
+
+
+    <select id="findHistoryOfferInfosByCondition" resultType="org.hj.chain.platform.vo.offer.OfferInfoVo">
+        SELECT
+        oi.id,
+        oi.project_name projectName,
+        oi.check_type checkType,
+        oi.certification_type certificationType,
+        oi.`status`,
+        oi.consignor_name consignorName,
+        oi.finish_date finishDate,
+        oi.check_task_count checkTaskCount,
+        oo.draft_amount draftAmount,
+        oi.create_user_id createUserId,
+        oi.remark,
+        oi.create_time createTime
+        FROM
+        t_offer_info oi
+        LEFT JOIN t_offer_cost oo ON oi.id = oo.offer_id
+        <where>
+            <if test="1==1">
+                and oi.del_status = '0'
+            </if>
+            <if test="organId!=null">
+                and oi.organ_id = #{organId,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.id!=null">
+                and oi.id = #{sv.id,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.status!=null">
+                and oi.status = #{sv.status,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.status==null">
+                and oi.status in ("3","4")
+            </if>
+            <if test="sv.projectName!=null">
+                and oi.project_name like concat('%',#{sv.projectName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="userId!=null">
+                and oi.create_user_id = #{userId,jdbcType=VARCHAR}
+            </if>
+            <if test="deptIds!=null">
+                and oi.dept_id in
+                <foreach item="item" index="index" collection="deptIds" open="(" separator="," close=")">
+                    #{item,jdbcType=BIGINT}
+                </foreach>
+            </if>
+        </where>
+        order by oi.id desc
+    </select>
+
+
+    <select id="findOfferApprovalsByCondition" resultType="org.hj.chain.platform.vo.approval.OfferApprovalVo">
+        SELECT
+        oi.id,
+        oi.project_name projectName,
+        oi.check_type checkType,
+        oi.certification_type certificationType,
+        oi.`status`,
+        oi.consignor_name consignorName,
+        oi.finish_date finishDate,
+        oi.check_task_count checkTaskCount,
+        oo.draft_amount draftAmount,
+        oi.create_user_id createUserId,
+        oi.remark,
+        oi.update_time createTime
+        FROM
+        t_offer_info oi
+        LEFT JOIN t_offer_cost oo ON oi.id = oo.offer_id
+        <where>
+            <if test="1==1">
+                oi.status = "1"
+            </if>
+            <if test="organId!=null">
+                and oi.organ_id = #{organId,jdbcType=VARCHAR}
+            </if>
+            <if test="userId!=null">
+                and oi.create_user_id = #{userId,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.id!=null">
+                and oi.id = #{sv.id,jdbcType=VARCHAR}
+            </if>
+            <if test="sv.projectName!=null">
+                and oi.project_name like concat('%',#{sv.projectName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="deptIds!=null">
+                and oi.dept_id in
+                <foreach item="item" index="index" collection="deptIds" open="(" separator="," close=")">
+                    #{item,jdbcType=BIGINT}
+                </foreach>
+            </if>
+        </where>
+        order by oi.update_time desc
+    </select>
+
+
+    <select id="findOfferContInfoByOfferId" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.vo.offer.OfferContVo">
+        SELECT
+            oi.project_name projectName,
+            oi.consignor_name consignorName,
+            f.draft_amount totalCost
+        FROM
+            t_offer_info oi
+	    LEFT JOIN t_offer_cost f ON oi.id = f.offer_id
+
+	    where oi.id = #{offerId,jdbcType=VARCHAR}
+    </select>
+</mapper>

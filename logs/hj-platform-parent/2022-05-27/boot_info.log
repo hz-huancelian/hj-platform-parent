@@ -1,0 +1,392 @@
+2022-05-27 08:47:18.269 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
+2022-05-27 08:47:18.329 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - Starting HjPlatformCoreApplication using Java 1.8.0_331 on HSPC-D10001 with PID 15292 (F:\ideaProjects\hj-platform-parent\hj-platform-core\target\classes started by Administrator in F:\ideaProjects\hj-platform-parent)
+2022-05-27 08:47:18.329 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - The following profiles are active: test
+2022-05-27 08:47:21.279 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-27 08:47:21.279 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-27 08:47:21.409 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 105 ms. Found 0 Redis repository interfaces.
+2022-05-27 08:47:21.449 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
+2022-05-27 08:47:21.499 [main] INFO  org.hj.chain.platform.HjPlatformMobileApplication - Starting HjPlatformMobileApplication using Java 1.8.0_331 on HSPC-D10001 with PID 7396 (F:\ideaProjects\hj-platform-parent\hj-platform-mobile\target\classes started by Administrator in F:\ideaProjects\hj-platform-parent)
+2022-05-27 08:47:21.499 [main] INFO  org.hj.chain.platform.HjPlatformMobileApplication - The following profiles are active: test
+2022-05-27 08:47:22.099 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 08:47:22.099 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$f5bdc789] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 08:47:22.119 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 08:47:22.659 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8090 (http)
+2022-05-27 08:47:22.669 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8090"]
+2022-05-27 08:47:22.679 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-27 08:47:22.679 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.45]
+2022-05-27 08:47:22.679 [main] INFO  org.apache.catalina.core.AprLifecycleListener - An older version [1.2.18] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+2022-05-27 08:47:22.679 [main] INFO  org.apache.catalina.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.2.18] using APR version [1.6.5].
+2022-05-27 08:47:22.679 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2022-05-27 08:47:22.679 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-05-27 08:47:22.799 [main] INFO  org.apache.catalina.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+2022-05-27 08:47:22.839 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-27 08:47:22.849 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-27 08:47:22.899 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 34 ms. Found 0 Redis repository interfaces.
+2022-05-27 08:47:23.039 [main] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2022-05-27 08:47:23.039 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 4580 ms
+2022-05-27 08:47:23.339 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 08:47:23.339 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$207a07f0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 08:47:23.349 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 08:47:23.729 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8099 (http)
+2022-05-27 08:47:23.739 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8099"]
+2022-05-27 08:47:23.739 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-27 08:47:23.739 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.45]
+2022-05-27 08:47:23.739 [main] INFO  org.apache.catalina.core.AprLifecycleListener - An older version [1.2.18] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+2022-05-27 08:47:23.739 [main] INFO  org.apache.catalina.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.2.18] using APR version [1.6.5].
+2022-05-27 08:47:23.739 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2022-05-27 08:47:23.739 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-05-27 08:47:23.739 [main] INFO  org.apache.catalina.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+2022-05-27 08:47:23.929 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/mobile] - Initializing Spring embedded WebApplicationContext
+2022-05-27 08:47:23.929 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2380 ms
+2022-05-27 08:47:24.699 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1,organ} inited
+2022-05-27 08:47:24.699 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource - load a datasource named [organ] success
+2022-05-27 08:47:24.699 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource initial loaded [1] datasource,primary datasource named [organ]
+2022-05-27 08:47:25.439 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1,organ} inited
+2022-05-27 08:47:25.439 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource - load a datasource named [organ] success
+2022-05-27 08:47:25.439 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource initial loaded [1] datasource,primary datasource named [organ]
+2022-05-27 08:47:27.829 [main] INFO  org.redisson.Version - Redisson 3.12.5
+2022-05-27 08:47:29.099 [redisson-netty-2-13] INFO  o.r.connection.pool.MasterPubSubConnectionPool - 1 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 08:47:29.099 [redisson-netty-2-20] INFO  org.redisson.connection.pool.MasterConnectionPool - 24 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 08:47:29.509 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2022-05-27 08:47:29.599 [main] INFO  org.redisson.Version - Redisson 3.12.5
+2022-05-27 08:47:30.439 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2022-05-27 08:47:30.509 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8099"]
+2022-05-27 08:47:30.529 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8099 (http) with context path '/mobile'
+2022-05-27 08:47:30.539 [main] INFO  org.hj.chain.platform.HjPlatformMobileApplication - Started HjPlatformMobileApplication in 9.899 seconds (JVM running for 12.578)
+2022-05-27 08:47:31.049 [RMI TCP Connection(1)-192.168.1.119] INFO  o.a.c.c.C.[Tomcat].[localhost].[/mobile] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-05-27 08:47:31.049 [RMI TCP Connection(1)-192.168.1.119] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-05-27 08:47:31.049 [RMI TCP Connection(1)-192.168.1.119] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2022-05-27 08:47:31.339 [redisson-netty-2-15] INFO  o.r.connection.pool.MasterPubSubConnectionPool - 1 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 08:47:31.339 [redisson-netty-2-20] INFO  org.redisson.connection.pool.MasterConnectionPool - 24 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 08:47:31.722 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2022-05-27 08:47:32.442 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2022-05-27 08:47:32.552 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8090"]
+2022-05-27 08:47:32.562 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8090 (http) with context path '/api'
+2022-05-27 08:47:32.582 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - Started HjPlatformCoreApplication in 15.477 seconds (JVM running for 17.725)
+2022-05-27 08:47:33.442 [RMI TCP Connection(6)-192.168.1.119] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-05-27 08:47:33.442 [RMI TCP Connection(6)-192.168.1.119] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-05-27 08:47:33.442 [RMI TCP Connection(6)-192.168.1.119] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2022-05-27 09:09:06.800 [SpringContextShutdownHook] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+2022-05-27 09:09:07.061 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource start closing ....
+2022-05-27 09:09:07.072 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2022-05-27 09:09:07.082 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2022-05-27 09:09:07.084 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource all closed success,bye
+2022-05-27 09:09:17.727 [SpringContextShutdownHook] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+2022-05-27 09:09:17.928 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource start closing ....
+2022-05-27 09:09:17.935 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2022-05-27 09:09:17.938 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2022-05-27 09:09:17.938 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource all closed success,bye
+2022-05-27 09:09:49.547 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
+2022-05-27 09:09:49.583 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - Starting HjPlatformCoreApplication using Java 1.8.0_331 on HSPC-D10001 with PID 5992 (F:\ideaProjects\hj-platform-parent\hj-platform-core\target\classes started by Administrator in F:\ideaProjects\hj-platform-parent)
+2022-05-27 09:09:49.584 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - The following profiles are active: test
+2022-05-27 09:09:51.506 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-27 09:09:51.508 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-27 09:09:51.609 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 84 ms. Found 0 Redis repository interfaces.
+2022-05-27 09:09:52.285 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:09:52.286 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$f48d3b01] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:09:52.310 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:09:52.752 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8090 (http)
+2022-05-27 09:09:52.768 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8090"]
+2022-05-27 09:09:52.769 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-27 09:09:52.769 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.45]
+2022-05-27 09:09:52.772 [main] INFO  org.apache.catalina.core.AprLifecycleListener - An older version [1.2.18] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+2022-05-27 09:09:52.772 [main] INFO  org.apache.catalina.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.2.18] using APR version [1.6.5].
+2022-05-27 09:09:52.772 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2022-05-27 09:09:52.772 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-05-27 09:09:52.792 [main] INFO  org.apache.catalina.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+2022-05-27 09:09:53.047 [main] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2022-05-27 09:09:53.048 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3393 ms
+2022-05-27 09:09:54.596 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1,organ} inited
+2022-05-27 09:09:54.598 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource - load a datasource named [organ] success
+2022-05-27 09:09:54.598 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource initial loaded [1] datasource,primary datasource named [organ]
+2022-05-27 09:11:34.513 [main] INFO  org.redisson.Version - Redisson 3.12.5
+2022-05-27 09:11:35.626 [redisson-netty-2-28] INFO  o.r.connection.pool.MasterPubSubConnectionPool - 1 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 09:11:35.635 [redisson-netty-2-20] INFO  org.redisson.connection.pool.MasterConnectionPool - 24 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 09:11:35.992 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2022-05-27 09:11:36.708 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2022-05-27 09:11:36.838 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8090 (http) with context path '/api'
+2022-05-27 09:11:36.854 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - Started HjPlatformCoreApplication in 108.21 seconds (JVM running for 111.788)
+2022-05-27 09:11:37.142 [SpringContextShutdownHook] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+2022-05-27 09:11:37.250 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource start closing ....
+2022-05-27 09:11:37.255 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2022-05-27 09:11:37.256 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2022-05-27 09:11:37.256 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource all closed success,bye
+2022-05-27 09:11:45.473 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
+2022-05-27 09:11:45.513 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - Starting HjPlatformCoreApplication using Java 1.8.0_331 on HSPC-D10001 with PID 14084 (F:\ideaProjects\hj-platform-parent\hj-platform-core\target\classes started by Administrator in F:\ideaProjects\hj-platform-parent)
+2022-05-27 09:11:45.513 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - The following profiles are active: test
+2022-05-27 09:11:47.239 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-27 09:11:47.242 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-27 09:11:47.344 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 84 ms. Found 0 Redis repository interfaces.
+2022-05-27 09:11:48.020 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:11:48.021 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$4bee3749] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:11:48.037 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:11:48.414 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8090 (http)
+2022-05-27 09:11:48.427 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8090"]
+2022-05-27 09:11:48.428 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-27 09:11:48.428 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.45]
+2022-05-27 09:11:48.430 [main] INFO  org.apache.catalina.core.AprLifecycleListener - An older version [1.2.18] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+2022-05-27 09:11:48.431 [main] INFO  org.apache.catalina.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.2.18] using APR version [1.6.5].
+2022-05-27 09:11:48.431 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2022-05-27 09:11:48.431 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-05-27 09:11:48.436 [main] INFO  org.apache.catalina.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+2022-05-27 09:11:48.685 [main] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2022-05-27 09:11:48.685 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3103 ms
+2022-05-27 09:11:50.297 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1,organ} inited
+2022-05-27 09:11:50.298 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource - load a datasource named [organ] success
+2022-05-27 09:11:50.298 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource initial loaded [1] datasource,primary datasource named [organ]
+2022-05-27 09:13:02.582 [main] INFO  org.redisson.Version - Redisson 3.12.5
+2022-05-27 09:13:03.733 [redisson-netty-2-5] INFO  o.r.connection.pool.MasterPubSubConnectionPool - 1 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 09:13:03.742 [redisson-netty-2-20] INFO  org.redisson.connection.pool.MasterConnectionPool - 24 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 09:13:04.106 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2022-05-27 09:13:04.832 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2022-05-27 09:13:04.959 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8090 (http) with context path '/api'
+2022-05-27 09:13:04.983 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - Started HjPlatformCoreApplication in 80.239 seconds (JVM running for 84.899)
+2022-05-27 09:13:05.264 [SpringContextShutdownHook] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+2022-05-27 09:13:05.372 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource start closing ....
+2022-05-27 09:13:05.378 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2022-05-27 09:13:05.380 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2022-05-27 09:13:05.380 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource all closed success,bye
+2022-05-27 09:21:38.166 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
+2022-05-27 09:21:38.204 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - Starting HjPlatformCoreApplication using Java 1.8.0_331 on HSPC-D10001 with PID 14204 (F:\ideaProjects\hj-platform-parent\hj-platform-core\target\classes started by Administrator in F:\ideaProjects\hj-platform-parent)
+2022-05-27 09:21:38.205 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - The following profiles are active: test
+2022-05-27 09:21:39.998 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-27 09:21:40.001 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-27 09:21:40.108 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 89 ms. Found 0 Redis repository interfaces.
+2022-05-27 09:21:40.778 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:21:40.779 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$cb97c1ea] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:21:40.795 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:21:41.182 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8090 (http)
+2022-05-27 09:21:41.194 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8090"]
+2022-05-27 09:21:41.196 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-27 09:21:41.197 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.45]
+2022-05-27 09:21:41.200 [main] INFO  org.apache.catalina.core.AprLifecycleListener - An older version [1.2.18] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+2022-05-27 09:21:41.200 [main] INFO  org.apache.catalina.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.2.18] using APR version [1.6.5].
+2022-05-27 09:21:41.200 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2022-05-27 09:21:41.200 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-05-27 09:21:41.205 [main] INFO  org.apache.catalina.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+2022-05-27 09:21:41.440 [main] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2022-05-27 09:21:41.441 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3161 ms
+2022-05-27 09:21:43.056 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1,organ} inited
+2022-05-27 09:21:43.057 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource - load a datasource named [organ] success
+2022-05-27 09:21:43.057 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource initial loaded [1] datasource,primary datasource named [organ]
+2022-05-27 09:22:09.208 [main] INFO  org.redisson.Version - Redisson 3.12.5
+2022-05-27 09:22:12.584 [redisson-netty-2-1] INFO  o.r.connection.pool.MasterPubSubConnectionPool - 1 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 09:22:12.615 [redisson-netty-2-20] INFO  org.redisson.connection.pool.MasterConnectionPool - 24 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 09:22:13.135 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2022-05-27 09:22:14.071 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2022-05-27 09:22:14.192 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8090"]
+2022-05-27 09:22:14.211 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8090 (http) with context path '/api'
+2022-05-27 09:22:14.229 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - Started HjPlatformCoreApplication in 36.797 seconds (JVM running for 39.011)
+2022-05-27 09:22:14.894 [RMI TCP Connection(3)-192.168.1.119] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-05-27 09:22:14.894 [RMI TCP Connection(3)-192.168.1.119] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-05-27 09:22:14.897 [RMI TCP Connection(3)-192.168.1.119] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2022-05-27 09:22:23.138 [SpringContextShutdownHook] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+2022-05-27 09:22:23.193 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource start closing ....
+2022-05-27 09:22:23.200 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2022-05-27 09:22:23.203 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2022-05-27 09:22:23.204 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource all closed success,bye
+2022-05-27 09:22:28.299 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
+2022-05-27 09:22:28.328 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - Starting HjPlatformCoreApplication using Java 1.8.0_331 on HSPC-D10001 with PID 8768 (F:\ideaProjects\hj-platform-parent\hj-platform-core\target\classes started by Administrator in F:\ideaProjects\hj-platform-parent)
+2022-05-27 09:22:28.329 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - The following profiles are active: test
+2022-05-27 09:22:29.882 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-27 09:22:29.884 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-27 09:22:29.982 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 83 ms. Found 0 Redis repository interfaces.
+2022-05-27 09:22:30.475 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:22:30.477 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$4676099b] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:22:30.491 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:22:30.865 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8090 (http)
+2022-05-27 09:22:30.874 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8090"]
+2022-05-27 09:22:30.875 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-27 09:22:30.875 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.45]
+2022-05-27 09:22:30.879 [main] INFO  org.apache.catalina.core.AprLifecycleListener - An older version [1.2.18] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+2022-05-27 09:22:30.879 [main] INFO  org.apache.catalina.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.2.18] using APR version [1.6.5].
+2022-05-27 09:22:30.879 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2022-05-27 09:22:30.880 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-05-27 09:22:30.884 [main] INFO  org.apache.catalina.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+2022-05-27 09:22:31.093 [main] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2022-05-27 09:22:31.093 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2705 ms
+2022-05-27 09:22:32.613 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1,organ} inited
+2022-05-27 09:22:32.615 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource - load a datasource named [organ] success
+2022-05-27 09:22:32.615 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource initial loaded [1] datasource,primary datasource named [organ]
+2022-05-27 09:22:36.755 [main] INFO  org.redisson.Version - Redisson 3.12.5
+2022-05-27 09:22:37.968 [redisson-netty-2-2] INFO  o.r.connection.pool.MasterPubSubConnectionPool - 1 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 09:22:37.980 [redisson-netty-2-20] INFO  org.redisson.connection.pool.MasterConnectionPool - 24 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 09:22:38.291 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2022-05-27 09:22:38.949 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2022-05-27 09:22:39.057 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8090"]
+2022-05-27 09:22:39.071 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8090 (http) with context path '/api'
+2022-05-27 09:22:39.087 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - Started HjPlatformCoreApplication in 11.346 seconds (JVM running for 13.538)
+2022-05-27 09:22:39.901 [RMI TCP Connection(1)-192.168.1.119] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-05-27 09:22:39.901 [RMI TCP Connection(1)-192.168.1.119] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-05-27 09:22:39.904 [RMI TCP Connection(1)-192.168.1.119] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2022-05-27 09:24:32.871 [SpringContextShutdownHook] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+2022-05-27 09:24:32.925 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource start closing ....
+2022-05-27 09:24:32.929 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2022-05-27 09:24:32.931 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2022-05-27 09:24:32.931 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource all closed success,bye
+2022-05-27 09:24:44.096 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
+2022-05-27 09:24:44.124 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - Starting HjPlatformCoreApplication using Java 1.8.0_331 on HSPC-D10001 with PID 9344 (F:\ideaProjects\hj-platform-parent\hj-platform-core\target\classes started by Administrator in F:\ideaProjects\hj-platform-parent)
+2022-05-27 09:24:44.124 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - The following profiles are active: test
+2022-05-27 09:24:47.389 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-27 09:24:47.396 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-27 09:24:47.586 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 163 ms. Found 0 Redis repository interfaces.
+2022-05-27 09:24:48.141 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
+2022-05-27 09:24:48.179 [main] INFO  org.hj.chain.platform.HjPlatformMobileApplication - Starting HjPlatformMobileApplication using Java 1.8.0_331 on HSPC-D10001 with PID 16392 (F:\ideaProjects\hj-platform-parent\hj-platform-mobile\target\classes started by Administrator in F:\ideaProjects\hj-platform-parent)
+2022-05-27 09:24:48.179 [main] INFO  org.hj.chain.platform.HjPlatformMobileApplication - The following profiles are active: test
+2022-05-27 09:24:48.575 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:24:48.577 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$b042e2fc] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:24:48.600 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:24:49.139 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8090 (http)
+2022-05-27 09:24:49.153 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8090"]
+2022-05-27 09:24:49.154 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-27 09:24:49.154 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.45]
+2022-05-27 09:24:49.160 [main] INFO  org.apache.catalina.core.AprLifecycleListener - An older version [1.2.18] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+2022-05-27 09:24:49.161 [main] INFO  org.apache.catalina.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.2.18] using APR version [1.6.5].
+2022-05-27 09:24:49.161 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2022-05-27 09:24:49.161 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-05-27 09:24:49.169 [main] INFO  org.apache.catalina.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+2022-05-27 09:24:49.425 [main] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2022-05-27 09:24:49.425 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5213 ms
+2022-05-27 09:24:49.821 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-27 09:24:49.824 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-27 09:24:49.886 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 39 ms. Found 0 Redis repository interfaces.
+2022-05-27 09:24:50.413 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:24:50.414 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$c7b7af23] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:24:50.428 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:24:50.871 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8099 (http)
+2022-05-27 09:24:50.883 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8099"]
+2022-05-27 09:24:50.884 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-27 09:24:50.884 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.45]
+2022-05-27 09:24:50.887 [main] INFO  org.apache.catalina.core.AprLifecycleListener - An older version [1.2.18] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+2022-05-27 09:24:50.887 [main] INFO  org.apache.catalina.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.2.18] using APR version [1.6.5].
+2022-05-27 09:24:50.887 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2022-05-27 09:24:50.887 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-05-27 09:24:50.892 [main] INFO  org.apache.catalina.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+2022-05-27 09:24:51.098 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/mobile] - Initializing Spring embedded WebApplicationContext
+2022-05-27 09:24:51.099 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2854 ms
+2022-05-27 09:24:51.246 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1,organ} inited
+2022-05-27 09:24:51.247 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource - load a datasource named [organ] success
+2022-05-27 09:24:51.247 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource initial loaded [1] datasource,primary datasource named [organ]
+2022-05-27 09:24:52.728 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1,organ} inited
+2022-05-27 09:24:52.729 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource - load a datasource named [organ] success
+2022-05-27 09:24:52.730 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource initial loaded [1] datasource,primary datasource named [organ]
+2022-05-27 09:24:55.182 [main] INFO  org.redisson.Version - Redisson 3.12.5
+2022-05-27 09:24:56.534 [redisson-netty-2-1] INFO  o.r.connection.pool.MasterPubSubConnectionPool - 1 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 09:24:56.535 [redisson-netty-2-20] INFO  org.redisson.connection.pool.MasterConnectionPool - 24 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 09:24:56.686 [main] INFO  org.redisson.Version - Redisson 3.12.5
+2022-05-27 09:24:56.906 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2022-05-27 09:24:57.775 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2022-05-27 09:24:57.855 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8099"]
+2022-05-27 09:24:57.871 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8099 (http) with context path '/mobile'
+2022-05-27 09:24:57.886 [main] INFO  org.hj.chain.platform.HjPlatformMobileApplication - Started HjPlatformMobileApplication in 10.49 seconds (JVM running for 13.908)
+2022-05-27 09:24:58.033 [redisson-netty-2-5] INFO  o.r.connection.pool.MasterPubSubConnectionPool - 1 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 09:24:58.088 [redisson-netty-2-20] INFO  org.redisson.connection.pool.MasterConnectionPool - 24 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 09:24:58.125 [RMI TCP Connection(1)-192.168.1.119] INFO  o.a.c.c.C.[Tomcat].[localhost].[/mobile] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-05-27 09:24:58.126 [RMI TCP Connection(1)-192.168.1.119] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-05-27 09:24:58.127 [RMI TCP Connection(1)-192.168.1.119] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2022-05-27 09:24:58.723 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2022-05-27 09:25:00.026 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2022-05-27 09:25:00.150 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8090"]
+2022-05-27 09:25:00.163 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8090 (http) with context path '/api'
+2022-05-27 09:25:00.179 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - Started HjPlatformCoreApplication in 17.084 seconds (JVM running for 19.351)
+2022-05-27 09:25:00.946 [RMI TCP Connection(8)-192.168.1.119] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-05-27 09:25:00.947 [RMI TCP Connection(8)-192.168.1.119] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-05-27 09:25:00.949 [RMI TCP Connection(8)-192.168.1.119] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2022-05-27 09:25:49.825 [http-nio-8090-exec-3] INFO  org.hj.chain.platform.config.SaTokenConfigure - requstPath:/sys/login/doLoginByUsername
+2022-05-27 09:25:49.826 [http-nio-8090-exec-3] INFO  org.hj.chain.platform.config.SaTokenConfigure - 跳过
+2022-05-27 09:25:57.934 [http-nio-8090-exec-4] INFO  org.hj.chain.platform.config.SaTokenConfigure - requstPath:/scheduleTask/findByCondition
+2022-05-27 09:25:57.934 [http-nio-8090-exec-4] INFO  org.hj.chain.platform.config.SaTokenConfigure - 校验角色、权限
+2022-05-27 09:25:57.935 [http-nio-8090-exec-4] INFO  org.hj.chain.platform.config.SaTokenConfigure - 跳过
+2022-05-27 09:33:21.811 [SpringContextShutdownHook] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+2022-05-27 09:33:22.238 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource start closing ....
+2022-05-27 09:33:22.246 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2022-05-27 09:33:22.259 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2022-05-27 09:33:22.260 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource all closed success,bye
+2022-05-27 09:33:24.434 [SpringContextShutdownHook] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+2022-05-27 09:33:24.665 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource start closing ....
+2022-05-27 09:33:24.892 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2022-05-27 09:33:24.923 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2022-05-27 09:33:24.935 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource all closed success,bye
+2022-05-27 09:37:33.700 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
+2022-05-27 09:37:33.743 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - Starting HjPlatformCoreApplication using Java 1.8.0_331 on HSPC-D10001 with PID 16888 (F:\ideaProjects\hj-platform-parent\hj-platform-core\target\classes started by Administrator in F:\ideaProjects\hj-platform-parent)
+2022-05-27 09:37:33.743 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - The following profiles are active: test
+2022-05-27 09:37:37.168 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
+2022-05-27 09:37:37.210 [main] INFO  org.hj.chain.platform.HjPlatformMobileApplication - Starting HjPlatformMobileApplication using Java 1.8.0_331 on HSPC-D10001 with PID 1492 (F:\ideaProjects\hj-platform-parent\hj-platform-mobile\target\classes started by Administrator in F:\ideaProjects\hj-platform-parent)
+2022-05-27 09:37:37.211 [main] INFO  org.hj.chain.platform.HjPlatformMobileApplication - The following profiles are active: test
+2022-05-27 09:37:37.509 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-27 09:37:37.514 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-27 09:37:37.711 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 157 ms. Found 0 Redis repository interfaces.
+2022-05-27 09:37:38.543 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:37:38.544 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$bf5e2bf7] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:37:38.568 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:37:38.792 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-27 09:37:38.798 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-05-27 09:37:38.865 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 44 ms. Found 0 Redis repository interfaces.
+2022-05-27 09:37:39.066 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8090 (http)
+2022-05-27 09:37:39.087 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8090"]
+2022-05-27 09:37:39.088 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-27 09:37:39.089 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.45]
+2022-05-27 09:37:39.092 [main] INFO  org.apache.catalina.core.AprLifecycleListener - An older version [1.2.18] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+2022-05-27 09:37:39.093 [main] INFO  org.apache.catalina.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.2.18] using APR version [1.6.5].
+2022-05-27 09:37:39.093 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2022-05-27 09:37:39.093 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-05-27 09:37:39.114 [main] INFO  org.apache.catalina.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+2022-05-27 09:37:39.415 [main] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2022-05-27 09:37:39.415 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5579 ms
+2022-05-27 09:37:39.522 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:37:39.523 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$eedf4f1c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:37:39.542 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-27 09:37:40.049 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8099 (http)
+2022-05-27 09:37:40.061 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8099"]
+2022-05-27 09:37:40.062 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2022-05-27 09:37:40.063 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.45]
+2022-05-27 09:37:40.066 [main] INFO  org.apache.catalina.core.AprLifecycleListener - An older version [1.2.18] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+2022-05-27 09:37:40.066 [main] INFO  org.apache.catalina.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.2.18] using APR version [1.6.5].
+2022-05-27 09:37:40.067 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2022-05-27 09:37:40.067 [main] INFO  org.apache.catalina.core.AprLifecycleListener - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2022-05-27 09:37:40.072 [main] INFO  org.apache.catalina.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+2022-05-27 09:37:40.301 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/mobile] - Initializing Spring embedded WebApplicationContext
+2022-05-27 09:37:40.301 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3015 ms
+2022-05-27 09:37:41.096 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1,organ} inited
+2022-05-27 09:37:41.097 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource - load a datasource named [organ] success
+2022-05-27 09:37:41.097 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource initial loaded [1] datasource,primary datasource named [organ]
+2022-05-27 09:37:41.888 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1,organ} inited
+2022-05-27 09:37:41.889 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource - load a datasource named [organ] success
+2022-05-27 09:37:41.890 [main] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource initial loaded [1] datasource,primary datasource named [organ]
+2022-05-27 09:37:45.842 [main] INFO  org.redisson.Version - Redisson 3.12.5
+2022-05-27 09:37:47.256 [redisson-netty-2-19] INFO  org.redisson.connection.pool.MasterConnectionPool - 24 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 09:37:47.258 [redisson-netty-2-20] INFO  o.r.connection.pool.MasterPubSubConnectionPool - 1 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 09:37:47.784 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2022-05-27 09:37:48.064 [main] INFO  org.redisson.Version - Redisson 3.12.5
+2022-05-27 09:37:49.227 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2022-05-27 09:37:49.309 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8099"]
+2022-05-27 09:37:49.326 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8099 (http) with context path '/mobile'
+2022-05-27 09:37:49.342 [main] INFO  org.hj.chain.platform.HjPlatformMobileApplication - Started HjPlatformMobileApplication in 13.171 seconds (JVM running for 16.626)
+2022-05-27 09:37:49.642 [redisson-netty-2-4] INFO  o.r.connection.pool.MasterPubSubConnectionPool - 1 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 09:37:49.662 [redisson-netty-2-20] INFO  org.redisson.connection.pool.MasterConnectionPool - 24 connections initialized for localhost/127.0.0.1:6379
+2022-05-27 09:37:50.595 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2022-05-27 09:37:50.730 [RMI TCP Connection(2)-192.168.1.119] INFO  o.a.c.c.C.[Tomcat].[localhost].[/mobile] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-05-27 09:37:50.730 [RMI TCP Connection(2)-192.168.1.119] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-05-27 09:37:50.732 [RMI TCP Connection(2)-192.168.1.119] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2022-05-27 09:37:51.968 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2022-05-27 09:37:52.098 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8090"]
+2022-05-27 09:37:52.125 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8090 (http) with context path '/api'
+2022-05-27 09:37:52.151 [main] INFO  org.hj.chain.platform.HjPlatformCoreApplication - Started HjPlatformCoreApplication in 19.915 seconds (JVM running for 22.833)
+2022-05-27 09:37:52.980 [RMI TCP Connection(2)-192.168.1.119] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-05-27 09:37:52.981 [RMI TCP Connection(2)-192.168.1.119] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-05-27 09:37:52.984 [RMI TCP Connection(2)-192.168.1.119] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2022-05-27 15:46:53.413 [http-nio-8090-exec-2] INFO  org.hj.chain.platform.config.SaTokenConfigure - requstPath:/sys/login/doLoginByUsername
+2022-05-27 15:46:53.442 [http-nio-8090-exec-2] INFO  org.hj.chain.platform.config.SaTokenConfigure - 跳过
+2022-05-27 15:46:59.985 [http-nio-8090-exec-4] INFO  org.hj.chain.platform.config.SaTokenConfigure - requstPath:/scheduleTask/findByCondition
+2022-05-27 15:46:59.987 [http-nio-8090-exec-4] INFO  org.hj.chain.platform.config.SaTokenConfigure - 校验角色、权限
+2022-05-27 15:46:59.988 [http-nio-8090-exec-4] INFO  org.hj.chain.platform.config.SaTokenConfigure - 跳过
+2022-05-27 17:54:26.762 [SpringContextShutdownHook] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+2022-05-27 17:54:27.060 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource start closing ....
+2022-05-27 17:54:27.079 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2022-05-27 17:54:27.085 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2022-05-27 17:54:27.085 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource all closed success,bye
+2022-05-27 17:54:31.007 [SpringContextShutdownHook] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+2022-05-27 17:54:32.013 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource start closing ....
+2022-05-27 17:54:32.084 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2022-05-27 17:54:32.090 [SpringContextShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2022-05-27 17:54:32.090 [SpringContextShutdownHook] INFO  c.b.dynamic.datasource.DynamicRoutingDataSource - dynamic-datasource all closed success,bye

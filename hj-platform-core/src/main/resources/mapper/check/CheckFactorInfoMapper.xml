@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.check.mapper.CheckFactorInfoMapper">
+    <select id="findCheckFactorForCheckManagerByCondition"
+            resultType="org.hj.chain.platform.vo.check.CheckFactorInfoVo">
+        select
+        cfi.id checkFactorId,
+        cfi.check_status checkStatus,
+        cfi.sample_item_id sampItemId,
+        cfi.check_res checkRes,
+        cfi.data_entry_step dataEntryStep,
+        cfi.check_equipment checkEquipment,
+        cfi.remark,
+        si.sample_no sampleNo,
+        si.factor_point factorPoint,
+        si.secd_class_name secdClassName,
+        si.day day,
+        si.frequency frequency,
+        sid.collect_time collectTime,
+        ss.store_time storeTime,
+        sjpf.check_standard_id checkStandardId,
+        sjpf.is_factor isFactor,
+        sjpf.factor_name factorName,
+        su.emp_name assignUser
+        from t_check_factor_info cfi
+        left join t_check_task ct on cfi.check_task_id = ct.id
+        left join t_sample_item si on cfi.sample_item_id = si.id
+        left join t_sys_user su on cfi.assign_user_id = su.user_id
+        left join t_sample_item_data sid on si.id = sid.sample_item_id
+        left join t_sample_store_list ss on si.id = ss.sample_item_id
+        left join t_schedule_job_plan_factor sjpf on cfi.job_plan_factor_id = sjpf.id
+        where ct.organ_id = #{organId}
+        <if test="sv.sampleNo != null">
+            and si.sample_no = #{sv.sampleNo}
+        </if>
+        <if test="sv.factorName != null">
+            and sjpf.factor_name like concat('%',#{sv.factorName},'%')
+        </if>
+        <if test="sv.checkStatus != null">
+            and cfi.check_status = #{sv.checkStatus}
+        </if>
+        <if test="sv.checkStatus == null">
+            and cfi.check_status &lt;&gt; "5"
+        </if>
+        order by cfi.create_time desc
+    </select>
+
+    <select id="findCheckFactorForDeptByCondition"
+            resultType="org.hj.chain.platform.vo.check.CheckFactorInfoVo">
+        select
+        cfi.id checkFactorId,
+        cfi.check_status checkStatus,
+        cfi.sample_item_id sampItemId,
+        cfi.check_res checkRes,
+        cfi.data_entry_step dataEntryStep,
+        cfi.check_equipment checkEquipment,
+        cfi.remark,
+        si.sample_no sampleNo,
+        si.factor_point factorPoint,
+        si.secd_class_name secdClassName,
+        si.day day,
+        si.frequency frequency,
+        sid.collect_time collectTime,
+        ss.store_time storeTime,
+        sjpf.check_standard_id checkStandardId,
+        sjpf.is_factor isFactor,
+        sjpf.factor_name factorName,
+        su.emp_name assignUser
+        from t_check_factor_info cfi
+        left join t_check_task ct on cfi.check_task_id = ct.id
+        left join t_sample_item si on cfi.sample_item_id = si.id
+        left join t_sys_user su on cfi.assign_user_id = su.user_id
+        left join t_sample_item_data sid on si.id = sid.sample_item_id
+        left join t_sample_store_list ss on si.id = ss.sample_item_id
+        left join t_schedule_job_plan_factor sjpf on cfi.job_plan_factor_id = sjpf.id
+        where ct.organ_id = #{organId} and cti.dept_id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <if test="sv.sampleNo != null">
+            and si.sample_no = #{sv.sampleNo}
+        </if>
+        <if test="sv.factorName != null">
+            and sjpf.factor_name like concat('%',#{sv.factorName},'%')
+        </if>
+        <if test="sv.checkStatus != null">
+            and cfi.check_status = #{sv.checkStatus}
+        </if>
+        <if test="sv.checkStatus == null">
+            and cfi.check_status &lt;&gt; "5"
+        </if>
+        order by cfi.create_time desc
+    </select>
+
+
+    <select id="findCheckFactorForCheckUserByCondition" resultType="org.hj.chain.platform.vo.check.CheckFactorInfoVo">
+        select
+        cfi.id checkFactorId,
+        cfi.check_status checkStatus,
+        cfi.sample_item_id sampItemId,
+        cfi.check_res checkRes,
+        cfi.check_sub_res checkSubRes,
+        cfi.assign_user_id assignUserId,
+        cfi.data_entry_step dataEntryStep,
+        cfi.remark remark,
+        odi.start_date startDate,
+        odi.end_date endDate,
+        sii.sample_no sampleNo,
+        sii.factor_point factorPoint,
+        sii.secd_class_name secdClassName,
+        sii.day day,
+        sii.frequency frequency,
+        sii.sample_type sampleType,
+        sid.collect_time collectTime,
+        ss.store_time storeTime,
+        ofi.check_standard_id checkStandardId,
+        fcs.factor_name factorName,
+        su.emp_name assignUser,
+        oi.project_name projectName
+        from t_check_factor_info cfi
+        left join t_check_task_info cti on cfi.check_task_id = cti.id
+        left join t_offer_dispatch_info odi on cti.dispatch_info_id = odi.id
+        left join t_sample_item sii on cfi.sample_item_id = sii.id
+        left join t_sample_item_detail sid on sii.id = sid.sample_item_id
+        left join t_sample_store_list ss on sii.id = ss.sample_item_id
+        left join t_sys_user su on cfi.assign_user_id = su.user_id
+        left join t_offer_factor_info ofi on cfi.offer_factor_id = ofi.id
+        left join t_factor_check_standard fcs on ofi.check_standard_id = fcs.standard_code
+        left join t_offer_info oi on ofi.offer_id = oi.id
+        where cfi.assign_user_id = #{userId} and fcs.organ_id = #{organId}
+        <if test="sv.sampItemId != null">
+            and cfi.sample_item_id = #{sv.sampItemId}
+        </if>
+        <if test="sv.factorName != null">
+            and fcs.factor_name like concat('%',#{sv.factorName},'%')
+        </if>
+        <if test="sv.checkStatus != null">
+            and cfi.check_status = #{sv.checkStatus}
+        </if>
+        <if test="sv.checkStatus == null">
+            and cfi.check_status &lt;&gt; "5"
+        </if>
+        order by cfi.create_time desc
+    </select>
+
+    <select id="getCheckFactorByCondition" resultType="org.hj.chain.platform.vo.check.CheckFactorInfoVo">
+        select
+        cfi.id checkFactorId,
+        cfi.check_status checkStatus,
+        cfi.sample_item_id sampItemId,
+        cfi.check_res checkRes,
+        cfi.data_entry_step dataEntryStep,
+        cfi.check_equipment checkEquipment,
+        si.sample_no sampleNo,
+        si.factor_point factorPoint,
+        si.secd_class_name secdClassName,
+        si.day day,
+        si.frequency frequency,
+        sid.collect_time collectTime,
+        ss.store_time storeTime,
+        sjpf.check_standard_id checkStandardId,
+        sjpf.is_factor isFactor,
+        sjpf.factor_name factorName,
+        su.emp_name assignUser
+        from t_check_factor_info cfi
+        left join t_sample_item si on cfi.sample_item_id = si.id
+        left join t_sys_user su on cfi.assign_user_id = su.user_id
+        left join t_sample_item_data sid on si.id = sid.sample_item_id
+        left join t_sample_store_list ss on si.id = ss.sample_item_id
+        left join t_schedule_job_plan_factor sjpf on cfi.job_plan_factor_id = sjpf.id
+        where cfi.check_task_id = #{checkTaskId}
+        <if test="sv.checkStatus != null">
+            and cfi.check_status = #{sv.checkStatus}
+        </if>
+        <if test="sv.sampleNo != null">
+            and si.sample_no = #{sv.sampleNo}
+        </if>
+        <if test="sv.factorName != null">
+            and sjpf.factor_name like concat('%',#{sv.factorName},'%')
+        </if>
+        order by cfi.check_status,si.sample_no
+    </select>
+
+    <select id="getCheckUserFactors" resultType="org.hj.chain.platform.vo.check.CheckUserVo">
+        select assign_user_id userId, count(*) cnt
+        from t_check_factor_info
+        where check_status in ("0", "1", "2", "6")
+        group by assign_user_id
+    </select>
+
+    <select id="findCheckDetailBySampleItemIds" resultType="org.hj.chain.platform.vo.check.ReportCheckDetailVo"
+            parameterType="java.util.Map">
+        SELECT
+        cf.id checkFactorId,
+        cf.check_equipment checkEquipment,
+        si.sample_no sampItemId,
+        sjpf.secd_class_id secdClassId,
+        sjpf.check_standard_id checkStandardId,
+        sjpf.factor_group_key factorGroupKey,
+        sjpf.dynamic_param dynamicParam,
+        sjpf.factor_name factorName,
+        sjpf.is_factor factorFlag,
+        cf.check_res checkRes,
+        cf.assign_user_id assignUserId
+        FROM
+        t_check_factor_info cf
+        LEFT JOIN t_sample_item si on cf.sample_item_id = si.id
+        LEFT JOIN t_schedule_job_plan_factor sjpf ON cf.job_plan_factor_id = sjpf.id
+        WHERE
+        si.sample_no IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+        and si.organ_id = #{organId,jdbcType = VARCHAR}
+    </select>
+
+    <select id="findCheckTaskDetailForManageByCondition"
+            resultType="org.hj.chain.platform.vo.check.CheckFactorInfoVo">
+        select
+        cfi.id checkFactorId,
+        cfi.check_status checkStatus,
+        cfi.sample_item_id sampItemId,
+        cfi.check_res checkRes,
+        cfi.data_entry_step dataEntryStep,
+        cfi.check_equipment checkEquipment,
+        cfi.assign_user_id assignUserId,
+        cfi.remark,
+        si.sample_no sampleNo,
+        si.factor_point factorPoint,
+        si.secd_class_name secdClassName,
+        si.day day,
+        si.frequency frequency,
+        sid.collect_time collectTime,
+        sid.collect_date collectDate,
+        ss.store_time storeTime,
+        sjpf.check_standard_id checkStandardId,
+        sjpf.is_factor isFactor,
+        sjpf.factor_name factorName,
+        sjpf.factor_remark factorRemark,
+        su.emp_name assignUser
+        from t_check_factor_info cfi
+        left join t_sample_item si on cfi.sample_item_id = si.id
+        left join t_sys_user su on cfi.assign_user_id = su.user_id
+        left join t_sample_item_data sid on si.id = sid.sample_item_id
+        left join t_sample_store_list ss on si.id = ss.sample_item_id
+        left join t_schedule_job_plan_factor sjpf on cfi.job_plan_factor_id = sjpf.id
+        where cfi.check_task_id = #{sv.checkTaskId}
+        <if test="sv.checkStatus != null">
+            and cfi.check_status = #{sv.checkStatus}
+        </if>
+        <if test="sv.sampleNo != null">
+            and si.sample_no = #{sv.sampleNo}
+        </if>
+        <if test="sv.factorName != null">
+            and sjpf.factor_name like concat('%',#{sv.factorName},'%')
+        </if>
+        <if test="list != null">
+            and cfi.check_status in
+            <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                #{item,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        order by cfi.check_status asc, si.sample_no asc, cfi.create_time desc
+    </select>
+
+    <select id="findCheckTaskDetailForEmpByCondition" resultType="org.hj.chain.platform.vo.check.CheckFactorInfoVo">
+        select
+        cfi.id checkFactorId,
+        cfi.check_status checkStatus,
+        cfi.sample_item_id sampItemId,
+        cfi.check_res checkRes,
+        cfi.data_entry_step dataEntryStep,
+        cfi.check_equipment checkEquipment,
+        cfi.assign_user_id assignUserId,
+        cfi.remark,
+        si.sample_no sampleNo,
+        si.factor_point factorPoint,
+        si.secd_class_name secdClassName,
+        si.day day,
+        si.frequency frequency,
+        sid.collect_time collectTime,
+        sid.collect_date collectDate,
+        ss.store_time storeTime,
+        sjpf.check_standard_id checkStandardId,
+        sjpf.is_factor isFactor,
+        sjpf.factor_name factorName,
+        sjpf.factor_remark factorRemark,
+        su.emp_name assignUser
+        from t_check_factor_info cfi
+        left join t_sample_item si on cfi.sample_item_id = si.id
+        left join t_sys_user su on cfi.assign_user_id = su.user_id
+        left join t_sample_item_data sid on si.id = sid.sample_item_id
+        left join t_sample_store_list ss on si.id = ss.sample_item_id
+        left join t_schedule_job_plan_factor sjpf on cfi.job_plan_factor_id = sjpf.id
+        where cfi.check_task_id = #{sv.checkTaskId} and cfi.assign_user_id = #{userId}
+        <if test="sv.checkStatus != null">
+            and cfi.check_status = #{sv.checkStatus}
+        </if>
+        <if test="sv.sampleNo != null">
+            and si.sample_no = #{sv.sampleNo}
+        </if>
+        <if test="sv.factorName != null">
+            and sjpf.factor_name like concat('%',#{sv.factorName},'%')
+        </if>
+        <if test="list != null">
+            and cfi.check_status in
+            <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                #{item,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        order by cfi.check_status asc, si.sample_no asc, cfi.create_time desc
+    </select>
+
+    <select id="sortCheckedSampleForCurrMonth" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT
+            count( DISTINCT cfi.samp_item_id ) xValData,
+            su.emp_name xNameData
+        FROM
+            t_check_factor_info cfi
+                LEFT JOIN t_sample_item sii ON cfi.samp_item_id = sii.id
+                LEFT JOIN t_offer_info oi ON sii.offer_id = oi.id
+                LEFT JOIN t_sys_user su ON cfi.assign_user_id = su.user_id
+        WHERE
+            oi.organ_id = #{organId}
+          AND cfi.check_status = "5"
+          AND DATE_FORMAT( cfi.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+        GROUP BY
+            xNameData
+        ORDER BY
+            xValData DESC
+    </select>
+
+    <select id="sortCheckedSampleForCurrYear" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT
+            count( DISTINCT cfi.samp_item_id ) xValData,
+            su.emp_name xNameData
+        FROM
+            t_check_factor_info cfi
+                LEFT JOIN t_sample_item sii ON cfi.samp_item_id = sii.id
+                LEFT JOIN t_offer_info oi ON sii.offer_id = oi.id
+                LEFT JOIN t_sys_user su ON cfi.assign_user_id = su.user_id
+        WHERE
+            oi.organ_id = #{organId}
+          AND cfi.check_status = "5"
+          AND YEAR ( cfi.create_time ) = YEAR ( NOW() )
+        GROUP BY
+            xNameData
+        ORDER BY
+            xValData DESC
+    </select>
+
+    <select id="checkedSampleClassificationCnt" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.vo.statistics.SampleClassificationVo">
+        SELECT LEFT
+            ( sii.secd_class_id, 3 ) classId,
+            count( DISTINCT cfi.samp_item_id ) cnt
+        FROM
+            t_check_factor_info cfi
+            LEFT JOIN t_sample_item sii ON cfi.samp_item_id = sii.id
+            LEFT JOIN t_offer_info oi ON sii.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+          AND cfi.check_status = "5"
+        GROUP BY
+            classId
+        ORDER BY
+            cnt DESC
+    </select>
+
+    <select id="checkedSampleClassificationCntForCurrMonth" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.vo.statistics.SampleClassificationVo">
+        SELECT LEFT
+            ( sii.secd_class_id, 3 ) classId,
+            count( DISTINCT cfi.samp_item_id ) cnt
+        FROM
+            t_check_factor_info cfi
+            LEFT JOIN t_sample_item sii ON cfi.samp_item_id = sii.id
+            LEFT JOIN t_offer_info oi ON sii.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+          AND cfi.check_status = "5"
+          AND DATE_FORMAT( cfi.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+        GROUP BY
+            classId
+        ORDER BY
+            cnt DESC
+    </select>
+
+    <select id="checkedSampleClassificationCntForCurrYear" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.vo.statistics.SampleClassificationVo">
+        SELECT LEFT
+            ( sii.secd_class_id, 3 ) classId,
+            count( DISTINCT cfi.samp_item_id ) cnt
+        FROM
+            t_check_factor_info cfi
+            LEFT JOIN t_sample_item sii ON cfi.samp_item_id = sii.id
+            LEFT JOIN t_offer_info oi ON sii.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+          AND cfi.check_status = "5"
+          AND YEAR ( cfi.create_time ) = YEAR ( NOW() )
+        GROUP BY
+            classId
+        ORDER BY
+            cnt DESC
+    </select>
+
+
+    <select id="ownerCheckFactorCntForCurrMonth" resultType="org.hj.chain.platform.check.entity.CheckFactorInfo">
+        SELECT
+            cfi.id,
+            cfi.check_status checkStatus
+        FROM
+            t_check_factor_info cfi
+            LEFT JOIN t_sample_item sii ON cfi.samp_item_id = sii.id
+            LEFT JOIN t_offer_info oi ON sii.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+          AND cfi.assign_user_id = #{userId}
+          AND DATE_FORMAT( cfi.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+    </select>
+
+    <select id="ownerCheckFactorCntForCurrYear" resultType="org.hj.chain.platform.check.entity.CheckFactorInfo">
+        SELECT
+            cfi.id,
+            cfi.check_status checkStatus
+        FROM
+            t_check_factor_info cfi
+            LEFT JOIN t_sample_item sii ON cfi.samp_item_id = sii.id
+            LEFT JOIN t_offer_info oi ON sii.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+          AND cfi.assign_user_id = #{userId}
+          AND YEAR ( cfi.create_time ) = YEAR ( NOW() )
+    </select>
+
+    <select id="selectCountPendingReviewCheckFactor" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            count(cfi.id) cnt
+        FROM
+            t_check_factor_info cfi
+            LEFT JOIN t_check_task_info cti ON cfi.check_task_id = cti.id
+            LEFT JOIN t_offer_info oi ON cti.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+          AND cfi.check_status = "4"
+    </select>
+    <select id="findCompleteCheckFactorByJobId" parameterType="java.lang.String"
+            resultType="org.hj.chain.platform.check.entity.CheckFactorInfo">
+        SELECT
+            cfi.id,
+            cfi.check_status checkStatus
+        FROM
+            t_check_factor_info cfi
+            LEFT JOIN t_check_task ct ON cfi.check_task_id = ct.id
+        WHERE
+            ct.job_id = #{jobId}
+          AND cfi.check_status = "5"
+    </select>
+</mapper>

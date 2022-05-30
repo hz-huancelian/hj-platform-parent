@@ -1,0 +1,64 @@
+server:
+#  port: 8299
+  port: 8099
+  servlet:
+    context-path: /mobile
+
+spring:
+  profiles:
+    active: test
+  main:
+    allow-bean-definition-overriding: true
+  mvc:
+    format:
+      date-time: yyyy-MM-dd HH:mm:ss
+      date: yyyy-MM-dd
+  cache:
+    type: redis
+    redis:
+      cache-null-values: true
+      key-prefix: CACHE_
+      time-to-live: 3600000
+
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+
+  # sa-token配置
+  sa-token:
+    # token名称 (同时也是cookie名称)
+    token-name: satoken
+    # token有效期，单位s 默认30天, -1代表永不过期
+    timeout: 2592000
+    # token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+    activity-timeout: -1
+    # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+    allow-concurrent-login: true
+    # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
+    is-share: false
+    # token风格
+    token-style: uuid
+    # 是否输出操作日志
+    is-log: false
+
+#MyBatis-plus
+mybatis-plus:
+  global-config:
+    banner: false
+  configuration:
+    #不加这个查询数据为空时，字段将被隐藏
+    call-setters-on-nulls: true
+    jdbc-type-for-null: null
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+weixin:
+  appid: 'wx9e935845bac3bf98'
+  secret: '3529d2147ba3a808deb5266ee849e511'
+  access-token-base-url: 'https://api.weixin.qq.com/sns/jscode2session?'
+
+image:
+  upload:
+    url:
+      cy: /data/wwwroot/imgStatic/cy
+      qz: /data/wwwroot/imgStatic/qz

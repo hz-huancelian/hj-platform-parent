@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.sample.mapper.SampleTaskMapper">
+    <select id="findForManageByCondition" resultType="org.hj.chain.platform.vo.sample.SampleTaskVo">
+        select
+        st.id sampTaskId,
+        st.task_status sampTaskStatus,
+        st.manager_user_id managerUserId,
+        st.combined_remark combinedRemark,
+        st.create_time createTime,
+        sj.id jobId,
+        sj.inspection_name inspectionName,
+        sj.inspection_linker inspectionLinker,
+        sj.inspection_linker_phone inspectionLinkerPhone,
+        sj.check_goal checkGoal,
+        sj.start_date startDate,
+        sj.end_date endDate,
+        sj.job_remark jobRemark,
+        sj.project_address projectAddress,
+        sj.project_name projectName,
+        sj.consignor_name consignorName,
+        sj.consignor_linker consignorLinker,
+        sj.consignor_linker_phone consignorLinkerPhone,
+        stt.offer_id offerId,
+        stt.cont_code contCode,
+        oi.remark offerRemark,
+        su.emp_name scheduUser
+        from t_sample_task st
+        left join t_schedule_job sj on st.job_id = sj.id
+        left join t_schedule_task stt on sj.task_id = stt.id
+        left join t_offer_info oi on stt.offer_id = oi.id
+        left join t_sys_user su on sj.create_user_id = su.user_id
+        where sj.organ_id = #{organId}
+        <if test="sv.jobId != null">
+            and sj.id = #{sv.jobId}
+        </if>
+        <if test="sv.projectName != null">
+            and sj.project_name like concat('%',#{sv.projectName},'%')
+        </if>
+        <if test="sv.sampTaskStatus != null">
+            and st.task_status = #{sv.sampTaskStatus}
+        </if>
+        <if test="sv.sampTaskStatus == null">
+            and st.task_status in ("0", "1", "2")
+        </if>
+        order by st.task_status asc, st.create_time desc
+    </select>
+
+    <select id="findForLeaderByCondition" resultType="org.hj.chain.platform.vo.sample.SampleTaskVo">
+        select
+        st.id sampTaskId,
+        st.task_status sampTaskStatus,
+        st.manager_user_id managerUserId,
+        st.combined_remark combinedRemark,
+        st.create_time createTime,
+        sj.id jobId,
+        sj.inspection_name inspectionName,
+        sj.inspection_linker inspectionLinker,
+        sj.inspection_linker_phone inspectionLinkerPhone,
+        sj.check_goal checkGoal,
+        sj.start_date startDate,
+        sj.end_date endDate,
+        sj.job_remark jobRemark,
+        sj.project_address projectAddress,
+        sj.project_name projectName,
+        sj.consignor_name consignorName,
+        sj.consignor_linker consignorLinker,
+        sj.consignor_linker_phone consignorLinkerPhone,
+        stt.offer_id offerId,
+        stt.cont_code contCode,
+        oi.remark offerRemark,
+        su.emp_name scheduUser
+        from t_sample_task st
+        left join t_schedule_job sj on st.job_id = sj.id
+        left join t_schedule_task stt on sj.task_id = stt.id
+        left join t_offer_info oi on stt.offer_id = oi.id
+        left join t_sys_user su on sj.create_user_id = su.user_id
+        where st.id in
+        (select distnct a.sample_task_id
+        from t_sample_item a
+        left join t_sample_item_data b on a.id = b.sample_item_id
+        where a.sample_user_id = #{userId} or b.collect_user_id = #{userId})
+        <if test="sv.jobId != null">
+            and sj.id = #{sv.jobId}
+        </if>
+        <if test="sv.projectName != null">
+            and sj.project_name like concat('%',#{sv.projectName},'%')
+        </if>
+        <if test="sv.sampTaskStatus != null">
+            and st.task_status = #{sv.sampTaskStatus}
+        </if>
+        <if test="sv.sampTaskStatus == null">
+            and st.task_status in ("0", "1", "2")
+        </if>
+        order by st.task_status asc, st.create_time desc
+    </select>
+
+    <select id="findByCondition" resultType="org.hj.chain.platform.vo.sample.SampleTaskVo">
+        select
+        st.id sampTaskId,
+        st.task_status sampTaskStatus,
+        st.manager_user_id managerUserId,
+        st.combined_remark combinedRemark,
+        st.create_time createTime,
+        sj.id jobId,
+        sj.inspection_name inspectionName,
+        sj.inspection_linker inspectionLinker,
+        sj.inspection_linker_phone inspectionLinkerPhone,
+        sj.check_goal checkGoal,
+        sj.start_date startDate,
+        sj.end_date endDate,
+        sj.job_remark jobRemark,
+        sj.project_address projectAddress,
+        sj.project_name projectName,
+        sj.consignor_name consignorName,
+        sj.consignor_linker consignorLinker,
+        sj.consignor_linker_phone consignorLinkerPhone,
+        stt.offer_id offerId,
+        stt.cont_code contCode,
+        oi.remark offerRemark,
+        su.emp_name scheduUser
+        from t_sample_task st
+        left join t_schedule_job sj on st.job_id = sj.id
+        left join t_schedule_task stt on sj.task_id = stt.id
+        left join t_offer_info oi on stt.offer_id = oi.id
+        left join t_sys_user su on sj.create_user_id = su.user_id
+        where sj.organ_id = #{organId} and (st.dept_id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        or st.dept_id is null)
+        <if test="sv.jobId != null">
+            and sj.id = #{sv.jobId}
+        </if>
+        <if test="sv.projectName != null">
+            and sj.project_name like concat('%',#{sv.projectName},'%')
+        </if>
+        <if test="sv.sampTaskStatus != null">
+            and st.task_status = #{sv.sampTaskStatus}
+        </if>
+        <if test="sv.sampTaskStatus == null">
+            and st.task_status in ("0", "1", "2")
+        </if>
+        order by st.task_status asc, st.create_time desc
+    </select>
+
+    <select id="getSampleTaskPointBySampTaskIdAndFactorPoint" resultType="org.hj.chain.platform.vo.sample.SampleTaskPointVo">
+        SELECT
+            stp.factor_point factorPoint,
+            stp.sample_task_id sampleTaskId,
+            GROUP_CONCAT( su.emp_name ) sampleUsers,
+            GROUP_CONCAT( stp.sample_user_id) sampleUserIds
+        FROM
+            t_sample_task_point stp
+                LEFT JOIN t_sys_user su ON stp.sample_user_id = su.user_id
+        WHERE
+            stp.sample_task_id = #{sampTaskId} AND stp.factor_point = #{factorPoint}
+        GROUP BY
+            sampleTaskId,
+            factorPoint
+    </select>
+
+    <select id="findSampTaskForLeaderByCondition" resultType="org.hj.chain.platform.vo.sample.SampleTaskListVo">
+        select
+        sti.id sampTaskId,
+        sti.task_status sampTaskStatus,
+        sj.id jobId,
+        sj.inspection_name inspectionName,
+        sj.start_date startDate,
+        sj.end_date endDate,
+        sj.project_name projectName,
+        st.plan_num taskCount,
+        st.scheduled_plan_num taskSn
+        from t_sample_task sti
+        left join t_schedule_job sj on sti.job_id = sj.id
+        left join t_schedule_task st on sj.task_id = st.id
+        where sti.id in
+        (select distinct a.sample_task_id
+        from t_sample_item a
+        left join t_sample_item_data b on a.id = b.sample_item_id
+        where a.sample_user_id = #{userId} or b.collect_user_id = #{userId})
+        <if test="sv.jobId != null">
+            and sj.id = #{sv.jobId}
+        </if>
+        <if test="sv.sampTaskStatus != null">
+            and sti.task_status = #{sv.sampTaskStatus}
+        </if>
+        <if test="sv.sampTaskStatus == null">
+            and sti.task_status in ("2", "3")
+        </if>
+        order by sti.task_status asc, sti.create_time desc
+    </select>
+
+    <select id="findSampTaskForManageByCondition" resultType="org.hj.chain.platform.vo.sample.SampleTaskListVo">
+        select
+        sti.id sampTaskId,
+        sti.task_status sampTaskStatus,
+        sj.id jobId,
+        sj.inspection_name inspectionName,
+        sj.start_date startDate,
+        sj.end_date endDate,
+        sj.project_name projectName,
+        st.plan_num taskCount,
+        st.scheduled_plan_num taskSn
+        from t_sample_task sti
+        left join t_schedule_job sj on sti.job_id = sj.id
+        left join t_schedule_task st on sj.task_id = st.id
+        where sti.organ_id = #{organId}
+        <if test="sv.jobId != null">
+            and sj.id = #{sv.jobId}
+        </if>
+        <if test="sv.sampTaskStatus != null">
+            and sti.task_status = #{sv.sampTaskStatus}
+        </if>
+        <if test="sv.sampTaskStatus == null">
+            and sti.task_status in ("2", "3")
+        </if>
+        order by sti.task_status asc, sti.create_time desc
+    </select>
+
+    <select id="findSampTasksByCondition" resultType="org.hj.chain.platform.vo.sample.SampleTaskListVo">
+        select
+        sti.id sampTaskId,
+        sti.task_status sampTaskStatus,
+        sj.id jobId,
+        sj.inspection_name inspectionName,
+        sj.start_date startDate,
+        sj.end_date endDate,
+        sj.project_name projectName,
+        st.plan_num taskCount,
+        st.scheduled_plan_num taskSn
+        from t_sample_task sti
+        left join t_schedule_job sj on sti.job_id = sj.id
+        left join t_schedule_task st on sj.task_id = st.id
+        where sti.organ_id = #{organId} and (sti.dept_id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        or sti.dept_id is null)
+        <if test="sv.jobId != null">
+            and sj.id = #{sv.jobId}
+        </if>
+        <if test="sv.sampTaskStatus != null">
+            and sti.task_status = #{sv.sampTaskStatus}
+        </if>
+        <if test="sv.sampTaskStatus == null">
+            and sti.task_status in ("2", "3")
+        </if>
+        order by sti.task_status asc, sti.create_time desc
+    </select>
+
+    <select id="findSamplesForJobByCondition" resultType="org.hj.chain.platform.vo.sample.SampleManageVo">
+        SELECT
+        st.id sampTaskId,
+        st.job_id jobId,
+        sj.project_name projectName,
+        sj.inspection_name inspectionName
+        FROM
+        t_sample_task st
+        LEFT JOIN t_schedule_job sj ON st.job_id = sj.id
+        WHERE st.organ_id = #{organId} and st.task_status in ("2", "3")
+        <if test="sv.jobId != null">
+            AND st.job_id = #{sv.jobId}
+        </if>
+
+    </select>
+
+</mapper>

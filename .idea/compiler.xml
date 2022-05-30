@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="hj-platform-mobile" />
+        <module name="hj-platform-manager" />
+        <module name="hj-platform-common" />
+        <module name="hj-platform-core" />
+        <module name="hj-platform-security" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="hj-platform-common" target="1.8" />
+      <module name="hj-platform-core" target="1.8" />
+      <module name="hj-platform-manager" target="1.8" />
+      <module name="hj-platform-mobile" target="1.8" />
+      <module name="hj-platform-parent" target="1.8" />
+      <module name="hj-platform-security" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="hj-platform-common" options="-parameters" />
+      <module name="hj-platform-core" options="-parameters" />
+      <module name="hj-platform-manager" options="-parameters" />
+      <module name="hj-platform-mobile" options="-parameters" />
+      <module name="hj-platform-security" options="-parameters" />
+    </option>
+  </component>
+</project>

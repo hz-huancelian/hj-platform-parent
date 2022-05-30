@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.judge.mapper.JudgeTaskMapper">
+    <select id="findJudgeTaskForTecManagerByCondition" resultType="org.hj.chain.platform.vo.judgetask.JudgeTaskVo">
+        SELECT
+            jt.id judgeTaskId,
+            jt.offer_id offerId,
+            jt.task_status judgeTaskStatus,
+            jt.review_num reviewNum,
+            jt.reviewed_num reviewedNum,
+            jt.remark remark,
+            oi.project_name projectName,
+            oi.consignor_name consignorName,
+            oi.certification_type certificationType,
+            oi.finish_date finishDate
+        FROM
+            t_judge_task jt
+                LEFT JOIN t_offer_info oi ON jt.offer_id = oi.id
+        WHERE oi.organ_id = #{organId}
+        <if test="sv.offerId != null">
+            AND jt.offer_id = #{sv.offerId}
+        </if>
+        <if test="sv.projectName != null">
+            AND oi.project_name LIKE concat('%',#{sv.projectName},'%')
+        </if>
+        <if test="sv.taskStatus != null">
+            AND jt.task_status = #{sv.taskStatus}
+        </if>
+        ORDER BY jt.create_time DESC
+    </select>
+
+    <select id="findJudgeTaskForDeptManagerByCondition" resultType="org.hj.chain.platform.vo.judgetask.JudgeRecordVo">
+        SELECT
+            jr.id judgeRecordId,
+            jr.judge_status judgeRecordStatus,
+            jr.remark remark,
+            jr.judge_time judgeTime,
+            su.emp_name judgeUser,
+            oi.id offerId,
+            oi.project_name projectName,
+            oi.consignor_name consignorName,
+            oi.certification_type certificationType,
+            oi.finish_date finishDate,
+            oi.check_task_count checkTaskCount
+        FROM
+            t_judge_record jr
+                LEFT JOIN t_judge_task jt ON jr.judge_task_id = jt.id
+                LEFT JOIN t_sys_user su ON jr.judge_user_id = su.user_id
+                LEFT JOIN t_offer_info oi ON jt.offer_id = oi.id
+        WHERE jr.judge_user_id = #{userId} AND jt.task_status NOT IN ("0","2","3")
+        <if test="sv.offerId != null">
+            AND jt.offer_id = #{sv.offerId}
+        </if>
+        <if test="sv.projectName != null">
+            AND oi.project_name LIKE concat('%',#{sv.projectName},'%')
+        </if>
+        <if test="sv.recordStatus != null">
+            AND jt.task_status = #{sv.recordStatus}
+        </if>
+        ORDER BY jr.create_time DESC
+    </select>
+
+    <select id="selectCountForUnJudgement" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            count(*) cnt
+        FROM
+            t_judge_task jt
+            LEFT JOIN t_offer_info oi ON jt.offer_id = oi.id
+        WHERE
+            jt.task_status = "0"
+          AND oi.organ_id = #{organId}
+    </select>
+
+    <select id="selectCountForUnContractReview" resultType="java.lang.Integer">
+        SELECT
+            count(jr.id) cnt
+        FROM
+            t_judge_record jr
+            LEFT JOIN t_judge_task jt ON jr.judge_task_id = jt.id
+            LEFT JOIN t_offer_info oi ON jt.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+          AND jr.judge_user_id = #{userId}
+          AND jt.task_status NOT IN ( "0", "2", "3" )
+          AND jr.judge_status = "0"
+    </select>
+</mapper>
