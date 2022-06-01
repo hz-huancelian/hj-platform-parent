@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.factor.mapper.FactorRainMapper">
+
+    <select id="findFactorsRainByCondition" resultType="org.hj.chain.platform.vo.factor.FactorRainVo">
+        SELECT
+        tb.id sampleTaskId,
+        tc.id sampleItemId,
+        tc.secd_class_id secdClassId,
+        tc.secd_class_name secdClassName,
+        tf.inspection_name inspectionName,
+        tf.project_name projectName,
+        td.collect_date collectDate,
+        td.sample_data_value sampleDataValue,
+        tc.sample_no sampleNo,
+        tc.factor_point factorPoint,
+        td.collect_time collectTime,
+        tg.check_res checkRes,
+        td.sample_properties sampleProperties,
+        td.collect_remark collectRemark,
+        td.special_note specialNote,
+        th.check_equipment checkEquipment,
+        th.positioning_one positioningOne,
+        th.positioning_two positioningTwo,
+        th.positioning_three positioningThree,
+        th.theoretical_val theoreticalVal,
+        th.ground_conditions groundConditions,
+        td.collect_user_id collectUserId,
+        td.review_user_id reviewUserId,
+        tc.sample_user_id sampleUserId,
+        th.factor_data_value factorDataValue
+        FROM t_sample_task tb
+        LEFT JOIN t_sample_item tc ON tb.id = tc.sample_task_id
+        LEFT JOIN t_sample_item_data td ON tc.id = td.sample_item_id
+        LEFT JOIN t_schedule_job tf ON tb.job_id = tf.id
+        LEFT JOIN t_check_factor_info tg ON tc.id = tg.sample_item_id
+        LEFT JOIN t_sample_item_factor_data th ON tc.id = th.sample_item_id
+        where tb.organ_id = #{organId}
+        <if test="fr.sampTaskId != null">
+            and tb.id = #{fr.sampTaskId}
+        </if>
+        <if test="fr.secdClassId != null">
+            and tc.secd_class_id = #{fr.secdClassId}
+        </if>
+        ORDER BY tc.create_time DESC
+    </select>
+
+    <select id="findFactorsRainByIdCondition" resultType="org.hj.chain.platform.factor.entity.FactorRain">
+        SELECT id FROM t_factor_class_rain
+    </select>
+
+</mapper>
