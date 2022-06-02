@@ -13,6 +13,7 @@ import org.hj.chain.platform.constants.BusiConstants;
 import org.hj.chain.platform.factor.entity.FactorRain;
 import org.hj.chain.platform.factor.mapper.FactorRainMapper;
 import org.hj.chain.platform.factor.service.FactorRainService;
+import org.hj.chain.platform.model.FactorClassInfo;
 import org.hj.chain.platform.vo.LoginOutputVo;
 import org.hj.chain.platform.vo.factor.FactorRainSearchVo;
 import org.hj.chain.platform.vo.factor.FactorRainVo;
@@ -43,7 +44,6 @@ public class FactorRainServiceImpl extends ServiceImpl<FactorRainMapper, FactorR
     public IPage<FactorRainVo> findFactorRainByCondition(PageVo pageVo, FactorRainSearchVo fr) {
         SaSession session = StpUtil.getSession();
         LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
-
         // 保证雨水表数据同步性，需先删除在将查询出的数据插入
         List<FactorRain> factorRainIds = factorRainMapper.findFactorsRainByIdCondition();
         if (factorRainIds != null && !factorRainIds.isEmpty()){
@@ -53,7 +53,6 @@ public class FactorRainServiceImpl extends ServiceImpl<FactorRainMapper, FactorR
                 log.info("雨水因子表数据删除成功!");
             }
         }
-
         // 批量插入
         List<FactorRainVo> factorRainVos = factorRainMapper.findFactorsRainByCondition(loginOutputVo.getOrganId(), fr);
         List<FactorRain> factorRains = factorRainVos.stream().map(d -> {
@@ -64,9 +63,15 @@ public class FactorRainServiceImpl extends ServiceImpl<FactorRainMapper, FactorR
             return factorRain;
         }).collect(Collectors.toList());
         factorRainService.saveBatch(factorRains);
-
         Page<FactorRainVo> page = PageUtil.initMpPage(pageVo);
         this.baseMapper.findFactorsRainByCondition(page, loginOutputVo.getOrganId(), fr);
+        return page;
+    }
+
+    @Override
+    public IPage<FactorClassInfo> findFactorClassInfoCondition(PageVo pageVo) {
+        Page<FactorClassInfo> page = PageUtil.initMpPage(pageVo);
+        this.baseMapper.findFactorsClassInfoCondition(page);
         return page;
     }
 

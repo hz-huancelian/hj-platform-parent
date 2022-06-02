@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Param;
 import org.hj.chain.platform.factor.entity.FactorRain;
+import org.hj.chain.platform.model.FactorClassInfo;
 import org.hj.chain.platform.vo.factor.FactorRainSearchVo;
 import org.hj.chain.platform.vo.factor.FactorRainVo;
 import org.springframework.stereotype.Repository;
@@ -40,5 +41,12 @@ public interface FactorRainMapper extends BaseMapper<FactorRain> {
      * @Date : 2022.6.1
      */
     List<FactorRain> findFactorsRainByIdCondition();
+
+    /**
+     * @author : zzl
+     * @description 分页查询采样类别
+     * @Date : 2022.6.2
+     */
+    IPage<FactorClassInfo> findFactorsClassInfoCondition(IPage<FactorClassInfo> page);
 
 }
