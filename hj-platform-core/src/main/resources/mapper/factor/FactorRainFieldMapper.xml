@@ -9,6 +9,15 @@
         field_name fieldName,
         create_time createTime,
         is_deleted isDeleted
-        FROM t_factor_class_info_field WHERE secd_class_id = #{ff.secdClassId} and is_deleted = 0
+        FROM t_factor_class_info_field WHERE secd_class_id = #{secdClassId} and is_deleted = 0
+    </select>
+
+    <select id="findClassInfoFileCondition" resultType="org.hj.chain.platform.fileresource.entity.FileResource">
+        SELECT file_name fileName FROM t_file_resource WHERE id = #{ff.fileResourceId} and file_type = #{ff.fileType}
+        and organ_id = #{organId}
+    </select>
+
+    <select id="findFactorClassIdInfoCondition" resultType="org.hj.chain.platform.model.FactorClassInfo">
+        SELECT id FROM t_factor_class_info WHERE name LIKE concat(#{fileName},'%') and level = 2
     </select>
 </mapper>

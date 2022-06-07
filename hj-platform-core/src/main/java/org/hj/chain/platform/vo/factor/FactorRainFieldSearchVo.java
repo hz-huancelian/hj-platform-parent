@@ -18,7 +18,19 @@ public class FactorRainFieldSearchVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    //二级类别id
+    /**
+     * 控制编号id
+     */
+    private Long fileResourceId;
+
+    /**
+     * 文件类型
+     */
+    private String fileType;
+
+    /**
+     * 二级类别id
+     */
     private String secdClassId;
 
 }

@@ -17,6 +17,8 @@ import org.hj.chain.platform.factor.entity.FactorRainField;
 import org.hj.chain.platform.factor.mapper.FactorRainFieldMapper;
 import org.hj.chain.platform.factor.mapper.FactorRainMapper;
 import org.hj.chain.platform.factor.service.FactorRainService;
+import org.hj.chain.platform.fileresource.entity.FileResource;
+import org.hj.chain.platform.model.FactorClassInfo;
 import org.hj.chain.platform.vo.LoginOutputVo;
 import org.hj.chain.platform.vo.factor.FactorRainFieldSearchVo;
 import org.hj.chain.platform.vo.factor.FactorRainFieldVo;
@@ -76,19 +78,29 @@ public class FactorRainServiceImpl extends ServiceImpl<FactorRainMapper, FactorR
 
     @Override
     public Result<List<FactorRainFieldVo>> findFactorClassInfoCondition(FactorRainFieldSearchVo ff) {
-        List<FactorRainField> factorRainFields = factorRainFieldMapper.findFactorsClassInfoCondition(ff);
-        if (factorRainFields != null && !factorRainFields.isEmpty()) {
-            List<FactorRainFieldVo> factorRainFieldVos = factorRainFields.stream().map(item -> {
-                FactorRainFieldVo factorRainFieldVo = new FactorRainFieldVo();
-                factorRainFieldVo.setId(item.getId())
-                        .setSecdClassId(item.getSecdClassId())
-                        .setSecdClassName(item.getSecdClassName())
-                        .setFieldName(item.getFieldName())
-                        .setCreateTime(item.getCreateTime())
-                        .setIsDeleted(item.getIsDeleted());
-                return factorRainFieldVo;
-            }).collect(Collectors.toList());
-            return ResultUtil.data(factorRainFieldVos);
+        SaSession session = StpUtil.getSession();
+        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
+        // 通过控制编号id、文件类型、机构id查询出文件名称
+        FileResource fileResourceName = factorRainFieldMapper.findClassInfoFileCondition(ff,loginOutputVo.getOrganId());
+        if (fileResourceName != null){
+            // 文件名称截取前两个文字用于模糊查询，拿到分类id
+            String fileName = fileResourceName.getFileName().substring(0,2);
+            FactorClassInfo secdClassId = factorRainFieldMapper.findFactorClassIdInfoCondition(fileName);
+            // 通过分类id查询出二级类别的字段
+            List<FactorRainField> factorRainFields = factorRainFieldMapper.findFactorsClassInfoCondition(secdClassId.getId());
+            if (factorRainFields != null && !factorRainFields.isEmpty()) {
+                List<FactorRainFieldVo> factorRainFieldVos = factorRainFields.stream().map(item -> {
+                    FactorRainFieldVo factorRainFieldVo = new FactorRainFieldVo();
+                    factorRainFieldVo.setId(item.getId())
+                            .setSecdClassId(item.getSecdClassId())
+                            .setSecdClassName(item.getSecdClassName())
+                            .setFieldName(item.getFieldName())
+                            .setCreateTime(item.getCreateTime())
+                            .setIsDeleted(item.getIsDeleted());
+                    return factorRainFieldVo;
+                }).collect(Collectors.toList());
+                return ResultUtil.data(factorRainFieldVos);
+            }
         }
         return ResultUtil.data(null);
     }
