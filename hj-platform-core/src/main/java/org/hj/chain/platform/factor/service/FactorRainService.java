@@ -2,11 +2,15 @@ package org.hj.chain.platform.factor.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.hj.chain.platform.Result;
 import org.hj.chain.platform.common.PageVo;
 import org.hj.chain.platform.factor.entity.FactorRain;
-import org.hj.chain.platform.model.FactorClassInfo;
+import org.hj.chain.platform.vo.factor.FactorRainFieldSearchVo;
+import org.hj.chain.platform.vo.factor.FactorRainFieldVo;
 import org.hj.chain.platform.vo.factor.FactorRainSearchVo;
 import org.hj.chain.platform.vo.factor.FactorRainVo;
+
+import java.util.List;
 
 public interface FactorRainService extends IService<FactorRain> {
 
@@ -19,9 +23,9 @@ public interface FactorRainService extends IService<FactorRain> {
 
     /**
      * @author : zzl
-     * @description 分页查询采样类别
-     * @Date : 2022.6.2
+     * @description 查询二级类别字段
+     * @Date : 2022.6.7
      */
-    IPage<FactorClassInfo> findFactorClassInfoCondition(PageVo pageVo);
+    Result<List<FactorRainFieldVo>> findFactorClassInfoCondition(FactorRainFieldSearchVo ff);
 
 }

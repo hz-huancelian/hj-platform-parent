@@ -7,14 +7,19 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.hj.chain.platform.Result;
+import org.hj.chain.platform.ResultUtil;
 import org.hj.chain.platform.common.PageUtil;
 import org.hj.chain.platform.common.PageVo;
 import org.hj.chain.platform.constants.BusiConstants;
 import org.hj.chain.platform.factor.entity.FactorRain;
+import org.hj.chain.platform.factor.entity.FactorRainField;
+import org.hj.chain.platform.factor.mapper.FactorRainFieldMapper;
 import org.hj.chain.platform.factor.mapper.FactorRainMapper;
 import org.hj.chain.platform.factor.service.FactorRainService;
-import org.hj.chain.platform.model.FactorClassInfo;
 import org.hj.chain.platform.vo.LoginOutputVo;
+import org.hj.chain.platform.vo.factor.FactorRainFieldSearchVo;
+import org.hj.chain.platform.vo.factor.FactorRainFieldVo;
 import org.hj.chain.platform.vo.factor.FactorRainSearchVo;
 import org.hj.chain.platform.vo.factor.FactorRainVo;
 import org.springframework.beans.BeanUtils;
@@ -36,9 +41,10 @@ public class FactorRainServiceImpl extends ServiceImpl<FactorRainMapper, FactorR
 
     @Autowired
     private FactorRainService factorRainService;
-
     @Autowired
     private FactorRainMapper factorRainMapper;
+    @Autowired
+    private FactorRainFieldMapper factorRainFieldMapper;
 
     @Override
     public IPage<FactorRainVo> findFactorRainByCondition(PageVo pageVo, FactorRainSearchVo fr) {
@@ -69,10 +75,22 @@ public class FactorRainServiceImpl extends ServiceImpl<FactorRainMapper, FactorR
     }
 
     @Override
-    public IPage<FactorClassInfo> findFactorClassInfoCondition(PageVo pageVo) {
-        Page<FactorClassInfo> page = PageUtil.initMpPage(pageVo);
-        this.baseMapper.findFactorsClassInfoCondition(page);
-        return page;
+    public Result<List<FactorRainFieldVo>> findFactorClassInfoCondition(FactorRainFieldSearchVo ff) {
+        List<FactorRainField> factorRainFields = factorRainFieldMapper.findFactorsClassInfoCondition(ff);
+        if (factorRainFields != null && !factorRainFields.isEmpty()) {
+            List<FactorRainFieldVo> factorRainFieldVos = factorRainFields.stream().map(item -> {
+                FactorRainFieldVo factorRainFieldVo = new FactorRainFieldVo();
+                factorRainFieldVo.setId(item.getId())
+                        .setSecdClassId(item.getSecdClassId())
+                        .setSecdClassName(item.getSecdClassName())
+                        .setFieldName(item.getFieldName())
+                        .setCreateTime(item.getCreateTime())
+                        .setIsDeleted(item.getIsDeleted());
+                return factorRainFieldVo;
+            }).collect(Collectors.toList());
+            return ResultUtil.data(factorRainFieldVos);
+        }
+        return ResultUtil.data(null);
     }
 
 }

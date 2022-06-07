@@ -47,8 +47,4 @@
     <select id="findFactorsRainByIdCondition" resultType="org.hj.chain.platform.factor.entity.FactorRain">
         SELECT id FROM t_factor_class_rain
     </select>
-
-    <select id="findFactorsClassInfoCondition" resultType="org.hj.chain.platform.model.FactorClassInfo">
-        SELECT id,name,level FROM t_factor_class_info WHERE level != 1
-    </select>
 </mapper>

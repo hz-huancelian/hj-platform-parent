@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hj.chain.platform.factor.mapper.FactorRainFieldMapper">
+    <select id="findFactorsClassInfoCondition" resultType="org.hj.chain.platform.factor.entity.FactorRainField">
+        SELECT id,secd_class_id secdClassId,secd_class_name secdClassName,field_name fieldName,create_time createTime,
+               is_deleted isDeleted from t_factor_class_info_field where secd_class_id = #{ff.secdClassId}
+    </select>
+</mapper>
