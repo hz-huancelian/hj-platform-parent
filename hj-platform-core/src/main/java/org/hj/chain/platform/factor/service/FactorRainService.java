@@ -5,10 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.hj.chain.platform.Result;
 import org.hj.chain.platform.common.PageVo;
 import org.hj.chain.platform.factor.entity.FactorRain;
-import org.hj.chain.platform.vo.factor.FactorRainFieldSearchVo;
-import org.hj.chain.platform.vo.factor.FactorRainFieldVo;
-import org.hj.chain.platform.vo.factor.FactorRainSearchVo;
-import org.hj.chain.platform.vo.factor.FactorRainVo;
+import org.hj.chain.platform.vo.factor.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,5 +25,12 @@ public interface FactorRainService extends IService<FactorRain> {
      * @Date : 2022.6.7
      */
     Result<List<FactorRainFieldVo>> findFactorClassInfoCondition(FactorRainFieldSearchVo ff);
+
+    /**
+     * @author : zzl
+     * @description 上传文件
+     * @Date : 2022.6.8
+     */
+    Result<Object> uploadFactorRainFile(MultipartFile file, String fileType, String fileName, String fileNo);
 
 }
