@@ -31,8 +31,8 @@ public class FactorsController {
      * @Author: zzl
      * @Date: 2022.6.1
      */
-    @GetMapping("/rainFindPageByCondition")
-    public Result<IPage<FactorRainVo>> rainsFindPageByCondition(@ModelAttribute PageVo pageVo,
+    @GetMapping("/factorClassFieldPageByCondition")
+    public Result<IPage<FactorRainVo>> factorClassFieldsPageByCondition(@ModelAttribute PageVo pageVo,
                                                             @ModelAttribute FactorRainSearchVo fr) {
         IPage<FactorRainVo> page = factorRainService.findFactorRainByCondition(pageVo, fr);
         return ResultUtil.data(page);
@@ -61,8 +61,8 @@ public class FactorsController {
      * @Author: zzl
      * @Date: 2022.6.8
      */
-    @RequestMapping(value = "/uploadFactorRainFile", method = RequestMethod.POST)
-    public Result<Object> uploadFactorsRainFile(@RequestParam("file") MultipartFile file,
+    @RequestMapping(value = "/uploadFactorClassFile", method = RequestMethod.POST)
+    public Result<Object> uploadFactorsClassFile(@RequestParam("file") MultipartFile file,
                                                 @RequestParam String fileType,
                                                 @RequestParam String fileName,
                                                 @RequestParam String fileNo) {
