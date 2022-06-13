@@ -26,4 +26,56 @@
 	    LEFT JOIN t_sample_task st ON sj.id = st.job_id
 	    where st.id = #{taskId,jdbcType = BIGINT}
     </select>
+
+    <select id="selectCountForCurrMonth" resultType="java.lang.Integer">
+        SELECT
+            count( sj.id ) cnt
+        FROM
+            t_schedule_job sj
+        WHERE
+            sj.organ_id = #{organId}
+          and sj.job_status != 0
+          AND DATE_FORMAT( sj.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' );
+    </select>
+
+    <select id="selectCountForCurrYear" resultType="java.lang.Integer">
+        SELECT
+            count( sj.id ) cnt
+        FROM
+            t_schedule_job sj
+        WHERE
+            sj.organ_id = #{organId}
+          and sj.job_status != 0
+          AND YEAR ( sj.create_time ) = YEAR ( NOW() )
+    </select>
+
+
+    <select id="taskCityForCurrMonth" parameterType="java.lang.String" resultType="org.hj.chain.platform.vo.statistics.TaskCityVo">
+        SELECT city,
+               count(*) taskNum
+        FROM (
+                 SELECT sj.id         infoId,
+                        sr.simple_name city
+                 FROM t_schedule_job sj
+                          LEFT JOIN t_sys_region sr ON sj.city = sr.region_code
+                 WHERE sj.organ_id = #{organId}
+                   AND DATE_FORMAT(sj.create_time, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')
+             ) b
+        GROUP BY city
+    </select>
+
+
+    <select id="taskCityForCurrYear" parameterType="java.lang.String" resultType="org.hj.chain.platform.vo.statistics.TaskCityVo">
+        SELECT city,
+               count(*) taskNum
+        FROM (
+                 SELECT sj.id          infoId,
+                        sr.simple_name city
+                 FROM t_schedule_job sj
+                          LEFT JOIN t_sys_region sr ON sj.city = sr.region_code
+                 WHERE sj.organ_id = #{organId}
+                   AND YEAR(sj.create_time) = YEAR(NOW())
+             ) b
+        GROUP BY city
+    </select>
 </mapper>

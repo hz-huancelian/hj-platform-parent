@@ -7,6 +7,7 @@ import org.hj.chain.platform.sample.entity.SampleItem;
 import org.hj.chain.platform.vo.sample.*;
 import org.hj.chain.platform.vo.samplebak.ReportSampleFactorDataVo;
 import org.hj.chain.platform.vo.samplebak.ReportSampleVo;
+import org.hj.chain.platform.vo.statistics.SampleClassificationVo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -76,4 +77,19 @@ public interface SampleItemMapper extends BaseMapper<SampleItem> {
      * @Date: 2022/4/29 9:19 下午
      */
     List<ReportSampleFactorDataVo> findReportSampleFactorDataByJobId(@Param("jobId") String jobId, @Param("organId") String organId);
+
+
+    List<SampleClassificationVo> sampleClassificationCntForCurrMonth(@Param("organId") String organId,
+                                                                     @Param("list") List<String> sampleStatus);
+
+
+    List<SampleClassificationVo> sampleClassificationCntForCurrYear(@Param("organId") String organId,
+                                                                    @Param("list") List<String> sampleStatus);
+
+    int selectCountForPending(String organId);
+
+    Integer selectCountForStoreListByOrganId(String organId);
+
+    List<SampleClassificationVo> storedSampleClassificationCnt(@Param("organId") String organId,
+                                                               @Param("list") List<String> sampleStatus);
 }

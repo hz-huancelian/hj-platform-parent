@@ -24,7 +24,7 @@
                 AND st.schedule_status = #{sv.scheduleStatus}
             </if>
             <if test="sv.scheduleStatus == null">
-                AND st.schedule_status in ("0", "1")
+                AND st.schedule_status in (0, 1)
             </if>
             <if test="sv.contCode != null">
                 AND st.cont_code = #{sv.contCode}
@@ -33,5 +33,35 @@
                 AND oi.project_name like concat('%',#{sv.projectName},'%')
             </if>
         ORDER BY st.create_time DESC
+    </select>
+
+    <select id="countJob" resultType="java.lang.Integer">
+        SELECT
+            sum( st.plan_num ) -  sum(st.scheduled_plan_num)
+        FROM
+            t_schedule_task st
+                LEFT JOIN t_offer_info oi ON st.offer_id = oi.id
+        WHERE
+            oi.organ_id = #{organId}
+          and st.del_status = 0
+          and st.schedule_status != 2
+    </select>
+
+    <select id="coutscheduledTasks" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            t_schedule_job
+        WHERE
+            organ_id = #{organId}
+          and job_status != 0
+          and del_status = 0
+        <if test="type == 1">
+            AND YEAR ( create_time ) = YEAR ( NOW() )
+        </if>
+        <if test="type==0">
+            AND DATE_FORMAT( create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' );
+        </if>
+
     </select>
 </mapper>

@@ -14,4 +14,18 @@ public interface ScheduleTaskMapper extends BaseMapper<ScheduleTask> {
     IPage<ScheduleTaskVo> findByCondition(Page<ScheduleTaskVo> page,
                                           @Param("organId") String organId,
                                           @Param("sv") ScheduleTaskSearchVo sv);
+
+    /**
+     * 查询待调度任务总数
+     * @param organId
+     * @return
+     */
+    Integer countJob(String organId);
+
+    /**
+     * 按月/年统计已调度任务数
+     * @param organId
+     * @return
+     */
+    Integer coutscheduledTasks(@Param("organId") String organId,@Param("type") Integer type);
 }

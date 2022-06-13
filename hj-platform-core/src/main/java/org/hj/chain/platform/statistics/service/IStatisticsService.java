@@ -13,15 +13,15 @@ public interface IStatisticsService {
 
     Result<Object> issueReport(String type);
 
-//    Result<Object> sampleClassificationCnt(String type, Integer limit);
+    Result<Object> sampleClassificationCnt(String type, Integer limit);
 
     Result<List<SysUserDeptVo>> deptUserCnt(Integer limit);
 
-//    Result<Object> offerDispatchTaskCnt(String type);
+    Result<Object> offerDispatchTaskCnt(String type);
 
     Result<Object> validContractsForPass11Month();
 
-//    Result<List<TaskCityVo>> taskCity(String type);
+    Result<List<TaskCityVo>> taskCity(String type);
 
     Result<Object> staffTurnover(String type);
 
@@ -33,27 +33,27 @@ public interface IStatisticsService {
 
     Result<Object> ownerValidContractsForPass11Month();
 
-//    Result<Object> dispatchToDoList();
+    Result<Object> dispatchToDoList();
 
     Result<Object> offerJudgeInfoCnt(String type);
 
-//    Result<Object> offerDispatchInfoCnt(String type);
+    Result<Object> offerDispatchInfoCnt(String type);
 
-//    Result<Object> cyTaskCnt(String type);
+    Result<Object> cyTaskCnt(String type);
 
-//    Result<Object> sortSampledNum(String type, Integer limit);
+    Result<Object> sortSampledNum(String type, Integer limit);
 
-//    Result<Object> allSampledItemsForPass11Month();
+    Result<Object> allSampledItemsForPass11Month();
 
-//    Result<Object> ownerSampledItemsForPass11Month();
+    Result<Object> ownerSampledItemsForPass11Month();
 
     Result<Object> equipmentCnt();
 
     Result<Object> equipmentStatsuCnt();
 
-//    Result<Object> sampleManagementCnt(String type);
+    Result<Object> sampleManagementCnt(String type);
 
-//    Result<Object> storedSampleClassificationCnt(Integer limit);
+    Result<Object> storedSampleClassificationCnt(Integer limit);
 
     Result<Object> issueReportForPass11Month();
 
@@ -67,15 +67,15 @@ public interface IStatisticsService {
 
     Result<Object> ownerCheckFactorCnt(String type);
 
-//    Result<Object> cyManagerToDoList();
+    Result<Object> cyManagerToDoList();
 
     Result<Object> technicalDirectorToDoList();
 
     Result<Object> checkManagerToDoList();
 
-//    Result<Object> sampleManagerToDoList();
+    Result<Object> sampleManagerToDoList();
 
     Result<Object> gmTopAggregateIndicators();
 
-//    Result<Object> sampleLeaderToDoList();
+    Result<Object> sampleLeaderToDoList();
 }

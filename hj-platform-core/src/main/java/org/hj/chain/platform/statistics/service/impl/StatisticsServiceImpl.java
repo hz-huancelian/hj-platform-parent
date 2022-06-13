@@ -27,7 +27,11 @@ import org.hj.chain.platform.offer.mapper.OfferInfoMapper;
 import org.hj.chain.platform.offer.mapper.OfferJudgeInfoMapper;
 import org.hj.chain.platform.report.mapper.ReportInfoMapper;
 import org.hj.chain.platform.report.model.ReportInfo;
+import org.hj.chain.platform.sample.entity.SampleItem;
+import org.hj.chain.platform.sample.entity.SampleTask;
 import org.hj.chain.platform.sample.mapper.*;
+import org.hj.chain.platform.schedule.mapper.ScheduleJobMapper;
+import org.hj.chain.platform.schedule.mapper.ScheduleTaskMapper;
 import org.hj.chain.platform.statistics.service.IStatisticsService;
 import org.hj.chain.platform.vo.DictParam;
 import org.hj.chain.platform.vo.LoginOutputVo;
@@ -50,14 +54,14 @@ public class StatisticsServiceImpl implements IStatisticsService {
     private ContractInfoMapper contractInfoMapper;
     @Autowired
     private CusContractBaseInfoMapper cusContractBaseInfoMapper;
-//    @Autowired
-//    private SampleTaskInfoMapper sampleTaskInfoMapper;
+    @Autowired
+    private SampleTaskMapper sampleTaskMapper;
     @Autowired
     private CheckTaskMapper checkTaskInfoMapper;
     @Autowired
     private ReportInfoMapper reportInfoMapper;
-//    @Autowired
-//    private SampleItemInfoMapper sampleItemInfoMapper;
+    @Autowired
+    private SampleItemMapper sampleItemMapper;
     @Autowired
     private SysUserMapper sysUserMapper;
     @Autowired
@@ -68,8 +72,8 @@ public class StatisticsServiceImpl implements IStatisticsService {
 //    private OfferDispatchInfoMapper offerDispatchInfoMapper;
     @Autowired
     private OfferInfoMapper offerInfoMapper;
-//    @Autowired
-//    private SampleItemDetailMapper sampleItemDetailMapper;
+    @Autowired
+    private SampleItemDataMapper sampleItemDataMapper;
     @Autowired
     private EquipmentInfoMapper equipmentInfoMapper;
     @Autowired
@@ -84,6 +88,12 @@ public class StatisticsServiceImpl implements IStatisticsService {
     private JudgeRecordMapper judgeRecordMapper;
     @Autowired
     private JudgeTaskMapper judgeTaskMapper;
+
+    @Autowired
+    private ScheduleJobMapper scheduleJobMapper;
+
+    @Autowired
+    private ScheduleTaskMapper scheduleTaskMapper;
 
     @Override
     public Result<ValidContractVo> validContracts(String type) {
@@ -195,40 +205,40 @@ public class StatisticsServiceImpl implements IStatisticsService {
         return ResultUtil.data(result);
     }
 
-//    @Override
-//    public Result<Object> sampleClassificationCnt(String type, Integer limit) {
-//        JSONObject result = new JSONObject();
-//        JSONArray xAxis = new JSONArray();
-//        JSONArray yAxis = new JSONArray();
-//        List<String> sampleStatus = Arrays.asList("4","6","7","8","9");
-//        Map<String, String> map = Arrays.stream(new Object[][]{
-//                {"001", "水"},
-//                {"002", "气"},
-//                {"003", "土壤、底泥"},
-//                {"004", "噪声"},
-//                {"005", "固废"},
-//                {"006", "污泥和生活垃圾"}
-//        }).collect(Collectors.toMap(kv -> (String) kv[0], kv -> (String) kv[1]));
-//        SaSession session = StpUtil.getSession();
-//        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
-//        String organId = loginOutputVo.getOrganId();
-//        List<SampleClassificationVo> vos = new ArrayList<>();
-//        if(type.equals("0")) {
-//            vos = sampleItemInfoMapper.sampleClassificationCntForCurrMonth(organId, sampleStatus);
-//        }else if(type.equals("1")) {
-//            vos = sampleItemInfoMapper.sampleClassificationCntForCurrYear(organId, sampleStatus);
-//        }
-//        if( limit > 0 && vos.size() >= limit) {
-//            vos = vos.subList(0,limit);
-//        }
-//        vos.forEach(vo -> {
-//            xAxis.add(map.get(vo.getClassId()));
-//            yAxis.add(vo.getCnt());
-//        });
-//        result.put("xNameData", xAxis);
-//        result.put("xValData", yAxis);
-//        return ResultUtil.data(result);
-//    }
+    @Override
+    public Result<Object> sampleClassificationCnt(String type, Integer limit) {
+        JSONObject result = new JSONObject();
+        JSONArray xAxis = new JSONArray();
+        JSONArray yAxis = new JSONArray();
+        List<String> sampleStatus = Arrays.asList("4","6","7","8","9");
+        Map<String, String> map = Arrays.stream(new Object[][]{
+                {"001", "水"},
+                {"002", "气"},
+                {"003", "土壤、底泥"},
+                {"004", "噪声"},
+                {"005", "固废"},
+                {"006", "污泥和生活垃圾"}
+        }).collect(Collectors.toMap(kv -> (String) kv[0], kv -> (String) kv[1]));
+        SaSession session = StpUtil.getSession();
+        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
+        String organId = loginOutputVo.getOrganId();
+        List<SampleClassificationVo> vos = new ArrayList<>();
+        if(type.equals("0")) {
+            vos = sampleItemMapper.sampleClassificationCntForCurrMonth(organId, sampleStatus);
+        }else if(type.equals("1")) {
+            vos = sampleItemMapper.sampleClassificationCntForCurrYear(organId, sampleStatus);
+        }
+        if( limit > 0 && vos.size() >= limit) {
+            vos = vos.subList(0,limit);
+        }
+        vos.forEach(vo -> {
+            xAxis.add(map.get(vo.getClassId()));
+            yAxis.add(vo.getCnt());
+        });
+        result.put("xNameData", xAxis);
+        result.put("xValData", yAxis);
+        return ResultUtil.data(result);
+    }
 
     @Override
     public Result<List<SysUserDeptVo>> deptUserCnt(Integer limit) {
@@ -242,41 +252,31 @@ public class StatisticsServiceImpl implements IStatisticsService {
         return ResultUtil.data(vos);
     }
 
-//    @Override
-//    public Result<Object> offerDispatchTaskCnt(String type) {
-//        JSONObject result = new JSONObject();
-//        JSONArray xNameData = new JSONArray();
-//        xNameData.add("已调度任务数");
-//        xNameData.add("待调度任务数");
-//        JSONArray xValData = new JSONArray();
-//        SaSession session = StpUtil.getSession();
-//        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
-//        String organId = loginOutputVo.getOrganId();
-//        OfferDispatchStatisVo vo = new OfferDispatchStatisVo();
-//        if(type.equals("0")) {
-//            vo = offerDispatchTaskMapper.offerDispatchTaskCntForCurrMonth(organId);
-//        }else if(type.equals("1")) {
-//            vo = offerDispatchTaskMapper.offerDispatchTaskCntForCurrYear(organId);
-//        }
-//        if(vo != null) {
-//            if(vo.getDipatchedCnt() == null) {
-//                xValData.add(0);
-//            }else{
-//                xValData.add(vo.getDipatchedCnt());
-//            }
-//            if(vo.getUnDispatchCnt() == null) {
-//                xValData.add(0);
-//            }else{
-//                xValData.add(vo.getUnDispatchCnt());
-//            }
-//        }else{
-//            xValData.add(0);
-//            xValData.add(0);
-//        }
-//        result.put("xNameData", xNameData);
-//        result.put("xValData", xValData);
-//        return ResultUtil.data(result);
-//    }
+    @Override
+    public Result<Object> offerDispatchTaskCnt(String type) {
+        JSONObject result = new JSONObject();
+        JSONArray xNameData = new JSONArray();
+        xNameData.add("已调度任务数");
+        xNameData.add("待调度任务数");
+        JSONArray xValData = new JSONArray();
+        SaSession session = StpUtil.getSession();
+        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
+        String organId = loginOutputVo.getOrganId();
+
+        Integer unDispatchCnt = scheduleTaskMapper.countJob(organId);
+        Integer dipatchedCnt= 0;
+        if(type.equals("0")) {
+            dipatchedCnt = scheduleTaskMapper.coutscheduledTasks(organId, 0);
+        }else if(type.equals("1")) {
+            dipatchedCnt = scheduleTaskMapper.coutscheduledTasks(organId, 1);
+        }
+        xValData.add(dipatchedCnt);
+        xValData.add(unDispatchCnt);
+
+        result.put("xNameData", xNameData);
+        result.put("xValData", xValData);
+        return ResultUtil.data(result);
+    }
 
     @Override
     public Result<Object> validContractsForPass11Month() {
@@ -319,19 +319,19 @@ public class StatisticsServiceImpl implements IStatisticsService {
         return ResultUtil.data(result);
     }
 
-//    @Override
-//    public Result<List<TaskCityVo>> taskCity(String type) {
-//        List<TaskCityVo> vos;
-//        SaSession session = StpUtil.getSession();
-//        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
-//        String organId = loginOutputVo.getOrganId();
-//        if("0".equals(type)) {
-//            vos = offerDispatchInfoMapper.taskCityForCurrMonth(organId);
-//        }else {
-//            vos = offerDispatchInfoMapper.taskCityForCurrYear(organId);
-//        }
-//        return ResultUtil.data(vos);
-//    }
+    @Override
+    public Result<List<TaskCityVo>> taskCity(String type) {
+        List<TaskCityVo> vos;
+        SaSession session = StpUtil.getSession();
+        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
+        String organId = loginOutputVo.getOrganId();
+        if("0".equals(type)) {
+            vos = scheduleJobMapper.taskCityForCurrMonth(organId);
+        }else {
+            vos = scheduleJobMapper.taskCityForCurrYear(organId);
+        }
+        return ResultUtil.data(vos);
+    }
 
     @Override
     public Result<Object> staffTurnover(String type) {
@@ -476,18 +476,18 @@ public class StatisticsServiceImpl implements IStatisticsService {
         return ResultUtil.data(result);
     }
 
-//    @Override
-//    public Result<Object> dispatchToDoList() {
-//        JSONArray result = new JSONArray();
-//        SaSession session = StpUtil.getSession();
-//        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
-//        String organId = loginOutputVo.getOrganId();
-//        int dispatchCount = offerDispatchTaskMapper.selectCountForToBeDispatched(organId);
-//        int judgeCount = offerJudgeInfoMapper.pendingOfferJudgeCnt(organId);
-//        buildResult(result, "待调度任务数", dispatchCount);
-//        buildResult(result, "待分包判定任务数", judgeCount);
-//        return ResultUtil.data(result);
-//    }
+    @Override
+    public Result<Object> dispatchToDoList() {
+        JSONArray result = new JSONArray();
+        SaSession session = StpUtil.getSession();
+        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
+        String organId = loginOutputVo.getOrganId();
+        Integer dispatchCount = scheduleTaskMapper.countJob(organId);
+        int judgeCount = offerJudgeInfoMapper.pendingOfferJudgeCnt(organId);
+        buildResult(result, "待调度任务数", dispatchCount);
+        buildResult(result, "待分包判定任务数", judgeCount);
+        return ResultUtil.data(result);
+    }
 
     @Override
     public Result<Object> offerJudgeInfoCnt(String type) {
@@ -495,7 +495,7 @@ public class StatisticsServiceImpl implements IStatisticsService {
         SaSession session = StpUtil.getSession();
         LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
         String organId = loginOutputVo.getOrganId();
-        List<OfferJudgeInfo> list = offerJudgeInfoMapper.selectListByOrganId(organId);
+        List<OfferJudgeInfo> list = offerJudgeInfoMapper.selectListByOrganId(organId,Integer.valueOf(type));
         long cnt_1 = 0l, cnt_2 = 0l;
         if(list != null && !list.isEmpty()) {
             cnt_1 = list.stream().filter(item -> "0".equals(item.getStatus())).count();
@@ -506,144 +506,144 @@ public class StatisticsServiceImpl implements IStatisticsService {
         return ResultUtil.data(result);
     }
 
-//    @Override
-//    public Result<Object> offerDispatchInfoCnt(String type) {
-//        JSONArray result = new JSONArray();
-//        SaSession session = StpUtil.getSession();
-//        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
-//        String organId = loginOutputVo.getOrganId();
-//        int dispatchInfoCnt = 0, finishDispatchInfoCnt = 0;
-//        if("0".equals(type)) {
-//            dispatchInfoCnt = offerDispatchInfoMapper.selectCountForCurrMonth(organId);
-//            finishDispatchInfoCnt = reportInfoMapper.selectCountFinishedForCurrMonth(organId);
-//        }else{
-//            dispatchInfoCnt = offerDispatchInfoMapper.selectCountForCurrYear(organId);
-//            finishDispatchInfoCnt = reportInfoMapper.selectCountFinishedForCurrYear(organId);
-//        }
-//        buildResult(result, "总任务", dispatchInfoCnt);
-//        buildResult(result, "正在进行", dispatchInfoCnt - finishDispatchInfoCnt);
-//        buildResult(result, "已完成", finishDispatchInfoCnt);
-//        return ResultUtil.data(result);
-//    }
+    @Override
+    public Result<Object> offerDispatchInfoCnt(String type) {
+        JSONArray result = new JSONArray();
+        SaSession session = StpUtil.getSession();
+        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
+        String organId = loginOutputVo.getOrganId();
+        int dispatchInfoCnt = 0, finishDispatchInfoCnt = 0;
+        if("0".equals(type)) {
+            dispatchInfoCnt = scheduleJobMapper.selectCountForCurrMonth(organId);
+            finishDispatchInfoCnt = reportInfoMapper.selectCountFinishedForCurrMonth(organId);
+        }else{
+            dispatchInfoCnt = scheduleJobMapper.selectCountForCurrYear(organId);
+            finishDispatchInfoCnt = reportInfoMapper.selectCountFinishedForCurrYear(organId);
+        }
+        buildResult(result, "总任务", dispatchInfoCnt);
+        buildResult(result, "正在进行", dispatchInfoCnt - finishDispatchInfoCnt);
+        buildResult(result, "已完成", finishDispatchInfoCnt);
+        return ResultUtil.data(result);
+    }
 
-//    @Override
-//    public Result<Object> cyTaskCnt(String type) {
-//        JSONArray result = new JSONArray();
-//        SaSession session = StpUtil.getSession();
-//        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
-//        String organId = loginOutputVo.getOrganId();
-//        List<SampleTaskInfo> list;
-//        if("0".equals(type)) {
-//            list = sampleTaskInfoMapper.selectListByOrganIdForCurrMonth(organId);
-//        }else{
-//            list = sampleTaskInfoMapper.selectListByOrganIdForCurrYear(organId);
-//        }
-//        buildResult(result, "未分配", list.stream().filter(task -> "0".equals(task.getTaskStatus())).count());
-//        buildResult(result, "正在进行", list.stream().filter(task -> "1".equals(task.getTaskStatus())).count());
-//        buildResult(result, "已完成", list.stream().filter(task -> "2".equals(task.getTaskStatus())).count());
-//        return ResultUtil.data(result);
-//    }
+    @Override
+    public Result<Object> cyTaskCnt(String type) {
+        JSONArray result = new JSONArray();
+        SaSession session = StpUtil.getSession();
+        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
+        String organId = loginOutputVo.getOrganId();
+        List<SampleTask> list;
+        if("0".equals(type)) {
+            list = sampleTaskMapper.selectListByOrganIdForCurrMonth(organId);
+        }else{
+            list = sampleTaskMapper.selectListByOrganIdForCurrYear(organId);
+        }
+        buildResult(result, "未分配", list.stream().filter(task -> "0".equals(task.getTaskStatus())).count());
+        buildResult(result, "正在进行", list.stream().filter(task -> "1".equals(task.getTaskStatus())).count());
+        buildResult(result, "已完成", list.stream().filter(task -> "2".equals(task.getTaskStatus())).count());
+        return ResultUtil.data(result);
+    }
 
-//    @Override
-//    public Result<Object> sortSampledNum(String type, Integer limit) {
-//        JSONObject result = new JSONObject();
-//        JSONArray xNameData = new JSONArray();
-//        JSONArray xValData = new JSONArray();
-//        SaSession session = StpUtil.getSession();
-//        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
-//        String organId = loginOutputVo.getOrganId();
-//        List<Map<String, Object>> list;
-//        List<String> sampleStatus = Arrays.asList("4","6","7","8","9");
-//        if("0".equals(type)) {
-//            list = sampleItemDetailMapper.sortSampledNumForMonth(organId, sampleStatus);
-//        }else{
-//            list = sampleItemDetailMapper.sortSampledNumForYear(organId, sampleStatus);
-//        }
-//        if( limit > 0 && list.size() >= limit) {
-//            list = list.subList(0,limit);
-//        }
-//        list.forEach(item -> {
-//            xNameData.add(item.get("empName"));
-//            xValData.add(item.get("cnt"));
-//        });
-//        result.put("xNameData", xNameData);
-//        result.put("xValData", xValData);
-//        return ResultUtil.data(result);
-//    }
+    @Override
+    public Result<Object> sortSampledNum(String type, Integer limit) {
+        JSONObject result = new JSONObject();
+        JSONArray xNameData = new JSONArray();
+        JSONArray xValData = new JSONArray();
+        SaSession session = StpUtil.getSession();
+        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
+        String organId = loginOutputVo.getOrganId();
+        List<Map<String, Object>> list;
+        List<String> sampleStatus = Arrays.asList("4","6","7","8","9");
+        if("0".equals(type)) {
+            list = sampleItemDataMapper.sortSampledNumForMonth(organId, sampleStatus);
+        }else{
+            list = sampleItemDataMapper.sortSampledNumForYear(organId, sampleStatus);
+        }
+        if( limit > 0 && list.size() >= limit) {
+            list = list.subList(0,limit);
+        }
+        list.forEach(item -> {
+            xNameData.add(item.get("empName"));
+            xValData.add(item.get("cnt"));
+        });
+        result.put("xNameData", xNameData);
+        result.put("xValData", xValData);
+        return ResultUtil.data(result);
+    }
 
-//    @Override
-//    public Result<Object> allSampledItemsForPass11Month() {
-//        JSONObject result = new JSONObject();
-//        JSONArray xNameData = new JSONArray();
-//        JSONArray xValData = new JSONArray();
-//        SaSession session = StpUtil.getSession();
-//        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
-//        String organId = loginOutputVo.getOrganId();
-//        List<String> sampleStatus = Arrays.asList("4","6","7","8","9");
-//        List<Map<String, Object>> list = sampleItemDetailMapper.allSampledItemsForPass11Month(organId, sampleStatus);
-//        LocalDate startMonth = LocalDate.now().minusMonths(11);
-//        String currMonth = startMonth.format(DateTimeFormatter.ofPattern("yyyy-MM"));
-//        xNameData.add(currMonth);
-//        Map<String, Object> map = new HashMap<>();
-//        if(list != null && !list.isEmpty()) {
-//            list.forEach(item -> map.put(item.get("xNameData").toString(), item.get("xValData")));
-//        }
-//        if(map.containsKey(currMonth)) {
-//            xValData.add(map.get(currMonth));
-//        }else{
-//            xValData.add(0);
-//        }
-//
-//        for(int i = 1; i < 12; i++) {
-//            currMonth = startMonth.plusMonths(i).format(DateTimeFormatter.ofPattern("yyyy-MM"));
-//            xNameData.add(currMonth);
-//            if(map.containsKey(currMonth)) {
-//                xValData.add(map.get(currMonth));
-//            }else{
-//                xValData.add(0);
-//            }
-//        }
-//        result.put("xNameData", xNameData);
-//        result.put("xValData", xValData);
-//        return ResultUtil.data(result);
-//    }
+    @Override
+    public Result<Object> allSampledItemsForPass11Month() {
+        JSONObject result = new JSONObject();
+        JSONArray xNameData = new JSONArray();
+        JSONArray xValData = new JSONArray();
+        SaSession session = StpUtil.getSession();
+        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
+        String organId = loginOutputVo.getOrganId();
+        List<String> sampleStatus = Arrays.asList("4","6","7","8","9");
+        List<Map<String, Object>> list = sampleItemDataMapper.allSampledItemsForPass11Month(organId, sampleStatus);
+        LocalDate startMonth = LocalDate.now().minusMonths(11);
+        String currMonth = startMonth.format(DateTimeFormatter.ofPattern("yyyy-MM"));
+        xNameData.add(currMonth);
+        Map<String, Object> map = new HashMap<>();
+        if(list != null && !list.isEmpty()) {
+            list.forEach(item -> map.put(item.get("xNameData").toString(), item.get("xValData")));
+        }
+        if(map.containsKey(currMonth)) {
+            xValData.add(map.get(currMonth));
+        }else{
+            xValData.add(0);
+        }
 
-//    @Override
-//    public Result<Object> ownerSampledItemsForPass11Month() {
-//        JSONObject result = new JSONObject();
-//        JSONArray xNameData = new JSONArray();
-//        JSONArray xValData = new JSONArray();
-//        SaSession session = StpUtil.getSession();
-//        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
-//        String organId = loginOutputVo.getOrganId();
-//        List<String> sampleStatus = Arrays.asList("4","6","7","8","9");
-//        List<Map<String, Object>> list = sampleItemDetailMapper.ownerSampledItemsForPass11Month(organId, loginOutputVo.getUserId(), sampleStatus);
-//        LocalDate startMonth = LocalDate.now().minusMonths(11);
-//        String currMonth = startMonth.format(DateTimeFormatter.ofPattern("yyyy-MM"));
-//        xNameData.add(currMonth);
-//        Map<String, Object> map = new HashMap<>();
-//        if(list != null && !list.isEmpty()) {
-//            list.forEach(item -> map.put(item.get("xNameData").toString(), item.get("xValData")));
-//        }
-//        if(map.containsKey(currMonth)) {
-//            xValData.add(map.get(currMonth));
-//        }else{
-//            xValData.add(0);
-//        }
-//
-//        for(int i = 1; i < 12; i++) {
-//            currMonth = startMonth.plusMonths(i).format(DateTimeFormatter.ofPattern("yyyy-MM"));
-//            xNameData.add(currMonth);
-//            if(map.containsKey(currMonth)) {
-//                xValData.add(map.get(currMonth));
-//            }else{
-//                xValData.add(0);
-//            }
-//        }
-//        result.put("xNameData", xNameData);
-//        result.put("xValData", xValData);
-//        return ResultUtil.data(result);
-//    }
+        for(int i = 1; i < 12; i++) {
+            currMonth = startMonth.plusMonths(i).format(DateTimeFormatter.ofPattern("yyyy-MM"));
+            xNameData.add(currMonth);
+            if(map.containsKey(currMonth)) {
+                xValData.add(map.get(currMonth));
+            }else{
+                xValData.add(0);
+            }
+        }
+        result.put("xNameData", xNameData);
+        result.put("xValData", xValData);
+        return ResultUtil.data(result);
+    }
+
+    @Override
+    public Result<Object> ownerSampledItemsForPass11Month() {
+        JSONObject result = new JSONObject();
+        JSONArray xNameData = new JSONArray();
+        JSONArray xValData = new JSONArray();
+        SaSession session = StpUtil.getSession();
+        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
+        String organId = loginOutputVo.getOrganId();
+        List<String> sampleStatus = Arrays.asList("4","6","7","8","9");
+        List<Map<String, Object>> list = sampleItemDataMapper.ownerSampledItemsForPass11Month(organId, loginOutputVo.getUserId(), sampleStatus);
+        LocalDate startMonth = LocalDate.now().minusMonths(11);
+        String currMonth = startMonth.format(DateTimeFormatter.ofPattern("yyyy-MM"));
+        xNameData.add(currMonth);
+        Map<String, Object> map = new HashMap<>();
+        if(list != null && !list.isEmpty()) {
+            list.forEach(item -> map.put(item.get("xNameData").toString(), item.get("xValData")));
+        }
+        if(map.containsKey(currMonth)) {
+            xValData.add(map.get(currMonth));
+        }else{
+            xValData.add(0);
+        }
+
+        for(int i = 1; i < 12; i++) {
+            currMonth = startMonth.plusMonths(i).format(DateTimeFormatter.ofPattern("yyyy-MM"));
+            xNameData.add(currMonth);
+            if(map.containsKey(currMonth)) {
+                xValData.add(map.get(currMonth));
+            }else{
+                xValData.add(0);
+            }
+        }
+        result.put("xNameData", xNameData);
+        result.put("xValData", xValData);
+        return ResultUtil.data(result);
+    }
 
     @Override
     public Result<Object> equipmentCnt() {
@@ -694,56 +694,56 @@ public class StatisticsServiceImpl implements IStatisticsService {
         return ResultUtil.data(result);
     }
 
-//    @Override
-//    public Result<Object> sampleManagementCnt(String type) {
-//        JSONArray result = new JSONArray();
-//        SaSession session = StpUtil.getSession();
-//        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
-//        String organId = loginOutputVo.getOrganId();
-//        Integer totalCnt = sampleItemInfoMapper.selectCountForStoreListByOrganId(organId);
-//        buildResult(result, "库存样品数", totalCnt);
-//        Integer storeCnt = 0, outCnt = 0;
-//        if("0".equals(type)) {
-//            storeCnt = sampleStoreApplyMapper.selectCountByOrganIdForCurrMonth(organId);
-//            outCnt = sampleDrawApplyMapper.selectCountByOrganIdForCurrMonth(organId);
-//        }else{
-//            storeCnt = sampleStoreApplyMapper.selectCountByOrganIdForCurrYear(organId);
-//            outCnt = sampleDrawApplyMapper.selectCountByOrganIdForCurrYear(organId);
-//        }
-//        buildResult(result, "入库样品数", storeCnt);
-//        buildResult(result, "出库样品数", outCnt);
-//        return ResultUtil.data(result);
-//    }
+    @Override
+    public Result<Object> sampleManagementCnt(String type) {
+        JSONArray result = new JSONArray();
+        SaSession session = StpUtil.getSession();
+        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
+        String organId = loginOutputVo.getOrganId();
+        Integer totalCnt = sampleItemMapper.selectCountForStoreListByOrganId(organId);
+        buildResult(result, "库存样品数", totalCnt);
+        Integer storeCnt = 0, outCnt = 0;
+        if("0".equals(type)) {
+            storeCnt = sampleStoreApplyMapper.selectCountByOrganIdForCurrMonth(organId);
+            outCnt = sampleDrawApplyMapper.selectCountByOrganIdForCurrMonth(organId);
+        }else{
+            storeCnt = sampleStoreApplyMapper.selectCountByOrganIdForCurrYear(organId);
+            outCnt = sampleDrawApplyMapper.selectCountByOrganIdForCurrYear(organId);
+        }
+        buildResult(result, "入库样品数", storeCnt);
+        buildResult(result, "出库样品数", outCnt);
+        return ResultUtil.data(result);
+    }
 
-//    @Override
-//    public Result<Object> storedSampleClassificationCnt(Integer limit) {
-//        JSONObject result = new JSONObject();
-//        JSONArray xAxis = new JSONArray();
-//        JSONArray yAxis = new JSONArray();
-//        List<String> sampleStatus = Arrays.asList("6","7");
-//        Map<String, String> map = Arrays.stream(new Object[][]{
-//                {"001", "水"},
-//                {"002", "气"},
-//                {"003", "土壤、底泥"},
-//                {"004", "噪声"},
-//                {"005", "固废"},
-//                {"006", "污泥和生活垃圾"}
-//        }).collect(Collectors.toMap(kv -> (String) kv[0], kv -> (String) kv[1]));
-//        SaSession session = StpUtil.getSession();
-//        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
-//        String organId = loginOutputVo.getOrganId();
-//        List<SampleClassificationVo> vos = sampleItemInfoMapper.storedSampleClassificationCnt(organId, sampleStatus);
-//        if( limit > 0 && vos.size() >= limit) {
-//            vos = vos.subList(0,limit);
-//        }
-//        vos.forEach(vo -> {
-//            xAxis.add(map.get(vo.getClassId()));
-//            yAxis.add(vo.getCnt());
-//        });
-//        result.put("xNameData", xAxis);
-//        result.put("xValData", yAxis);
-//        return ResultUtil.data(result);
-//    }
+    @Override
+    public Result<Object> storedSampleClassificationCnt(Integer limit) {
+        JSONObject result = new JSONObject();
+        JSONArray xAxis = new JSONArray();
+        JSONArray yAxis = new JSONArray();
+        List<String> sampleStatus = Arrays.asList("6","7");
+        Map<String, String> map = Arrays.stream(new Object[][]{
+                {"001", "水"},
+                {"002", "气"},
+                {"003", "土壤、底泥"},
+                {"004", "噪声"},
+                {"005", "固废"},
+                {"006", "污泥和生活垃圾"}
+        }).collect(Collectors.toMap(kv -> (String) kv[0], kv -> (String) kv[1]));
+        SaSession session = StpUtil.getSession();
+        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
+        String organId = loginOutputVo.getOrganId();
+        List<SampleClassificationVo> vos = sampleItemMapper.storedSampleClassificationCnt(organId, sampleStatus);
+        if( limit > 0 && vos.size() >= limit) {
+            vos = vos.subList(0,limit);
+        }
+        vos.forEach(vo -> {
+            xAxis.add(map.get(vo.getClassId()));
+            yAxis.add(vo.getCnt());
+        });
+        result.put("xNameData", xAxis);
+        result.put("xValData", yAxis);
+        return ResultUtil.data(result);
+    }
 
     @Override
     public Result<Object> issueReportForPass11Month() {
@@ -921,20 +921,20 @@ public class StatisticsServiceImpl implements IStatisticsService {
         return ResultUtil.data(result);
     }
 
-//    @Override
-//    public Result<Object> cyManagerToDoList() {
-//        JSONArray result = new JSONArray();
-//        SaSession session = StpUtil.getSession();
-//        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
-//        String organId = loginOutputVo.getOrganId();
-//        int assignSampleTaskCnt = sampleTaskInfoMapper.selectCountForAssign(organId);
-//        buildResult(result, "待分配的采样任务数", assignSampleTaskCnt);
-//        int pendSampleInfoCnt = sampleItemInfoMapper.selectCountForPending(organId);
-//        buildResult(result, "待审批样品数", pendSampleInfoCnt);
-//        int reviewTaskCnt = judgeRecordMapper.selectCountForReview(organId, loginOutputVo.getUserId());
-//        buildResult(result, "待评审任务数", reviewTaskCnt);
-//        return ResultUtil.data(result);
-//    }
+    @Override
+    public Result<Object> cyManagerToDoList() {
+        JSONArray result = new JSONArray();
+        SaSession session = StpUtil.getSession();
+        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
+        String organId = loginOutputVo.getOrganId();
+        int assignSampleTaskCnt = sampleTaskMapper.selectCountForAssign(organId);
+        buildResult(result, "待分配的采样任务数", assignSampleTaskCnt);
+        int pendSampleInfoCnt = sampleItemMapper.selectCountForPending(organId);
+        buildResult(result, "待审批样品数", pendSampleInfoCnt);
+        int reviewTaskCnt = judgeRecordMapper.selectCountForReview(organId, loginOutputVo.getUserId());
+        buildResult(result, "待评审任务数", reviewTaskCnt);
+        return ResultUtil.data(result);
+    }
 
     @Override
     public Result<Object> technicalDirectorToDoList() {
@@ -964,18 +964,18 @@ public class StatisticsServiceImpl implements IStatisticsService {
         return ResultUtil.data(result);
     }
 
-//    @Override
-//    public Result<Object> sampleManagerToDoList() {
-//        JSONArray result = new JSONArray();
-//        SaSession session = StpUtil.getSession();
-//        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
-//        String organId = loginOutputVo.getOrganId();
-//        int toStoreSampleCnt = sampleStoreApplyMapper.selectCountToStoreSample(organId);
-//        buildResult(result, "待入库样品数", toStoreSampleCnt);
-//        int toDrawSampleCnt = sampleDrawApplyMapper.selectCountToDrawSample(organId);
-//        buildResult(result, "待出库样品数", toDrawSampleCnt);
-//        return ResultUtil.data(result);
-//    }
+    @Override
+    public Result<Object> sampleManagerToDoList() {
+        JSONArray result = new JSONArray();
+        SaSession session = StpUtil.getSession();
+        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
+        String organId = loginOutputVo.getOrganId();
+        int toStoreSampleCnt = sampleStoreApplyMapper.selectCountToStoreSample(organId);
+        buildResult(result, "待入库样品数", toStoreSampleCnt);
+        int toDrawSampleCnt = sampleDrawApplyMapper.selectCountToDrawSample(organId);
+        buildResult(result, "待出库样品数", toDrawSampleCnt);
+        return ResultUtil.data(result);
+    }
 
     @Override
     public Result<Object> gmTopAggregateIndicators() {
@@ -1000,17 +1000,17 @@ public class StatisticsServiceImpl implements IStatisticsService {
         return ResultUtil.data(result);
     }
 
-//    @Override
-//    public Result<Object> sampleLeaderToDoList() {
-//        JSONArray result = new JSONArray();
-//        SaSession session = StpUtil.getSession();
-//        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
-//        int cnt = sampleItemInfoMapper.selectCount(Wrappers.<SampleItemInfo>lambdaQuery()
-//                .eq(SampleItemInfo::getSampleUserId, loginOutputVo.getUserId())
-//                .eq(SampleItemInfo::getSampleStatus, "2"));
-//        buildResult(result, "待采样确认数", cnt);
-//        return ResultUtil.data(result);
-//    }
+    @Override
+    public Result<Object> sampleLeaderToDoList() {
+        JSONArray result = new JSONArray();
+        SaSession session = StpUtil.getSession();
+        LoginOutputVo loginOutputVo = session.getModel(BusiConstants.SESSION_USER_KEY, LoginOutputVo.class);
+        int cnt = sampleItemMapper.selectCount(Wrappers.<SampleItem>lambdaQuery()
+                .eq(SampleItem::getSampleUserId, loginOutputVo.getUserId())
+                .eq(SampleItem::getSampleStatus, "2"));
+        buildResult(result, "待采样确认数", cnt);
+        return ResultUtil.data(result);
+    }
 
     public void buildResult(JSONArray result, String name, Object value) {
         JSONObject obj = new JSONObject();

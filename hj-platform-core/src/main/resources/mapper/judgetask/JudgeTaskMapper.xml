@@ -81,7 +81,7 @@
         WHERE
             oi.organ_id = #{organId}
           AND jr.judge_user_id = #{userId}
-          AND jt.task_status NOT IN ( "0", "2", "3" )
-          AND jr.judge_status = "0"
+          AND jt.task_status NOT IN ( 0, 2, 3 )
+          AND jr.judge_status = 0
     </select>
 </mapper>

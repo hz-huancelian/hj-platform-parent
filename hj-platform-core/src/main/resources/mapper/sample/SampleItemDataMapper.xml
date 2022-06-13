@@ -123,4 +123,88 @@
                  left join t_schedule_job sj on sti.job_id = sj.id
         where sii.id = #{sampItemId}
     </select>
+
+    <select id="sortSampledNumForMonth" resultType="java.util.Map">
+        SELECT
+            su.emp_name empName,
+            count( sid.sample_item_id ) cnt
+        FROM
+            t_sample_item_data sid
+                LEFT JOIN t_sample_item sii ON sid.sample_item_id = sii.id
+                LEFT JOIN t_sys_user su ON sid.collect_user_id = su.user_id
+        WHERE
+            sii.organ_id = #{organId}
+          AND DATE_FORMAT( sii.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+          AND sii.sample_status IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY
+            empName
+        ORDER BY
+            cnt DESC
+    </select>
+
+    <select id="sortSampledNumForYear" resultType="java.util.Map">
+        SELECT
+            su.emp_name empName,
+            count( sid.sample_item_id ) cnt
+        FROM
+            t_sample_item_data sid
+                LEFT JOIN t_sample_item sii ON sid.sample_item_id = sii.id
+                LEFT JOIN t_sys_user su ON sid.collect_user_id = su.user_id
+        WHERE
+            sii.organ_id = #{organId}
+          AND YEAR ( sii.create_time ) = YEAR ( NOW() )
+          AND sii.sample_status IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY
+            empName
+        ORDER BY
+            cnt DESC;
+    </select>
+
+    <select id="ownerSampledItemsForPass11Month" resultType="java.util.Map">
+        SELECT
+            DATE_FORMAT( sii.create_time, '%Y-%m' ) xNameData,
+            count( sid.sample_item_id ) xValData
+        FROM
+            t_sample_item_data sid
+            LEFT JOIN t_sample_item sii ON sid.sample_item_id = sii.id
+        WHERE
+            sii.organ_id = #{organId}
+        AND sid.collect_user_id = #{organId}
+        AND sii.sample_status IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        AND DATE_FORMAT( sii.create_time, '%Y-%m' ) > DATE_FORMAT( DATE_SUB( CURDATE(), INTERVAL 12 MONTH ), '%Y-%m' )
+        GROUP BY
+            xNameData
+        ORDER BY
+            xNameData;
+    </select>
+
+    <select id="allSampledItemsForPass11Month" resultType="java.util.Map">
+
+        SELECT
+            DATE_FORMAT( sii.create_time, '%Y-%m' ) xNameData,
+            count( sid.sample_item_id ) xValData
+        FROM
+            t_sample_item_data sid
+                LEFT JOIN t_sample_item sii ON sid.sample_item_id = sii.id
+        WHERE
+            sii.organ_id = #{organId}
+          AND sii.sample_status IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+          AND DATE_FORMAT( sii.create_time, '%Y-%m' ) > DATE_FORMAT( DATE_SUB( CURDATE(), INTERVAL 12 MONTH ), '%Y-%m' )
+        GROUP BY
+            xNameData
+        ORDER BY
+            xNameData;
+    </select>
 </mapper>

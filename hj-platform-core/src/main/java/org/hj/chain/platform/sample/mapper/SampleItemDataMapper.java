@@ -7,6 +7,7 @@ import org.hj.chain.platform.vo.sample.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Project : hj-platform-parent
@@ -45,4 +46,21 @@ public interface SampleItemDataMapper extends BaseMapper<SampleItemData> {
                                                                  @Param("organId") String organId);
 
     SampleItemDetailVo getSampleDetailBySampleItemId(Long sampItemId);
+
+
+    List<Map<String, Object>> sortSampledNumForMonth(@Param("organId") String organId,
+                                                      @Param("list") List<String> sampleStatus );
+
+
+    List<Map<String, Object>> sortSampledNumForYear(@Param("organId") String organId,
+                                                    @Param("list") List<String> sampleStatus);
+
+
+    List<Map<String, Object>> ownerSampledItemsForPass11Month(@Param("organId") String organId,
+                                                              @Param("userId") String userId,
+                                                              @Param("list") List<String> sampleStatus);
+
+
+    List<Map<String, Object>> allSampledItemsForPass11Month(@Param("organId") String organId,
+                                                            @Param("list") List<String> sampleStatus);
 }

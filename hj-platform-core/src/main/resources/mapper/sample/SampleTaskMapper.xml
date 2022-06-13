@@ -265,4 +265,40 @@
 
     </select>
 
+    <select id="selectCountForAssign" resultType="int">
+        SELECT
+        count( sti.job_id ) cnt
+        FROM
+        t_sample_task sti
+        WHERE
+        sti.organ_id = #{organId}
+        AND sti.task_status = 0
+    </select>
+
+    <select id="selectListByOrganIdForCurrMonth" resultType="org.hj.chain.platform.sample.entity.SampleTask">
+
+        SELECT
+            sti.id,
+            sti.task_status taskStatus
+        FROM
+            t_sample_task sti
+        WHERE
+            sti.organ_id = #{organId}
+          AND DATE_FORMAT( sti.create_time, '%Y%m' ) = DATE_FORMAT(
+                CURDATE(),
+                '%Y%m'
+            );
+
+    </select>
+
+    <select id="selectListByOrganIdForCurrYear" resultType="org.hj.chain.platform.sample.entity.SampleTask">
+        SELECT
+            sti.id,
+            sti.task_status taskStatus
+        FROM
+            t_sample_task sti
+        WHERE
+            sti.organ_id = 'wdcs1'
+          AND YEAR ( sti.create_time ) = YEAR ( NOW() );
+    </select>
 </mapper>

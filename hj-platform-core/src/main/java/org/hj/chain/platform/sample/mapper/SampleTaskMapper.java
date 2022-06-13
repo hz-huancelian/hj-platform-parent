@@ -53,4 +53,12 @@ public interface SampleTaskMapper extends BaseMapper<SampleTask> {
     IPage<SampleManageVo> findSamplesForJobByCondition(Page<SampleManageVo> page,
                                                        @Param("organId") String organId,
                                                        @Param("sv") SampCommSearchVo sv);
+
+
+    int selectCountForAssign(String organId);
+
+    List<SampleTask> selectListByOrganIdForCurrMonth(String organId);
+
+    List<SampleTask> selectListByOrganIdForCurrYear(String organId);
+
 }

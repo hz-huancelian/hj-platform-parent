@@ -82,7 +82,7 @@
             and ct.task_status = #{sv.checkTaskStatus}
         </if>
         <if test="sv.checkTaskStatus == null">
-            and ct.task_status in ("1", "2")
+            and ct.task_status in (1, 2)
         </if>
         order by ct.task_status asc, ct.create_time desc
     </select>
@@ -107,7 +107,7 @@
             and cti.task_status = #{sv.checkTaskStatus}
         </if>
         <if test="sv.checkTaskStatus == null">
-            and cti.task_status in ("1", "2")
+            and cti.task_status in (1, 2)
         </if>
         order by cti.task_status asc, cti.create_time desc
     </select>
@@ -132,7 +132,7 @@
             and cti.task_status = #{sv.checkTaskStatus}
         </if>
         <if test="sv.checkTaskStatus == null">
-            and cti.task_status in ("1", "2")
+            and cti.task_status in (1, 2)
         </if>
         order by cti.task_status asc, cti.create_time desc
     </select>
@@ -161,7 +161,7 @@
             and cti.task_status = #{sv.checkTaskStatus}
         </if>
         <if test="sv.checkTaskStatus == null">
-            and cti.task_status in ("1", "2")
+            and cti.task_status in (1, 2)
         </if>
         order by cti.task_status asc, cti.create_time desc
     </select>
@@ -185,7 +185,7 @@
     <select id="completeTaskForCurrYear" parameterType="java.lang.String" resultType="org.hj.chain.platform.vo.statistics.CompleteTaskVo">
         SELECT
             count(*) totalCnt,
-            sum( cti.task_status = "2" ) completeCnt
+            sum( cti.task_status = 2 ) completeCnt
         FROM
             t_check_task_info cti
                 LEFT JOIN t_offer_dispatch_info odi ON cti.dispatch_info_id = odi.id
@@ -202,11 +202,10 @@
             count( cti.id ) cnt,
             cti.task_status taskStatus
         FROM
-            t_check_task_info cti
-                LEFT JOIN t_offer_info oi ON cti.offer_id = oi.id
+            t_check_task cti
         WHERE
-            oi.organ_id = #{organId}
-          AND DATE_FORMAT( cti.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+            cti.organ_id = #{organId}
+            AND DATE_FORMAT( cti.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
         GROUP BY
             taskStatus
     </select>
@@ -216,10 +215,9 @@
             count( cti.id ) cnt,
             cti.task_status taskStatus
         FROM
-            t_check_task_info cti
-                LEFT JOIN t_offer_info oi ON cti.offer_id = oi.id
+            t_check_task cti
         WHERE
-            oi.organ_id = #{organId}
+            cti.organ_id = #{organId}
             AND YEAR ( cti.create_time ) = YEAR ( NOW() )
         GROUP BY
             taskStatus
@@ -228,10 +226,9 @@
         SELECT
             count(*) cnt
         FROM
-            t_check_task_info cti
-            LEFT JOIN t_offer_info oi ON cti.offer_id = oi.id
+            t_check_task cti
         WHERE
-            oi.organ_id = #{organId}
-          AND cti.task_status = "0"
+        cti.organ_id = #{organId}
+          AND cti.task_status = 0
     </select>
 </mapper>

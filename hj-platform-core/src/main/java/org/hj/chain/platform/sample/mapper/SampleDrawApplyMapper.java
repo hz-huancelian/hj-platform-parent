@@ -18,4 +18,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SampleDrawApplyMapper extends BaseMapper<SampleDrawApply> {
     Page<SampleVo> getSampDrawApplyList(Page<SampleVo> page, @Param("organId") String organId, @Param("sv") SampleSearchVo sv);
+
+    Integer selectCountToDrawSample(String organId);
+
+    Integer selectCountByOrganIdForCurrMonth(String organId);
+
+    Integer selectCountByOrganIdForCurrYear(String organId);
 }

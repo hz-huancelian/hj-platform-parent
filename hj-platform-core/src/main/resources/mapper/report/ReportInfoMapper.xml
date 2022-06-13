@@ -122,7 +122,7 @@
             sum( ri.report_status > "1" ) totalIssuedCnt
         FROM
             t_report_info ri
-                LEFT JOIN t_offer_info oi ON ri.offer_id = oi.id
+            LEFT JOIN t_schedule_job oi ON ri.job_id = oi.id
         WHERE
             oi.organ_id = #{organId}
           AND DATE_FORMAT( ri.create_time, '%Y%m' ) = DATE_FORMAT(
@@ -138,7 +138,7 @@
             sum( ri.report_status > "1" ) totalIssuedCnt
         FROM
             t_report_info ri
-                LEFT JOIN t_offer_info oi ON ri.offer_id = oi.id
+        LEFT JOIN t_schedule_job oi ON ri.job_id = oi.id
         WHERE
                 oi.organ_id = #{organId}
                 AND YEAR ( ri.create_time ) = YEAR (
@@ -148,7 +148,7 @@
 
     <select id="selectCountFinishedForCurrMonth" parameterType="java.lang.String" resultType="java.lang.Integer">
         SELECT
-            count( dispatch_info_id ) cnt
+            count( job_id ) cnt
         FROM
             t_report_info
         WHERE
@@ -162,7 +162,7 @@
 
     <select id="selectCountFinishedForCurrYear" parameterType="java.lang.String" resultType="java.lang.Integer">
         SELECT
-            count( dispatch_info_id ) cnt
+            count( job_id ) cnt
         FROM
             t_report_info
         WHERE

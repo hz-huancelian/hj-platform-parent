@@ -24,7 +24,7 @@
         left join t_sample_task sti on sii.sample_task_id = sti.id
         left join t_schedule_job sj on sti.job_id = sj.id
         left join t_sys_user su on sid.collect_user_id = su.user_id
-        where sii.organ_id = #{organId} and ssa.approval_status = "0"
+        where sii.organ_id = #{organId} and ssa.approval_status = 0
         <if test="sv.sampleNo != null">
             and sii.id = #{sv.sampItemId}
         </if>
@@ -47,41 +47,38 @@
         and si.organ_id = #{organId,jdbcType = VARCHAR}
     </select>
 
-    <!--    <select id="selectCountByOrganIdForCurrMonth" parameterType="java.lang.String" resultType="java.lang.Integer">-->
-    <!--        SELECT-->
-    <!--            COUNT(DISTINCT ssa.sample_item_Id) cnt-->
-    <!--        FROM-->
-    <!--            t_sample_store_apply ssa-->
-    <!--            LEFT JOIN t_sample_item sii ON ssa.sample_item_Id = sii.id-->
-    <!--            LEFT JOIN t_offer_info oi ON sii.offer_id = oi.id-->
-    <!--        WHERE-->
-    <!--            oi.organ_id = #{organId}-->
-    <!--            AND ssa.approval_status = "1"-->
-    <!--            AND DATE_FORMAT( ssa.update_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )-->
-    <!--    </select>-->
+        <select id="selectCountByOrganIdForCurrMonth" parameterType="java.lang.String" resultType="java.lang.Integer">
+            SELECT
+                COUNT( DISTINCT ssa.sample_item_Id ) cnt
+            FROM
+                t_sample_store_apply ssa
+                    LEFT JOIN t_sample_item sii ON ssa.sample_item_Id = sii.id
+            WHERE
+                sii.organ_id = #{organId,jdbcType = VARCHAR}
+              AND ssa.approval_status = 1
+              AND DATE_FORMAT( ssa.update_time, '%Y%m' ) = DATE_FORMAT(CURDATE(),'%Y%m')
+        </select>
 
-    <!--    <select id="selectCountByOrganIdForCurrYear" parameterType="java.lang.String" resultType="java.lang.Integer">-->
-    <!--        SELECT-->
-    <!--            COUNT(DISTINCT ssa.sample_item_Id) cnt-->
-    <!--        FROM-->
-    <!--            t_sample_store_apply ssa-->
-    <!--            LEFT JOIN t_sample_item sii ON ssa.sample_item_Id = sii.id-->
-    <!--            LEFT JOIN t_offer_info oi ON sii.offer_id = oi.id-->
-    <!--        WHERE-->
-    <!--            oi.organ_id = #{organId}-->
-    <!--          AND ssa.approval_status = "1"-->
-    <!--          AND YEAR( ssa.update_time ) = YEAR ( NOW() )-->
-    <!--    </select>-->
+        <select id="selectCountByOrganIdForCurrYear" parameterType="java.lang.String" resultType="java.lang.Integer">
+            SELECT
+                COUNT(DISTINCT ssa.sample_item_Id) cnt
+            FROM
+                t_sample_store_apply ssa
+                LEFT JOIN t_sample_item sii ON ssa.sample_item_Id = sii.id
+            WHERE
+                sii.organ_id = #{organId}
+              AND ssa.approval_status = 1
+              AND YEAR( ssa.update_time ) = YEAR ( NOW() )
+        </select>
 
-    <!--    <select id="selectCountToStoreSample" parameterType="java.lang.String" resultType="java.lang.Integer">-->
-    <!--        SELECT-->
-    <!--            count(ssa.id) cnt-->
-    <!--        FROM-->
-    <!--            t_sample_store_apply ssa-->
-    <!--            LEFT JOIN t_sample_item sii ON ssa.sample_item_Id = sii.id-->
-    <!--            LEFT JOIN t_offer_info oi ON sii.offer_id = oi.id-->
-    <!--        WHERE-->
-    <!--            oi.organ_id = #{organId}-->
-    <!--          AND ssa.approval_status = "0"-->
-    <!--    </select>-->
+        <select id="selectCountToStoreSample" parameterType="java.lang.String" resultType="java.lang.Integer">
+            SELECT
+                count(ssa.id) cnt
+            FROM
+                t_sample_store_apply ssa
+                LEFT JOIN t_sample_item sii ON ssa.sample_item_Id = sii.id
+            WHERE
+                sii.organ_id = #{organId}
+              AND ssa.approval_status = 0
+        </select>
 </mapper>

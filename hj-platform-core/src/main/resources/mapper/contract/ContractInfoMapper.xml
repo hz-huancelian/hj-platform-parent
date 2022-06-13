@@ -58,17 +58,18 @@
 
     <select id="validContractsForCurrMonth" parameterType="java.lang.String" resultType="org.hj.chain.platform.vo.statistics.ValidContractVo">
         SELECT
-            SUM(draft_amount) contAmount,
+            SUM( draft_amount ) contAmount,
             COUNT(*) contSum
-        FROM
-            t_offer_dispatch_task odt
-                LEFT JOIN t_offer_info oi ON odt.offer_id = oi.id
-                LEFT JOIN t_offer_cost oc ON oi.id = oc.offer_id
-                LEFT JOIN t_contract_info ci ON oi.id = ci.offer_id
-        WHERE
-            oi.organ_id = #{organId}
-          AND oi.status NOT IN ("2","5")
-          AND DATE_FORMAT( odt.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+        from
+            t_contract_info t1
+                LEFT JOIN t_offer_info t2 on t1.offer_id = t2.id
+                LEFT JOIN t_offer_cost t3 on t2.id = t3.offer_id
+                LEFT JOIN t_schedule_task t4 on t2.id = t4.offer_id
+        where
+            t1.organ_id = #{organId}
+          and t1.cont_status = 4
+          AND DATE_FORMAT( t4.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' );
+
     </select>
 
     <select id="validContractsForCurrYear" parameterType="java.lang.String" resultType="org.hj.chain.platform.vo.statistics.ValidContractVo">

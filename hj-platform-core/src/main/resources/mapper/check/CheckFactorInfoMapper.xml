@@ -313,17 +313,16 @@
 
     <select id="sortCheckedSampleForCurrMonth" parameterType="java.lang.String" resultType="java.util.HashMap">
         SELECT
-            count( DISTINCT cfi.samp_item_id ) xValData,
+            count( DISTINCT cfi.sample_item_id ) xValData,
             su.emp_name xNameData
         FROM
             t_check_factor_info cfi
-                LEFT JOIN t_sample_item sii ON cfi.samp_item_id = sii.id
-                LEFT JOIN t_offer_info oi ON sii.offer_id = oi.id
+                LEFT JOIN t_sample_item sii ON cfi.sample_item_id = sii.id
                 LEFT JOIN t_sys_user su ON cfi.assign_user_id = su.user_id
         WHERE
-            oi.organ_id = #{organId}
-          AND cfi.check_status = "5"
-          AND DATE_FORMAT( cfi.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+            sii.organ_id = #{organId}
+            AND cfi.check_status = 5
+            AND DATE_FORMAT( cfi.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
         GROUP BY
             xNameData
         ORDER BY
@@ -332,17 +331,16 @@
 
     <select id="sortCheckedSampleForCurrYear" parameterType="java.lang.String" resultType="java.util.HashMap">
         SELECT
-            count( DISTINCT cfi.samp_item_id ) xValData,
+            count( DISTINCT cfi.sample_item_id ) xValData,
             su.emp_name xNameData
         FROM
             t_check_factor_info cfi
-                LEFT JOIN t_sample_item sii ON cfi.samp_item_id = sii.id
-                LEFT JOIN t_offer_info oi ON sii.offer_id = oi.id
+                LEFT JOIN t_sample_item sii ON cfi.sample_item_id = sii.id
                 LEFT JOIN t_sys_user su ON cfi.assign_user_id = su.user_id
         WHERE
-            oi.organ_id = #{organId}
-          AND cfi.check_status = "5"
-          AND YEAR ( cfi.create_time ) = YEAR ( NOW() )
+            sii.organ_id = #{organId}
+            AND cfi.check_status = 5
+            AND YEAR ( cfi.create_time ) = YEAR ( NOW() )
         GROUP BY
             xNameData
         ORDER BY
@@ -371,15 +369,14 @@
             resultType="org.hj.chain.platform.vo.statistics.SampleClassificationVo">
         SELECT LEFT
             ( sii.secd_class_id, 3 ) classId,
-            count( DISTINCT cfi.samp_item_id ) cnt
+            count( DISTINCT cfi.sample_item_id ) cnt
         FROM
             t_check_factor_info cfi
-            LEFT JOIN t_sample_item sii ON cfi.samp_item_id = sii.id
-            LEFT JOIN t_offer_info oi ON sii.offer_id = oi.id
+            LEFT JOIN t_sample_item sii ON cfi.sample_item_id = sii.id
         WHERE
-            oi.organ_id = #{organId}
-          AND cfi.check_status = "5"
-          AND DATE_FORMAT( cfi.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+            sii.organ_id = #{organId}
+            AND cfi.check_status = 5
+            AND DATE_FORMAT( cfi.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
         GROUP BY
             classId
         ORDER BY
@@ -390,15 +387,14 @@
             resultType="org.hj.chain.platform.vo.statistics.SampleClassificationVo">
         SELECT LEFT
             ( sii.secd_class_id, 3 ) classId,
-            count( DISTINCT cfi.samp_item_id ) cnt
+            count( DISTINCT cfi.sample_item_id ) cnt
         FROM
             t_check_factor_info cfi
-            LEFT JOIN t_sample_item sii ON cfi.samp_item_id = sii.id
-            LEFT JOIN t_offer_info oi ON sii.offer_id = oi.id
+            LEFT JOIN t_sample_item sii ON cfi.sample_item_id = sii.id
         WHERE
-            oi.organ_id = #{organId}
-          AND cfi.check_status = "5"
-          AND YEAR ( cfi.create_time ) = YEAR ( NOW() )
+            sii.organ_id = #{organId}
+            AND cfi.check_status = 5
+            AND YEAR ( cfi.create_time ) = YEAR ( NOW() )
         GROUP BY
             classId
         ORDER BY
@@ -412,12 +408,11 @@
             cfi.check_status checkStatus
         FROM
             t_check_factor_info cfi
-            LEFT JOIN t_sample_item sii ON cfi.samp_item_id = sii.id
-            LEFT JOIN t_offer_info oi ON sii.offer_id = oi.id
+            LEFT JOIN t_sample_item sii ON cfi.sample_item_id = sii.id
         WHERE
-            oi.organ_id = #{organId}
-          AND cfi.assign_user_id = #{userId}
-          AND DATE_FORMAT( cfi.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+            sii.organ_id = #{organId}
+            AND cfi.assign_user_id = #{userId}
+            AND DATE_FORMAT( cfi.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
     </select>
 
     <select id="ownerCheckFactorCntForCurrYear" resultType="org.hj.chain.platform.check.entity.CheckFactorInfo">
@@ -426,12 +421,11 @@
             cfi.check_status checkStatus
         FROM
             t_check_factor_info cfi
-            LEFT JOIN t_sample_item sii ON cfi.samp_item_id = sii.id
-            LEFT JOIN t_offer_info oi ON sii.offer_id = oi.id
+            LEFT JOIN t_sample_item sii ON cfi.sample_item_id = sii.id
         WHERE
-            oi.organ_id = #{organId}
-          AND cfi.assign_user_id = #{userId}
-          AND YEAR ( cfi.create_time ) = YEAR ( NOW() )
+            sii.organ_id = #{organId}
+            AND cfi.assign_user_id = #{userId}
+            AND YEAR ( cfi.create_time ) = YEAR ( NOW() )
     </select>
 
     <select id="selectCountPendingReviewCheckFactor" parameterType="java.lang.String" resultType="java.lang.Integer">
@@ -439,11 +433,10 @@
             count(cfi.id) cnt
         FROM
             t_check_factor_info cfi
-            LEFT JOIN t_check_task_info cti ON cfi.check_task_id = cti.id
-            LEFT JOIN t_offer_info oi ON cti.offer_id = oi.id
+            LEFT JOIN t_check_task cti ON cfi.check_task_id = cti.id
         WHERE
-            oi.organ_id = #{organId}
-          AND cfi.check_status = "4"
+            cti.organ_id = #{organId}
+          AND cfi.check_status = 4
     </select>
     <select id="findCompleteCheckFactorByJobId" parameterType="java.lang.String"
             resultType="org.hj.chain.platform.check.entity.CheckFactorInfo">

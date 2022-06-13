@@ -35,4 +35,10 @@ public interface SampleStoreApplyMapper extends BaseMapper<SampleStoreApply> {
      */
     List<String> findApplyUsersBySampleNos(@Param("list") List<String> sampleNos,
                                            @Param("organId") String organId);
+
+    int selectCountToStoreSample(String organId);
+
+    Integer selectCountByOrganIdForCurrMonth(String organId);
+
+    Integer selectCountByOrganIdForCurrYear(String organId);
 }

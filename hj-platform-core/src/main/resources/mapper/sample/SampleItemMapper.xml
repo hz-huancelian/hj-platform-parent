@@ -11,7 +11,7 @@
                 LEFT JOIN t_sample_task st ON si.sample_task_id = st.id
         WHERE
             st.job_id = #{jobId}
-          AND si.sample_status IN ("4","6","7","8","9")
+          AND si.sample_status IN (4,6,7,8,9)
     </select>
 
     <select id="fuzzyQrySampItemByCondition" resultType="org.hj.chain.platform.sample.entity.SampleItem">
@@ -170,7 +170,7 @@
             AND si.sample_status = #{sv.sampStatus}
         </if>
         <if test="sv.sampStatus == null">
-            AND si.sample_status in ("4","6","7","8","9")
+            AND si.sample_status in (4,6,7,8,9)
         </if>
     </select>
 
@@ -202,7 +202,7 @@
             AND si.sample_status = #{sv.sampStatus}
         </if>
         <if test="sv.sampStatus == null">
-            AND si.sample_status in ("3","4","6","7","8","9")
+            AND si.sample_status in (3,4,6,7,8,9)
         </if>
     </select>
 
@@ -240,7 +240,7 @@
                 and si.sample_no = #{sv.sampleNo}
             </if>
             <if test="sv.sampStatus == null">
-                and si.sample_status in ("6", "7", "8")
+                and si.sample_status in (6, 7, 8)
             </if>
             <if test="sv.sampStatus != null">
                 and si.sample_status = #{sv.sampStatus}
@@ -286,5 +286,83 @@
             LEFT JOIN t_sample_item_factor_data sifd ON si.id = sifd.sample_item_id
             LEFT JOIN t_sample_task st ON st.id = si.sample_task_id
         WHERE st.job_id = #{jobId,jdbcType = VARCHAR} and si.organ_id = #{organId,jdbcType = VARCHAR}
+    </select>
+
+    <select id="sampleClassificationCntForCurrMonth"
+            resultType="org.hj.chain.platform.vo.statistics.SampleClassificationVo">
+        SELECT LEFT
+                   ( sii.secd_class_id, 3 ) classId,
+               count(*) cnt
+        FROM
+            t_sample_item sii
+        WHERE
+            sii.organ_id =  #{organId}
+          AND sii.sample_status IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+          AND DATE_FORMAT( sii.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+        GROUP BY
+            classId
+        ORDER BY
+            cnt DESC;
+    </select>
+
+    <select id="sampleClassificationCntForCurrYear"
+            resultType="org.hj.chain.platform.vo.statistics.SampleClassificationVo">
+        SELECT LEFT
+                   ( sii.secd_class_id, 3 ) classId,
+               count(*) cnt
+        FROM
+            t_sample_item sii
+        WHERE
+            sii.organ_id = #{organId}
+          AND sii.sample_status IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+          AND YEAR ( sii.create_time ) = YEAR ( NOW() )
+        GROUP BY
+            classId
+        ORDER BY
+            cnt DESC;
+    </select>
+
+    <select id="selectCountForPending" resultType="int">
+        SELECT
+            count( sii.id ) cnt
+        FROM
+            t_sample_item sii
+        WHERE
+            sii.organ_id = #{organId}
+        AND sii.sample_status = 3;
+    </select>
+
+    <select id="selectCountForStoreListByOrganId" resultType="java.lang.Integer">
+        SELECT
+            count(*) cnt
+        FROM
+            t_sample_item sii
+        WHERE
+            sii.organ_id = #{organId}
+          AND sii.sample_status IN ( 6, 7 );
+    </select>
+
+    <select id="storedSampleClassificationCnt" resultType="org.hj.chain.platform.vo.statistics.SampleClassificationVo">
+        SELECT LEFT
+        ( sii.secd_class_id, 3 ) classId,
+        count(*) cnt
+        FROM
+        t_sample_item sii
+        WHERE
+        sii.organ_id = #{organId}
+        AND sii.sample_status IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY
+        classId
+        ORDER BY
+        cnt DESC
     </select>
 </mapper>

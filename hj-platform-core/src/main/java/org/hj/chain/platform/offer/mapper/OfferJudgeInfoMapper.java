@@ -59,5 +59,5 @@ public interface OfferJudgeInfoMapper extends BaseMapper<OfferJudgeInfo> {
      */
     List<OfferJudgeInfoVo> findOfferJudgeInfoByCondition(@Param("offerId") String offerId, @Param("organId") String organId);
 
-    List<OfferJudgeInfo> selectListByOrganId(String organId);
+    List<OfferJudgeInfo> selectListByOrganId(@Param("organId") String organId,@Param("type") Integer type);
 }

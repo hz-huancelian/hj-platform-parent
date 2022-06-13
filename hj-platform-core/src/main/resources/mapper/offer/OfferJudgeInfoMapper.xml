@@ -28,7 +28,7 @@
                 and oji.status = #{sv.status,jdbcType=VARCHAR}
             </if>
             <if test="sv.projectName!=null">
-                and oi.project_name like concat('%',#{projectName,jdbcType=VARCHAR},'%')
+                and oi.project_name like concat('%',#{sv.projectName,jdbcType=VARCHAR},'%')
             </if>
         </where>
         order by oi.update_time desc
@@ -97,5 +97,11 @@
                 LEFT JOIN t_offer_info oi ON oji.offer_id = oi.id
         WHERE
             oi.organ_id = #{organId}
+        <if test="type==1">
+            AND YEAR ( oji.create_time ) = YEAR ( NOW() )
+        </if>
+        <if test="type==0">
+            AND DATE_FORMAT( oji.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+        </if>
     </select>
 </mapper>
