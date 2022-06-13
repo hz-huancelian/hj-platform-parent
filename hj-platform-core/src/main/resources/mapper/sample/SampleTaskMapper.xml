@@ -258,10 +258,11 @@
         FROM
         t_sample_task st
         LEFT JOIN t_schedule_job sj ON st.job_id = sj.id
-        WHERE st.organ_id = #{organId} and st.task_status in ("2", "3")
+        WHERE st.organ_id = #{organId} and st.task_status in (2, 3)
         <if test="sv.jobId != null">
             AND st.job_id = #{sv.jobId}
         </if>
+        ORDER BY sj.create_time desc
 
     </select>
 
