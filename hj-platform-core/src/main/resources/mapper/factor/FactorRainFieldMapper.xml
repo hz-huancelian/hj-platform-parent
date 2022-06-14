@@ -18,6 +18,6 @@
     </select>
 
     <select id="findFactorClassIdInfoCondition" resultType="org.hj.chain.platform.model.FactorClassInfo">
-        SELECT id FROM t_factor_class_info WHERE name LIKE concat(#{fileName},'%') and level = 2
+        SELECT id FROM t_factor_class_info WHERE name LIKE concat('%',#{fileName},'%') and level = 2
     </select>
 </mapper>
